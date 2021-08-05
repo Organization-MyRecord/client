@@ -23,7 +23,7 @@ jobs:
           host: ${{ secrets.HOST_FRONT }}
           username: ${{ secrets.USER }}
           script: |
-            cd server
+            cd client
             git reset --hard
             git fetch
             git pull
