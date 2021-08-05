@@ -28,3 +28,4 @@ jobs:
             git fetch
             git pull
             cd myrecord
+            npm start
