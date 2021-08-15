@@ -1,9 +1,7 @@
-import Topbar from './options/Topbar'
-
 function App() {
   return (
     <div>
-      <Topbar/>
+      hello!
     </div>
   );
 }
