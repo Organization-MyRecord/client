@@ -1,0 +1,25 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #a9d0f5;
+  padding: 10px 15px;
+
+  .a {
+    text-decoration: none;
+    color: white;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .bar_search input {
+    padding: 10px 0px;
+    margin-right: 8px;
+  }
+
+  .bar_info button {
+    margin-right: 8px;
+  }
+}

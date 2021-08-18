@@ -1,9 +1,11 @@
+import Topbar from "./options/Topbar";
 import RegisterPage from "./register/RegisterPage";
+
 function App() {
   
   return (
     <div>
-      <RegisterPage/>
+      <Topbar/>      
     </div>
   );
 }
