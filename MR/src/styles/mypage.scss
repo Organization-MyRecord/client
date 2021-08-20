@@ -1,0 +1,29 @@
+.mypage {
+  position: absolute;
+  display: flex;
+  .profile_cotainer {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 400px;
+    .profile {
+      background-color: white;
+      margin: 20px 0;
+    }
+    .interests {
+      background-color: white;
+    }
+  }
+  .mypost_container {
+    margin: 20px 40px;
+    width: 600px;
+    height: 300px;
+    background-color: white;
+    .motto {
+    }
+    .mypost {
+    }
+    .post_info {
+    }
+  }
+}
