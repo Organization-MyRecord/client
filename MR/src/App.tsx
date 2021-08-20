@@ -1,11 +1,11 @@
-import Topbar from "./options/Topbar";
-import RegisterPage from "./register/RegisterPage";
+import Mypage from "./mypage/Mypage";
+import './styles/app.scss'
 
 function App() {
   
   return (
-    <div>
-      <Topbar/>      
+    <div id = "app" className = "App">      
+      <Mypage/>
     </div>
   );
 }
