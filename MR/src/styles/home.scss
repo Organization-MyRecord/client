@@ -1,0 +1,38 @@
+.home {
+  .myfeed_container {
+    background-color: white;
+    .feed_container {
+      display: flex;
+      flex-wrap: wrap;
+      .feed {
+        border: 1px solid gold;
+        width: 33%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+  .populer_feed {
+    background-color: whitesmoke;
+    .feed_container {
+      display: flex;
+      .feed {
+        border: 1px solid gold;
+        width: 33%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+
+  .new_post {
+    .post_container {
+      display: flex;
+      text-align: center;
+    }
+  }
+}

@@ -1,11 +1,11 @@
-import Mypage from "./mypage/Mypage";
+import Home from './home/Home'
 import './styles/app.scss'
 
 function App() {
   
   return (
-    <div id = "app" className = "App">      
-      <Mypage/>
+    <div id = "app" className = "App">
+      <Home/>
     </div>
   );
 }
