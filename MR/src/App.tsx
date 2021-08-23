@@ -1,11 +1,11 @@
-import Home from './home/Home'
+import Topbar from './options/Topbar'
 import './styles/app.scss'
 
 function App() {
   
   return (
     <div id = "app" className = "App">
-      <Home/>
+      <Topbar/>
     </div>
   );
 }

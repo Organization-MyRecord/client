@@ -22,12 +22,15 @@ function Topbar() {
             </div>
             <div className="bar_search">
                 <input type = "text" placeholder = "Search..." value = {Keyword} onChange = {onchange}/>
+                <button className="search_logo">
                 <FaSearch className="logo" onClick = {onclick}/>
+                 </button>
             </div>
             <div className="bar_info">
                 <button className="small_btn">Login</button>
                 <button className="small_btn">Logout</button>
-                <FaUserCircle className="logo"/>
+                <button className="account_logo"><FaUserCircle className="logo"/> </button>
+                
             </div>
         </nav>
     )

@@ -2,24 +2,73 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #a9d0f5;
-  padding: 10px 15px;
+  padding: 15px 10px;
+  background-color: #5c8fc2;
+  animation: fadeIn 0.8s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.bar_logo a {
+  font-weight: 600;
+  font-size: 25px;
+  text-decoration: double;
+}
 
-  .a {
-    text-decoration: none;
-    color: white;
+.logo {
+  font-size: 20px;
+}
+
+.bar_search {
+  display: flex;
+  align-items: center;
+  width: 250px;
+}
+.bar_search input {
+  display: block;
+  width: 100%;
+  padding: 7px 3px;
+  margin-right: 3px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.bar_search button {
+  margin-right: 8px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #06315b;
+}
+
+.bar_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bar_info button {
+  margin-right: 8px;
+  padding: 3px 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 20%;
+}
+.bar_info .account_logo {
+  background-color: transparent;
+}
+@keyframes fadeIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
   }
-
-  .logo {
-    font-size: 20px;
-  }
-
-  .bar_search input {
-    padding: 10px 0px;
-    margin-right: 8px;
-  }
-
-  .bar_info button {
-    margin-right: 8px;
+  to {
+    transform: none;
+    opacity: 0.8;
   }
 }
