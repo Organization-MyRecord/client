@@ -1,11 +1,12 @@
-import Home from './home/Home'
+import React from 'react';
+import Sidebar from './options/Sidebar'
 import './styles/app.scss'
 
-function App() {
+const App:React.FC = () => {
   
   return (
     <div id = "app" className = "App">
-      <Home/>
+      <Sidebar/>
     </div>
   );
 }
