@@ -1,12 +1,12 @@
 import React from 'react';
-import Sidebar from './options/Sidebar'
+import Post from './post/Post';
 import './styles/app.scss'
 
-const App:React.FC = () => {
+function App() {
   
   return (
     <div id = "app" className = "App">
-      <Sidebar/>
+      <Post/>
     </div>
   );
 }

@@ -1,0 +1,26 @@
+.post {
+  background-color: whitesmoke;
+  .post_header {
+    border-bottom: 3px solid black;
+    margin-bottom: 20px;
+    .division {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .button_container {
+        margin: 5px 5px;
+        button {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+  .post_content {
+    margin-bottom: 20px;
+  }
+  .post_list {
+    border-top: 3px solid black;
+    border-bottom: 2px solid black;
+  }
+}
