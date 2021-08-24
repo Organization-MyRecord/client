@@ -1,12 +1,11 @@
-import React from 'react';
-import Post from './post/Post';
+import Topbar from './options/Topbar'
 import './styles/app.scss'
 
 function App() {
   
   return (
     <div id = "app" className = "App">
-      <Post/>
+      <Topbar/>
     </div>
   );
 }
