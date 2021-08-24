@@ -1,0 +1,31 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 280px;
+  margin: 0 auto;
+  background-color: #5c8fc2;
+  border-radius: 30px;
+}
+.login_top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -40px;
+  margin-bottom: 20px;
+  color: whitesmoke;
+}
+.login_register_container {
+  border: none;
+  outline: none;
+  border-radius: 50%;
+}
+
+button {
+  margin-right: 12px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
