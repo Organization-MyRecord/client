@@ -12,9 +12,7 @@ module.exports = {
     "plugin:import/typescript",
     // import 관련 규칙 모음
 
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
-    "prettier/react",
+    "prettier",
     // prettier 관련 규칙 모음
   ],
   parserOptions: {
@@ -25,5 +23,9 @@ module.exports = {
   },
   rules: {
     // 추가하고 싶은 rule을 더 추가해줍니다.
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
