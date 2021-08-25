@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../styles/home.scss';
+import React, { useState } from "react";
+import "../styles/home.scss";
 
 function Home() {
   const [isLogin, setisLogin] = useState<boolean>(true); //로그인 이 됬을 때 true, 안했을 때 false
@@ -47,12 +47,7 @@ function Home() {
       <div className="new_post">
         <h2>최신 자료</h2>
         <div className="post_container">
-          <img
-            src="../../../../../카톡 이미지.jpg"
-            alt=""
-            width="92px"
-            height="92px"
-          />
+          <img src="../../../../../카톡 이미지.jpg" alt="" width="92px" height="92px" />
           <div className="content_container">
             <h2>제목</h2>
             <a>가나다라마바사아 자차카타 파하</a>

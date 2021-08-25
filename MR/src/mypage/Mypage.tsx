@@ -1,6 +1,6 @@
-import React from 'react';
-import { FaUserCircle } from 'react-icons/fa';
-import '../styles/mypage.scss';
+import React from "react";
+import { FaUserCircle } from "react-icons/fa";
+import "../styles/mypage.scss";
 
 function Mypage() {
   return (
