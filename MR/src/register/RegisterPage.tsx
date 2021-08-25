@@ -59,7 +59,7 @@ export default function RegisterPage() {
     await axios.post("/api/register", {
       age: 0,
       email: Email,
-      field: "IT웹통신",
+      filed: "IT웹통신",
       gender: "남",
       job: "string",
       major: "string",
