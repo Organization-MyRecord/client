@@ -24,6 +24,16 @@ export const options: Options[] = [
   { value: "화학", label: "화학" },
 ];
 
+export const Major: Options[] = [
+  { value: "인문", label: "인문" },
+  { value: "사회", label: "사회" },
+  { value: "교육", label: "교육" },
+  { value: "공학", label: "공학" },
+  { value: "자역", label: "자역" },
+  { value: "의약", label: "의약" },
+  { value: "예체능", label: "예체능" }
+]
+
 export const lim_Specialc = /[^가-힣ㄱ-ㅎㅏ-ㅣ0-9a-zA-Z~!*?:;.,\s]/gi; //특수문자 제한
 export const lim_num = /[^0-9]/gi; //숫자만 허용
 export const lim_al = /[^a-z]/gi; //영문만 허용
