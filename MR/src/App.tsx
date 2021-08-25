@@ -1,11 +1,11 @@
-import Login from './login/Login'
+import Mypage from './mypage/Mypage'
 import './styles/app.scss'
 
 function App() {
   
   return (
     <div id = "app" className = "App">
-      <Login/>
+      <Mypage/>
     </div>
   );
 }
