@@ -1,10 +1,10 @@
-import RegisterPage from "./register/RegisterPage";
+import Login from "./login/Login";
 import "./styles/app.scss";
 
 function App() {
   return (
     <div id="app" className="App">
-      <RegisterPage/>
+      <Login />
     </div>
   );
 }

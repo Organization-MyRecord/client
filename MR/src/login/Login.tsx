@@ -1,8 +1,18 @@
-import React from "react";
-import { FaUserCircle } from "react-icons/fa";
+import React, { useState } from "react";
+
 import "../styles/login.scss";
 
-function login() {
+export default function login() {
+  const [Id, setId] = useState(""); //e-mail
+  const [Password, setPassword] = useState(""); //password
+
+  const IdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setId(e.currentTarget.value);
+  };
+
+  const PasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
+  };
   return (
     <div className="login">
       <div className="login_contatiner">
@@ -11,28 +21,26 @@ function login() {
             <h1>로그인</h1>
           </div>
         </div>
+
         <table className="login_register_container">
           <tbody>
             <tr>
-              <td>아이디</td>
+              <td>E-mail</td>
               <td>
-                {" "}
-                <input type="text" placeholder="ID를 입력하세요" />
+                <input type="text" placeholder="ID를 입력하세요" value={Id} onChange={IdHandler} />
               </td>
             </tr>
             <tr>
-              <td>패스워드</td>
+              <td>Password</td>
               <td>
-                <input type="text" placeholder="PW를 입력하세요" />
+                <input type="text" placeholder="PW를 입력하세요" value={Password} onChange={PasswordHandler} />
               </td>
             </tr>
           </tbody>
         </table>
-        <button>로그인</button>
+        <button className="login_button">로그인</button>
         <button>아이디/비밀번호 찾기</button>
       </div>
     </div>
   );
 }
-
-export default login;
