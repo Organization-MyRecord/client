@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function ChageInfo() {
-    return (
-        <div className = "">
-            
-        </div>
-    )
+  return <div className=""></div>;
 }
 
-export default ChageInfo
+export default ChageInfo;
