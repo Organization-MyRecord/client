@@ -104,17 +104,17 @@ export default function RegisterPage() {
   };
   return (
     <div>
+      <div className="Email_auth">
+        <label>이메일 (필수)</label>
+        <input type="text" value={Email} onChange={EamilHandler} />
+        <button onClick={emailAuth}>메일 인증</button>
+        <h6>*본인 인증시 이메일이 반드시 필요합니다.</h6>
+      </div>
+      <div style={toggle ? { opacity: "1" } : { opacity: "0" }}>
+        <input type="text" value={Anum} onChange={AnumHandler} />
+        <button onClick={aaa}>인증하기</button>
+      </div>
       <form onSubmit={register} className="register_container">
-        <div className="Email_auth">
-          <label>이메일 (필수)</label>
-          <input type="text" value={Email} onChange={EamilHandler} />
-          <button onClick={emailAuth}>메일 인증</button>
-          <h6>*본인 인증시 이메일이 반드시 필요합니다.</h6>
-        </div>
-        <div style={toggle ? { opacity: "1" } : { opacity: "0" }}>
-          <input type="text" value={Anum} onChange={AnumHandler} />
-          <button onClick={aaa}>인증하기</button>
-        </div>
         <label>비밀번호</label>
         <input type="password" value={Password} onChange={PasswordHandler} />
         <label>비밀번호 확인</label>
