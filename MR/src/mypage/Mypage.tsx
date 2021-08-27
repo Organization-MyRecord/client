@@ -1,10 +1,19 @@
+import axios from "axios";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import "../styles/mypage.scss";
 
 function Mypage() {
+
+  const GetMyInfo = async() => {
+    await axios.get('/api/mypage',{
+      headers : {'Authorization' : `Bearer ${localStorage.getItem("token")}`}
+  }).then(res => console.log(res.data))
+  }
+
   return (
     <div className="mypage">
+      <button onClick = {GetMyInfo}>정보 확인</button>
       <div className="profile_cotainer">
         <div className="profile">
           <FaUserCircle />

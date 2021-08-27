@@ -2,11 +2,10 @@
   position: absolute;
   display: flex;
   .profile_cotainer {
-    display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 20px 10px;
     align-items: center;
+    height: 400px;
     .profile {
       background-color: white;
       margin: 20px 0;
