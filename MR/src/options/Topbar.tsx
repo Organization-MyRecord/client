@@ -15,7 +15,7 @@ function Topbar() {
   };
 
   return (
-    <nav className="topbar">
+    <div className="topbar">
       <div className="bar_logo">
         <FaAdversal className="logo" />
         <a>MyRecord</a>
@@ -33,7 +33,7 @@ function Topbar() {
           <FaUserCircle className="logo" />{" "}
         </button>
       </div>
-    </nav>
+    </div>
   );
 }
 
