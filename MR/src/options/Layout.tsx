@@ -1,19 +1,22 @@
 import React from 'react'
-import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import '../styles/layout.scss'
 const Layout = (props : {
     children : React.ReactNode
 }) => {
 
 
     return (
-        <React.Fragment>
-            <Topbar/>
-            <Sidebar/>
-            <main style = {{paddingTop : "90px"}}>
+        <div className = "layout">
+            <header>
+                <Topbar/>
+            </header>
+            <aside></aside>
+            <section>
                 {props.children}
-            </main>
-        </React.Fragment>
+            </section>
+            <footer></footer>
+        </div>
     )
 }
 
