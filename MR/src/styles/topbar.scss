@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #5c8fc2;
-  animation: fadeIn 0.8s linear;
+  animation: fadeInY 0.8s linear;
   position: fixed;
   top: 0;
   left: 0;
@@ -61,7 +61,7 @@
 .bar_info .account_logo {
   background-color: transparent;
 }
-@keyframes fadeIn {
+@keyframes fadeInY {
   from {
     transform: translateY(10px);
     opacity: 0;

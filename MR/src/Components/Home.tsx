@@ -16,7 +16,7 @@ function Home() {
             <div className="feed_container">
               <div className="feed">
                 가나다라
-                <h1>예시</h1>
+                <h6>예시</h6>
               </div>
               <div className="feed">마바사아</div>
               <div className="feed">자차카타</div>
@@ -25,7 +25,10 @@ function Home() {
           <div className="populer_feed">
             <h2>인기글</h2>
             <div className="feed_container">
-              <div className="feed">가나다라</div>
+              <div className="feed">
+                가나다라
+                <h6>예시</h6>
+              </div>
               <div className="feed">마바사아</div>
               <div className="feed">자차카타</div>
             </div>
@@ -35,7 +38,10 @@ function Home() {
         <div className="populer_feed">
           <h2>인기글</h2>
           <div className="feed_container">
-            <div className="feed">가나다라</div>
+            <div className="feed">
+              가나다라
+              <h6>예시</h6>
+            </div>
             <div className="feed">마바사아</div>
             <div className="feed">자차카타</div>
             <div className="feed">가나다라</div>
