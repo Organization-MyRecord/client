@@ -1,8 +1,9 @@
 .layout {
+  position: absolute;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  position: absolute;
-  background-color: aliceblue;
+  background-color: whitesmoke;
 
   section {
     padding-top: 80px;
