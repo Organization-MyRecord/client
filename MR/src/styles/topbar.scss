@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
+
 }
 .bar_logo a {
   font-weight: 600;
@@ -70,4 +71,14 @@
     transform: none;
     opacity: 0.8;
   }
+}
+
+.Modal {
+  position: absolute;
+  top : 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }

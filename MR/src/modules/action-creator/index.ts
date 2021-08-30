@@ -5,7 +5,7 @@ import {Action} from '../actions/index'
 import {Dispatch} from 'redux'
 import axios from "axios"
 
-export const LoginHandler = (Email : string, Password : string) => {
+export const LoginHandler = (Email : string, Password : string, setopenmodal : any) => {
     return async(dispatch : Dispatch<Action>) => {
         await axios.post('/api/authenticate',{
             email : Email,
@@ -19,6 +19,9 @@ export const LoginHandler = (Email : string, Password : string) => {
                 payload : response.data
             })
         })
+        .then(() => {
+            console.log("가나라다마바사아");
+            setopenmodal(false)})
     }
 }
 
