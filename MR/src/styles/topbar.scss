@@ -1,17 +1,21 @@
 .topbar {
   display: flex;
+  width: 100%;
   justify-content: space-between;
+  white-space: nowrap;
   align-items: center;
   background-color: #5c8fc2;
   animation: fadeInY 0.8s linear;
   position: fixed;
+  padding: 10px;
+  margin: 0 auto;
   top: 0;
   left: 0;
   right: 0;
 }
 .bar_logo a {
   font-weight: 600;
-  font-size: 25px;
+  font-size: 23px;
   text-decoration: double;
 }
 

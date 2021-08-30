@@ -4,25 +4,24 @@ import { FaUserCircle } from "react-icons/fa";
 import "../styles/mypage.scss";
 
 function Mypage() {
-
-  const GetMyInfo = async() => {
-    await axios.get('/api/mypage',{
-      headers : {'Authorization' : `Bearer ${localStorage.getItem("token")}`}
-  }).then(res => console.log(res.data))
-  }
+  const GetMyInfo = async () => {
+    await axios
+      .get("/api/mypage", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((res) => console.log(res.data));
+  };
 
   return (
     <div className="mypage">
-      <button onClick = {GetMyInfo}>정보 확인</button>
       <div className="profile_cotainer">
         <div className="profile">
-          <FaUserCircle />
+          <FaUserCircle id="user_icon" />
+          <h1>김정수</h1>
+          <a>sunpl0718@naver.com</a>
           <br />
-          김정수
-          <br />
-          sunpl0718@naver.com
-          <br />
-          <button>기본정보 수정</button>
+          <button id="user_edit">기본정보 수정</button>
+
           <table>
             <tbody>
               <tr>
@@ -58,7 +57,8 @@ function Mypage() {
               </tr>
             </tbody>
           </table>
-          Discription : 무엇 전직업 대학교
+          Discription : <br />
+          무엇 전직업 대학교
         </div>
       </div>
       <div className="mypost_container">
@@ -68,7 +68,7 @@ function Mypage() {
             전체글 0개
             <button>글쓰기</button>
           </div>
-          <div>여기에 내 글 정보들이 들어갈 꺼입니다.</div>
+          <div className="post_detail">여기에 내 글 정보들이 들어갈 꺼입니다.</div>
         </div>
       </div>
     </div>
