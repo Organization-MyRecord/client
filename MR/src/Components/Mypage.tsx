@@ -1,24 +1,54 @@
-import axios from "axios";
-import React from "react";
+import React, {useEffect} from "react";
+
 import { FaUserCircle } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { GetUserInfo } from "../modules/action-creator";
+import { RootState } from "../modules/Store";
 import "../styles/mypage.scss";
 
-function Mypage() {
-  const GetMyInfo = async () => {
-    await axios
-      .get("/api/mypage", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => console.log(res.data));
-  };
 
+
+function Mypage() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    
+    dispatch(GetUserInfo())
+  }, [])
+  
+
+  const userData = useSelector((state : RootState) => state.User.userData)
+    console.log(userData);
+
+  const MyPost = userData.myPostList.map(
+    (item:any, index:number) => {
+      return(
+        <tbody id = {"body" + index} key = {item.id}>
+          <tr>
+            <td id = "title">{item.postName}</td>
+          </tr>
+          <tr>
+            <td id = "content">{item.content}</td>
+          </tr>
+        </tbody>
+      )
+    }
+  )
+    
   return (
     <div className="mypage">
+      
       <div className="profile_cotainer">
         <div className="profile">
-          <FaUserCircle id="user_icon" />
-          <h1>김정수</h1>
-          <a>sunpl0718@naver.com</a>
+          { userData.lenth == "string" ?
+            <FaUserCircle id="user_icon" />
+            :
+            <div className = "box">
+              <img className = "box_profile" src = {userData.image}/>
+            </div>
+          }
+          <h1>{userData.name}</h1>
+          <a>{userData.email}</a>
           <br />
           <button id="user_edit">기본정보 수정</button>
 
@@ -35,7 +65,7 @@ function Mypage() {
 
               <tr>
                 <td>나의 게시물</td>
-                <td>13개</td>
+                <td>{userData.myPostList.length}개</td>
               </tr>
             </tbody>
           </table>
@@ -45,15 +75,15 @@ function Mypage() {
             <tbody>
               <tr>
                 <td>나이</td>
-                <td>100세</td>
+                <td>{userData.age}세</td>
               </tr>
               <tr>
                 <td>관심분야</td>
-                <td>IT산업</td>
+                <td>{userData.field}</td>
               </tr>
               <tr>
                 <td>전공 계열</td>
-                <td>공학계열</td>
+                <td>{userData.major}</td>
               </tr>
             </tbody>
           </table>
@@ -68,9 +98,11 @@ function Mypage() {
             전체글 0개
             <button>글쓰기</button>
           </div>
-          <div className="post_detail">여기에 내 글 정보들이 들어갈 꺼입니다.</div>
+          <table className="post_detail">{MyPost == null ? "표시할 정보가 없습니다." : MyPost}</table>
         </div>
+        
       </div>
+        
     </div>
   );
 }

@@ -20,12 +20,17 @@ const user = (state : userState = initialState, action: Action) => {
     switch(action.type) {
         case ActionType.LOGIN_USER :
             return {
-                ...state,
+                ...state
 
             }
         case ActionType.REGISTER_USER :
             return {
-
+                ...state
+            }
+        case ActionType.USER_INFO :
+            return {
+                ...state,
+                userData : action.payload
             }
         default :
             return state

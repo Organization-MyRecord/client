@@ -32,7 +32,7 @@ function Topbar() {
 
   return (
     <header className="topbar">
-      <div className="bar_logo">
+      <div className="bar_logo" onClick = {() => {history.push('/')}}>
         <FaAdversal className="logo" />
         <a>MyRecord</a>
       </div>
@@ -44,7 +44,7 @@ function Topbar() {
       </div>
       <div className="bar_info">
         <button className="small_btn" onClick = {onOpen}>Login</button>
-        <button className="small_btn">Logout</button>
+        <button className="small_btn" onClick = {() => {localStorage.removeItem("token")}}>Logout</button>
         <button className="account_logo">
           <FaUserCircle className="logo" onClick = {() => {history.push('/mypage')}}/>
         </button>

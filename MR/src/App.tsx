@@ -4,24 +4,27 @@ import Home from "./Components/Home";
 import Mypage from "./Components/Mypage";
 import RegisterPage from "./Components/RegisterPage";
 import Topbar from "./options/Topbar";
+import Post from "./Components/Post";
 
 
 function App() {
 
   return (
     <div className = "app">
-      <Topbar/>
-      <section>
       <BrowserRouter>
+        <header><Topbar/></header>
+        <section>
         <Switch>
           <Route exact = {true} path = "/" component = {Home}/>
           <Route path = "/mypage" component = {Mypage}/>
           <Route path = "/registerpage" component = {RegisterPage}/>
+          <Route path = "/post" component = {Post}/>
           {/* Not Found */}
           <Route component = {() => <Redirect to = "/" />} />
         </Switch>
+        </section>
       </BrowserRouter>
-      </section>
+  
     </div>
   );
 }

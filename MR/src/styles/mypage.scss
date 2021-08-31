@@ -41,6 +41,20 @@
       td {
         padding-right: 10px;
       }
+
+      .box{
+        background-color: #bdbdbd;
+        width: 60px;
+        height: 60px;
+        border-radius: 70%;
+        overflow: hidden;
+
+        .box_profile {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
     }
     .interests {
       background-color: white;
@@ -68,7 +82,28 @@
       margin-bottom: 20px;
     }
     .post_detail {
+      position: relative;
       background-color: white;
+      width: 100%;
+      tbody {
+        display: block;
+        border-collapse: separate;
+        
+        text-align: center;
+        tr {
+          width: 100%;
+          
+          #title{
+            font-weight: bold;
+          }
+        }
+        td {
+          padding : 10px 10px;
+        }
+        #body0, #body1, #body2, #body3 {
+          border-top: 1px solid black;
+        }
+      }
     }
     .post_info {
       display: flex;

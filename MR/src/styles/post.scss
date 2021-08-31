@@ -15,6 +15,21 @@
         }
       }
     }
+
+    textarea {
+      background-color: whitesmoke;
+      display: block;
+      width: 100%;
+      border: none;
+      font-size: 30px;
+      color: #202020;
+      font-family: sans-serif;
+      resize: none;
+      outline: 0 none;
+      line-height: 40px;
+      overflow: hidden;
+      letter-spacing: -.4px;
+    }
   }
   .post_content {
     margin-bottom: 20px;
