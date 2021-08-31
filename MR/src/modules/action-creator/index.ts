@@ -58,3 +58,19 @@ export const RegisterHandler = (
         })
     }
 }
+
+export const GetUserInfo = () =>{
+    
+    return async(dispatch : Dispatch<Action>) => {
+                
+        await axios.get('/api/mypage', {
+            headers : {'Authorization' : `Bearer ${localStorage.getItem("token")}`}
+        })
+        .then(res => {
+            dispatch({
+                type : ActionType.USER_INFO,
+                payload : res.data
+            })
+        })
+    }
+}

@@ -11,4 +11,9 @@ interface RegisterAction {
     type : ActionType.REGISTER_USER
 }
 
-export type Action = LoginAction | RegisterAction
+interface GetUserInfo {
+    type : ActionType.USER_INFO
+    payload : string
+}
+
+export type Action = LoginAction | RegisterAction | GetUserInfo
