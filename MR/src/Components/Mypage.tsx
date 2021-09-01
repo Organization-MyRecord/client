@@ -44,21 +44,21 @@ function Mypage() {
           <table>
             <tbody>
               <tr>
-                <td>나이</td>
+                <td>나이:</td>
                 <td>100세</td>
               </tr>
               <tr>
-                <td>관심분야</td>
+                <td>관심분야:</td>
                 <td>IT산업</td>
               </tr>
               <tr>
-                <td>전공 계열</td>
+                <td>전공 계열:</td>
                 <td>공학계열</td>
               </tr>
+              Discription : <br />
+              무엇 전직업 대학교
             </tbody>
           </table>
-          Discription : <br />
-          무엇 전직업 대학교
         </div>
       </div>
       <div className="mypost_container">
