@@ -21,6 +21,8 @@ function Post() {
 
     input.onchange = async () => {
       const file : any = input.files;
+      console.log(file);
+      
       if (file !== null) {
         formData.append("image", file[0]);
 
@@ -103,7 +105,7 @@ function Post() {
             }
           }}
           value = {contents || ""}
-          onChange = {(content, delta, source, editor) => setcontents(editor.getHTML())}
+          onChange = {setcontents}
           modules = {modules}
           formats = {formats}
           theme = "snow"
