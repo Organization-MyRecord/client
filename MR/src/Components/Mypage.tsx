@@ -18,7 +18,7 @@ function Mypage() {
   
 
   const userData = useSelector((state : RootState) => state.User.userData)
-    console.log(userData);
+  
 
   const MyPost = userData.myPostList.map(
     (item:any, index:number) => {
@@ -102,7 +102,7 @@ function Mypage() {
         </div>
         
       </div>
-        
+    
     </div>
   );
 }
