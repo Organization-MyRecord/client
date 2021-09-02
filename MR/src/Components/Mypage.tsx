@@ -20,7 +20,7 @@ function Mypage() {
   const userData = useSelector((state : RootState) => state.User.userData)
   
 
-  const MyPost = userData.myPostList.map(
+  const MyPost = userData?.myPostList?.map(
     (item:any, index:number) => {
       return(
         <tbody id = {"body" + index} key = {item.id}>
@@ -40,15 +40,15 @@ function Mypage() {
       
       <div className="profile_cotainer">
         <div className="profile">
-          { userData.lenth == "string" ?
+          { userData?.lenth == "string" ?
             <FaUserCircle id="user_icon" />
             :
             <div className = "box">
-              <img className = "box_profile" src = {userData.image}/>
+              <img className = "box_profile" src = {userData?.image}/>
             </div>
           }
-          <h1>{userData.name}</h1>
-          <a>{userData.email}</a>
+          <h1>{userData?.name}</h1>
+          <a>{userData?.email}</a>
           <br />
           <button id="user_edit">기본정보 수정</button>
 
@@ -65,7 +65,7 @@ function Mypage() {
 
               <tr>
                 <td>나의 게시물</td>
-                <td>{userData.myPostList.length}개</td>
+                <td>{userData?.myPostList.length}개</td>
               </tr>
             </tbody>
           </table>
@@ -75,15 +75,15 @@ function Mypage() {
             <tbody>
               <tr>
                 <td>나이</td>
-                <td>{userData.age}세</td>
+                <td>{userData?.age}세</td>
               </tr>
               <tr>
                 <td>관심분야</td>
-                <td>{userData.field}</td>
+                <td>{userData?.field}</td>
               </tr>
               <tr>
                 <td>전공 계열</td>
-                <td>{userData.major}</td>
+                <td>{userData?.major}</td>
               </tr>
             </tbody>
           </table>
