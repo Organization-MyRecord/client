@@ -1,10 +1,10 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, {useRef, useMemo,useState } from "react";
 import ReactQuill from "react-quill";
 import "../styles/post.scss";
 import 'react-quill/dist/quill.snow.css';
+import axios, { AxiosError } from "axios";
 function Post() {
-
-  const   QuillRef = useRef<ReactQuill>()
+  const QuillRef = useRef<ReactQuill>();
   const [Title, setTitle] = useState("")  // 제목을 저장할 state
   const [contents, setcontents] = useState("")    //내용을 저장할 state
 
@@ -13,6 +13,7 @@ function Post() {
       // 파일을 업로드 하기 위한 input 태그 생성
     const input = document.createElement("input");
     const formData = new FormData();
+    let url : string;
 
 
     input.setAttribute("type", "file");
@@ -20,25 +21,41 @@ function Post() {
     input.click();
 
     input.onchange = async () => {
-      const file : any = input.files;
-      console.log(file);
-      
-      if (file !== null) {
-        formData.append("image", file[0]);
+      if(input.files) {
+        const file: any = input.files[0];
+        console.log(file);
+        
+        formData.append("file", file)
 
-    
+        try {
+          axios.post('/api/upload', formData, {
+            headers: {
+            'content-type': 'multipart/form-data',
+            'Authorization' : `Bearer ${localStorage.getItem("token")}`
+        }})
+        .then(res => {
+          
+          url = res.data
 
-	// 커서의 위치를 알고 해당 위치에 이미지 태그를 넣어주는 코드 
-    	// 해당 DOM의 데이터가 필요하기에 useRef를 사용한다.
+        	// 커서의 위치를 알고 해당 위치에 이미지 태그를 넣어주는 코드 
+    	    // 해당 DOM의 데이터가 필요하기에 useRef를 사용한다.
           const range = QuillRef.current?.getEditor().getSelection()?.index;
-          if (range !== null && range !== undefined) {
-            const quill = QuillRef.current?.getEditor();
+            if (range !== null && range !== undefined) {
+              const quill = QuillRef.current?.getEditor();
 
-            quill?.setSelection(range, 1);
-          }
+              quill?.setSelection(range, 1);
 
+              quill?.clipboard.dangerouslyPasteHTML(
+                range,
+                `<img src=${url} alt="이미지 태그가 삽입됩니다." height = "100px"/>`
+              );
+            }
 
-        console.log(formData)
+          return { ...res};
+        })} catch (error) {
+          const err = error as AxiosError;
+          return {...err.response}
+        }
       }
     }
   }
@@ -47,30 +64,28 @@ function Post() {
       setTitle(e.currentTarget.value)
   }
 
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: [
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
-            { align: [] },
-          ],
-          ["image", "video", "link"],
-          ["clean"],
-          ["code-block"]
+  const modules = useMemo(() =>({
+    toolbar: {
+      container: [
+        ["bold", "italic", "underline", "strike", "blockquote"],
+        [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+        [
+          { list: "ordered" },
+          { list: "bullet" },
+          { indent: "-1" },
+          { indent: "+1" },
+          { align: [] },
         ],
-        handlers: {
-          image: imageHandler,
-        },
+        ["image", "video", "link"],
+        ["clean"],
+        ["code-block"]
+      ],
+      handlers: {
+        image: imageHandler,
       },
-    }),
-    []
-  );
+    },
+  }),[])
+  
 
   const formats = [
     'bold', 'italic', 'underline', 'strike', 'blockquote',
@@ -98,14 +113,14 @@ function Post() {
       </div>
       <div className="post_content">
         <ReactQuill
-        style = {{height : "650px"}}
-          ref = {(element) => {
-            if(element != null) {
-              QuillRef.current = element
+          ref={(element) => {
+            if (element !== null) {
+              QuillRef.current = element;
             }
           }}
+          style = {{height : "100%"}}
           value = {contents || ""}
-          onChange = {setcontents}
+          onChange = {() => {setcontents}}
           modules = {modules}
           formats = {formats}
           theme = "snow"
