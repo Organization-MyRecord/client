@@ -52,7 +52,7 @@ function Post() {
 
               quill?.clipboard.dangerouslyPasteHTML(
                 range,
-                `<img src=${url} alt="이미지 태그가 삽입됩니다." height = "100px"/>`
+                `<img src=${url} alt="이미지 태그가 삽입됩니다." style = {{overflow : "hidden"}}/>`
               );
             }
 

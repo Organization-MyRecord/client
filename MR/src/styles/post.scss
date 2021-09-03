@@ -33,9 +33,17 @@
   }
   .post_content {
     margin-bottom: 20px;
+    overflow: hidden;
+    img {
+      z-index: 10;
+      margin : 30px 0;
+      height: auto;
+    }
   }
   .post_list {
     border-top: 3px solid black;
     border-bottom: 2px solid black;
   }
+
+  
 }
