@@ -1,9 +1,14 @@
 import React, {useRef, useMemo,useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, {Quill} from "react-quill";
 import "../styles/post.scss";
 import 'react-quill/dist/quill.snow.css';
+import ImageResize from '@looop/quill-image-resize-module-react'
 import axios, { AxiosError } from "axios";
+
 function Post() {
+  
+  //Content 내부에서 사진 이미지 리사이징을 위한 모듈
+  Quill.register('modules/ImageResize', ImageResize)
   const QuillRef = useRef<ReactQuill>();
   const [Title, setTitle] = useState("")  // 제목을 저장할 state
   const [contents, setcontents] = useState("")    //내용을 저장할 state
@@ -65,6 +70,9 @@ function Post() {
   }
 
   const modules = useMemo(() =>({
+    ImageResize : {
+      modules : ['Resize']
+    },
     toolbar: {
       container: [
         ["bold", "italic", "underline", "strike", "blockquote"],
@@ -118,7 +126,7 @@ function Post() {
               QuillRef.current = element;
             }
           }}
-          style = {{height : "100%"}}
+          style = {{height : "650px"}}
           value = {contents || ""}
           onChange = {() => {setcontents}}
           modules = {modules}
