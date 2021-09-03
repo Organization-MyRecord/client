@@ -5,6 +5,7 @@ import Mypage from "./Components/Mypage";
 import RegisterPage from "./Components/RegisterPage";
 import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
+import Sidebar from "./options/Sidebar";
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <div className = "app">
       <BrowserRouter>
         <header><Topbar/></header>
+        <aside><Sidebar/></aside>
         <section>
         <Switch>
           <Route exact = {true} path = "/" component = {Home}/>
