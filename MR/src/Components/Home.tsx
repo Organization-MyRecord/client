@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules/Store";
 import "../styles/home.scss";
 
 function Home() {
-  const [isLogin, setisLogin] = useState<boolean>(true); //로그인 이 됬을 때 true, 안했을 때 false
+  const isLogin = useSelector((state :RootState) => state.User.userLoading)
   console.log(isLogin);
+
 
   //피드부분 map 함수로 구현 할 것.
 

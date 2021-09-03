@@ -7,6 +7,10 @@ interface LoginAction {
     payload : string
 }
 
+interface LogoutAction {
+    type : ActionType.LOGOUT_USER
+}
+
 interface RegisterAction {
     type : ActionType.REGISTER_USER
 }
@@ -16,4 +20,4 @@ interface GetUserInfo {
     payload : string
 }
 
-export type Action = LoginAction | RegisterAction | GetUserInfo
+export type Action = LoginAction | RegisterAction | GetUserInfo | LogoutAction

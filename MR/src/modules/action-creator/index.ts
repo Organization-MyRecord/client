@@ -74,3 +74,12 @@ export const GetUserInfo = () =>{
         })
     }
 }
+
+export const LogoutHandler = () => {
+    return (dispatch : Dispatch<Action>) => {
+        localStorage.removeItem("token")
+        dispatch({
+            type : ActionType.LOGOUT_USER
+        })
+    }
+}

@@ -4,12 +4,15 @@ import Modal from 'react-modal'
 import { FaAdversal, FaSearch, FaUserCircle } from "react-icons/fa";
 import Login from '../Components/Login'
 import "../styles/topbar.scss";
+import { useDispatch } from "react-redux";
+import { LogoutHandler } from "../modules/action-creator";
 
 function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false)
 
   const history = useHistory()
+  const dispatch = useDispatch()
 
   const onchange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value);
@@ -44,7 +47,7 @@ function Topbar() {
       </div>
       <div className="bar_info">
         <button className="small_btn" onClick = {onOpen}>Login</button>
-        <button className="small_btn" onClick = {() => {localStorage.removeItem("token")}}>Logout</button>
+        <button className="small_btn" onClick = {() => {dispatch(LogoutHandler())}}>Logout</button>
         <button className="account_logo">
           <FaUserCircle className="logo" onClick = {() => {history.push('/mypage')}}/>
         </button>

@@ -20,8 +20,14 @@ const user = (state : userState = initialState, action: Action) => {
     switch(action.type) {
         case ActionType.LOGIN_USER :
             return {
-                ...state
+                ...state,
+                userLoading : true
 
+            }
+        case ActionType.LOGOUT_USER :
+            return {
+                ...state,
+                userLoading : false
             }
         case ActionType.REGISTER_USER :
             return {
