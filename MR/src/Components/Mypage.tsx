@@ -1,15 +1,20 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
+import ReactPaginate from 'react-paginate'
 import "../styles/mypage.scss";
 
 
 
 function Mypage() {
+
+  const [currentPage,setcurrentPage] = useState(1);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     
@@ -17,7 +22,11 @@ function Mypage() {
   }, [])
   
 
-  const userData = useSelector((state : RootState) => state.User.userData)
+  const userData = useSelector((state : RootState) => state.User.userData); //유저정보 가져오기
+
+  const changePage = (page) => {
+    setcurrentPage(page)
+  }
   
 
   const MyPost = userData?.myPostList?.map(
@@ -95,14 +104,27 @@ function Mypage() {
         <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
         <div className="mypost">
           <div className="post_info">
-            전체글 0개
-            <button>글쓰기</button>
+            전체글 {userData?.postPagination.totalElements}개
+            <button onClick = {() => {history.push('/post')}}>글쓰기</button>
           </div>
           <table className="post_detail">{MyPost == null ? "표시할 정보가 없습니다." : MyPost}</table>
+          <ReactPaginate
+            pageCount = {userData?.postPagination.totalPages} //총 페이지 수
+            pageRangeDisplayed = {10}   //한 페이지에 표시할 게시글 수
+            initialPage = {currentPage} // 선택한 초기 페이지
+            marginPagesDisplayed = {1}  //페이지 여백 수
+            previousLabel = {"<"} //이전 라벨
+            nextLabel = {">"} //다음 라벨
+            breakLabel = {"..."}  //줄임 라벨
+            onPageChange={changePage}  //클릭 할 때 호출 할 메서드
+            containerClassName={"pagination-ul"}  //페이지 매김 컨테이너의 클래스 이름
+            pageClassName={"page-li"}  //각 페이지 요소의 li태그에 있는 클래스 이름
+            activeClassName={"currentPage"}  //활성 페이지의 클래스 이름
+            previousClassName={"pageLabel-btn"}  //이전 라벨의 클래스 이름
+            nextClassName={"pageLabel-btn"}  //다음 라벨의 클래스 이름
+            />
         </div>
-        
       </div>
-    
     </div>
   );
 }
