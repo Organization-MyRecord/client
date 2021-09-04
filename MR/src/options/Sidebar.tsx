@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 function Sidebar() {
   const option = options.map((item) => {
     return (
-      <li>
+      <li key = {item.label}>
         <Link to ="awdawdawd">
           <h2>{item.value}</h2>
         </Link>

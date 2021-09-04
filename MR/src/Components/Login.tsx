@@ -10,11 +10,13 @@ interface Iprops {
 
 function login(props : Iprops) {
   
-  const {setopenmodal, openmodal} = props
+  const {setopenmodal, openmodal} = props;
+  
 
   const dispatch = useDispatch()
   const [Email, setEmail] = useState("")          //이메일 담을 State
   const [Password, setPassword] = useState("")    //패스워드 담을 State
+  
 
   const EmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {    //이메일 onChange
     setEmail(e.currentTarget.value);
@@ -30,8 +32,14 @@ function login(props : Iprops) {
     //   email : Email,
     //   password : Password
     // }).then(res => localStorage.setItem("token", res.data))   //그 다음 토큰을 로컬스토리지에 저장 , 궁금할 시 console.log로 res 검색
-    dispatch(LoginHandler(Email, Password, setopenmodal))    
+    dispatch(LoginHandler(Email, Password, setopenmodal))
+    
+    
   }
+
+  
+
+  
 
   
 

@@ -1,38 +1,85 @@
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GetPostHandler } from "../modules/action-creator/PostIndex";
 import { RootState } from "../modules/Store";
+import Loader from "react-loader-spinner";
 import "../styles/home.scss";
+
+interface IPost {
+  id : number,
+  postImage: string,
+  postName : string,
+  content : string
+}
 
 function Home() {
   const isLogin = useSelector((state :RootState) => state.User.userLoading)
-  console.log(isLogin);
+  const [Loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(GetPostHandler(setLoading))
+  },[isLogin])
+  
+  const MainData = useSelector((state : RootState) => state.Post.TotalData);
+    //최신 글 가져오기
+    const popularList : IPost = MainData?.popularPostResponseList?.map((item : any) => {
+      return (
+        <div className = "feed" key = {item.id}>
+          <img src = {item.postImage} width = "500px"/>
+          <h4>{item.postName}</h4>
+          <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
+        </div>
+      )
+    })
 
-  //피드부분 map 함수로 구현 할 것.
+    //내 피드 리스트 가져오기
+    const MyFeedList : IPost = MainData?.recentMyPostResponseList?.map((item : any) => {
+      return (
+        <div className = "feed" key = {item.id}>
+          <img src = {item.postImage} width = "500px"/>
+          <h4>{item.postName}</h4>
+          <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
+        </div>
+      )
+    })
+
+    const MyRecentList : IPost = MainData?.recentEveryPostResponseList?.map((item : any) => {
+      return (
+        <div className="post_container" key = {item.id}>
+          <img src= {item.postImage} alt="" width="92px" height="92px" />
+          <div className="content_container">
+            <h2>{item.postName}</h2>
+            <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
+          </div>
+        </div>
+      )
+    })
+   
 
   return (
+    <React.Fragment>
+      {Loading ?
+        <Loader
+        type = "Oval"
+        color = "#3d66ba"
+        height = {30}
+        width = {30}
+        timeout = {3000}/>
+        :
     <div className="home">
       {isLogin ? (
         <>
           <div className="myfeed_container">
             <h2>My 피드</h2>
             <div className="feed_container">
-              <div className="feed">
-                가나다라
-                <h6>예시</h6>
-              </div>
-              <div className="feed">마바사아</div>
-              <div className="feed">자차카타</div>
+              {MyFeedList}
             </div>
           </div>
           <div className="populer_feed">
             <h2>인기글</h2>
             <div className="feed_container">
-              <div className="feed">
-                가나다라
-                <h6>예시</h6>
-              </div>
-              <div className="feed">마바사아</div>
-              <div className="feed">자차카타</div>
+              {popularList}
             </div>
           </div>
         </>
@@ -40,29 +87,17 @@ function Home() {
         <div className="populer_feed">
           <h2>인기글</h2>
           <div className="feed_container">
-            <div className="feed">
-              가나다라
-              <h6>예시</h6>
-            </div>
-            <div className="feed">마바사아</div>
-            <div className="feed">자차카타</div>
-            <div className="feed">가나다라</div>
-            <div className="feed">마바사아</div>
-            <div className="feed">자차카타</div>
+            {popularList}
           </div>
         </div>
       )}
       <div className="new_post">
         <h2>최신 자료</h2>
-        <div className="post_container">
-          <img src="../../../../../카톡 이미지.jpg" alt="" width="92px" height="92px" />
-          <div className="content_container">
-            <h2>제목</h2>
-            <a>가나다라마바사아 자차카타 파하</a>
-          </div>
-        </div>
+        {MyRecentList}
       </div>
     </div>
+  }
+    </React.Fragment>
   );
 }
 

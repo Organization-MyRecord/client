@@ -3,15 +3,16 @@ import {Action} from './actions/index'
 
 type userState = {
     userLoading: boolean;
-    userData: any
+    userData: any;
     error: any;
+    modalstate : boolean
 }
 
 const initialState : userState = {
     userLoading : false,
     userData : null,
-    error : null
-
+    error : null,
+    modalstate : false,
 }
 
 //로그인
@@ -37,6 +38,16 @@ const user = (state : userState = initialState, action: Action) => {
             return {
                 ...state,
                 userData : action.payload
+            }
+        case ActionType.OPEN_MODAL :
+            return {
+                ...state,
+                modalstate : true
+            }
+        case ActionType.CLOSE_MODAL :
+            return {
+                ...state,
+                modalstate : false
             }
         default :
             return state

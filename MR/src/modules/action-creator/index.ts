@@ -5,6 +5,14 @@ import {Action} from '../actions/index'
 import {Dispatch} from 'redux'
 import axios from "axios"
 
+export const CloseModalHandler = () => {
+    return (dispatch : Dispatch<Action>) => {
+        dispatch({
+            type : ActionType.CLOSE_MODAL
+        })
+    }
+}
+
 export const LoginHandler = (Email : string, Password : string, setopenmodal : any) => {
     return async(dispatch : Dispatch<Action>) => {
         await axios.post('/api/authenticate',{
@@ -20,8 +28,11 @@ export const LoginHandler = (Email : string, Password : string, setopenmodal : a
             })
         })
         .then(() => {
-            console.log("가나라다마바사아");
-            setopenmodal(false)})
+            setopenmodal(false)
+            dispatch({
+                type : ActionType.OPEN_MODAL
+            })
+        })
     }
 }
 
