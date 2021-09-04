@@ -6,9 +6,23 @@ import RegisterPage from "./Components/RegisterPage";
 import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
 import Sidebar from "./options/Sidebar";
+import Modal from "./options/Modal";
+import {CloseModalHandler} from './modules/action-creator/index'
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./modules/Store";
+
 
 
 function App() {
+  const dispatch = useDispatch()
+
+  const bool = useSelector((state: RootState) => state.User.modalstate)
+  console.log("bool" , bool);
+
+  const CloseModal = () => {
+    dispatch(CloseModalHandler())
+  }
+  
 
   return (
     <div className = "app">
@@ -25,8 +39,8 @@ function App() {
           <Route component = {() => <Redirect to = "/" />} />
         </Switch>
         </section>
-      </BrowserRouter>
-  
+      </BrowserRouter>   
+      <Modal open = {bool} close = {CloseModal} header = {bool ? "로그인이 완료되었습니다" : "비밀번호를 확인해주시기 바랍니다"}/>
     </div>
   );
 }
