@@ -53,6 +53,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-right: 20px;
 }
 
 .bar_info button {
@@ -85,4 +86,8 @@
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+.unvisible {
+  display: none;
 }

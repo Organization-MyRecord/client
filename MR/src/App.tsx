@@ -29,7 +29,7 @@ function App() {
       <BrowserRouter>
         <header><Topbar/></header>
         <aside><Sidebar/></aside>
-        <section>
+        <section className = "Global_section">
         <Switch>
           <Route exact = {true} path = "/" component = {Home}/>
           <Route path = "/mypage" component = {Mypage}/>

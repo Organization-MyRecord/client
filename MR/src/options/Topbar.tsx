@@ -4,12 +4,14 @@ import Modal from 'react-modal'
 import { FaAdversal, FaSearch, FaUserCircle } from "react-icons/fa";
 import Login from '../Components/Login'
 import "../styles/topbar.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 import { LogoutHandler } from "../modules/action-creator";
+import { RootState } from "../modules/Store";
 
 function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false)
+  const isLogin = useSelector((state : RootState) => state.User.userLoading)  //사용자가 로그인 되어 있는지 확인
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -46,8 +48,8 @@ function Topbar() {
         </button>
       </div>
       <div className="bar_info">
-        <button className="small_btn" onClick = {onOpen}>Login</button>
-        <button className="small_btn" onClick = {() => {dispatch(LogoutHandler())}}>Logout</button>
+        <button className= {isLogin ? "small_btn unvisible" : "small_btn"} onClick = {onOpen}>Login</button>
+        <button className= {isLogin ? "small_btn" : "small_btn unvisible"} onClick = {() => {dispatch(LogoutHandler())}}>Logout</button>
         <button className="account_logo">
           <FaUserCircle className="logo" onClick = {() => {history.push('/mypage')}}/>
         </button>
