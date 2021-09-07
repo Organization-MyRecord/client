@@ -49,6 +49,7 @@ function Topbar() {
       </div>
       <div className="bar_info">
         <button className= {isLogin ? "small_btn unvisible" : "small_btn"} onClick = {onOpen}>Login</button>
+        <button className = {isLogin ? "small_btn unvisible" : "small_btn"} onClick = {() =>history.push('/registerpage')}>Sign Up</button>
         <button className= {isLogin ? "small_btn" : "small_btn unvisible"} onClick = {() => {dispatch(LogoutHandler())}}>Logout</button>
         <button className="account_logo">
           <FaUserCircle className="logo" onClick = {() => {history.push('/mypage')}}/>
