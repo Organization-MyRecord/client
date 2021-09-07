@@ -22,3 +22,7 @@ yarn-error.log*
 
 #env
 /MR/.env
+
+#eslint
+/MR/.eslintrc.js
+/MR/.prettierrc.js

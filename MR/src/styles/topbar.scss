@@ -1,3 +1,5 @@
+@import './app.scss';
+
 .topbar {
   display: flex;
   width: 100%;
@@ -12,6 +14,7 @@
   top: 0;
   left: 0;
   right: 0;
+
 }
 .bar_logo a {
   font-weight: 600;
@@ -20,48 +23,54 @@
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 35px;
 }
 
 .bar_search {
   display: flex;
   align-items: center;
   width: 250px;
-}
-.bar_search input {
-  display: block;
-  width: 100%;
-  padding: 7px 3px;
-  margin-right: 3px;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  font-size: 15px;
+
+ input {
+    display: block;
+    width: 100%;
+    padding: 7px 3px;
+    margin-right: 3px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+
 }
 
-.bar_search button {
-  margin-right: 8px;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background-color: transparent;
-  color: #06315b;
-}
+ 
 
 .bar_info {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  margin-right: 50px;
+
+  .small_btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #5c8fc2;
+    font-family  :'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: $x-large;
+    color: #e2e2e2;
+    margin-right: 8px;
+    padding: 3px 5px;
+    cursor: pointer;
+
+    &:hover {
+      color :#c4c2c2;
+    }
+  }
 }
 
-.bar_info button {
-  margin-right: 8px;
-  padding: 3px 5px;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  border-radius: 20%;
-}
+
 .bar_info .account_logo {
   background-color: transparent;
 }
@@ -74,4 +83,18 @@
     transform: none;
     opacity: 0.8;
   }
+}
+
+.Modal {
+  position: absolute;
+  top : 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.unvisible {
+  display: none;
 }

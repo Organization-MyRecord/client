@@ -1,3 +1,5 @@
+@import './app.scss';
+
 .mypage {
   width: 100%;
   position: absolute;
@@ -41,6 +43,20 @@
       td {
         padding-right: 10px;
       }
+
+      .box{
+        background-color: #bdbdbd;
+        width: 60px;
+        height: 60px;
+        border-radius: 70%;
+        overflow: hidden;
+
+        .box_profile {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
     }
     .interests {
       background-color: white;
@@ -62,6 +78,12 @@
     width: 50%;
     height: 600px;
     flex-direction: column;
+
+    ul {
+      width: 50%;
+      margin : 0 auto;
+    }
+
     .motto {
       background-color: #cbdfec;
       text-align: center;
@@ -71,7 +93,28 @@
       margin-bottom: 20px;
     }
     .post_detail {
+      position: relative;
       background-color: white;
+      width: 100%;
+      tbody {
+        display: block;
+        border-collapse: separate;
+        
+        text-align: center;
+        tr {
+          width: 100%;
+          
+          #title{
+            font-weight: bold;
+          }
+        }
+        td {
+          padding : 10px 10px;
+        }
+        #body0, #body1, #body2, #body3 {
+          border-top: 1px solid black;
+        }
+      }
     }
     .post_info {
       display: flex;
@@ -83,5 +126,49 @@
     display: flex;
     width: 10px;
     height: 10px;
+  }
+}
+
+.pagination-ul {
+  list-style-type: none;
+  padding: 10px 0px 0px 0px;
+  margin: 0 auto;
+  position: absolute;
+  //bottom: 25px;
+  text-align: center;
+  * {
+      display: inline-block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      text-align: center;
+      border-radius: 30px;
+      line-height: 30px;
+      :hover {
+          background-color: $BackGray;
+          color: $fontWhite;
+      }
+  }
+  .pageLabel-btn {
+      width: 60px;
+      margin: 0 5px;
+      padding: 0;
+      border: 1px solid $BackGray;
+      * {
+          width: 60px;
+      }
+      cursor: pointer;
+  }
+  .page-li {
+      padding: 0;
+      margin: 0 3px;
+  }
+  .currentPage {
+      background-color: $BackSkyBlue;
+      cursor: pointer;
+      * {
+          color: $fontWhite;
+      }
   }
 }

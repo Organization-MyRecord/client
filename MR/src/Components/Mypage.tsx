@@ -1,10 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { FaUserCircle } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { GetUserInfo } from "../modules/action-creator";
+import { RootState } from "../modules/Store";
+import ReactPaginate from "react-paginate";
 import "../styles/mypage.scss";
 import { options, Major } from "../options/options";
 import { RegisterHandler } from "../modules/action-creator";
-import { useDispatch } from "react-redux";
 
 function Mypage() {
   const GetMyInfo = async () => {
@@ -85,9 +90,15 @@ function Mypage() {
     <div className="mypage">
       <div className="profile_cotainer">
         <div className="profile">
-          <FaUserCircle id="user_icon" />
-          <h1>김정수</h1>
-          <a>sunpl0718@naver.com</a>
+          {userData?.lenth == "string" ? (
+            <FaUserCircle id="user_icon" />
+          ) : (
+            <div className="box">
+              <img className="box_profile" src={userData?.image} />
+            </div>
+          )}
+          <h1>{userData?.name}</h1>
+          <a>{userData?.email}</a>
           <br />
           <button id="user_edit">기본정보 수정</button>
           <table>
@@ -103,7 +114,7 @@ function Mypage() {
 
               <tr>
                 <td>나의 게시물</td>
-                <td>13개</td>
+                <td>{userData?.myPostList.length}개</td>
               </tr>
             </tbody>
           </table>
@@ -112,16 +123,16 @@ function Mypage() {
           <table>
             <tbody>
               <tr>
-                <td>나이:</td>
-                <td>100세</td>
+                <td>나이</td>
+                <td>{userData?.age}세</td>
               </tr>
               <tr>
-                <td>관심분야:</td>
-                <td>IT산업</td>
+                <td>관심분야</td>
+                <td>{userData?.field}</td>
               </tr>
               <tr>
-                <td>전공 계열:</td>
-                <td>공학계열</td>
+                <td>전공 계열</td>
+                <td>{userData?.major}</td>
               </tr>
               Discription : <br />
               무엇 전직업 대학교
@@ -129,39 +140,38 @@ function Mypage() {
           </table>
         </div>
       </div>
-
-      <div className="change_info">
-        <form className="changing_container">
-          <label>현재 닉네임</label>
-          <br />
-          <label>닉네임 변경</label>
-          <input type="name" value={Name} onChange={NameHandler} />
-          <br />
-          <label>관심분야</label>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>전공계열</th>
-                  <th>세부전공</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <select className="MajorSelect" onChange={majorHandler} placeholder={major}>
-                      {majorList}
-                    </select>
-                  </td>
-                  <td>
-                    <input type="text" value={majorDetail} onChange={majorDetailHander}></input>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+      <div className="mypost_container">
+        <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
+        <div className="mypost">
+          <div className="post_info">
+            전체글 {userData?.postPagination.totalElements}개
+            <button
+              onClick={() => {
+                history.push("/post");
+              }}
+            >
+              글쓰기
+            </button>
           </div>
-          <button type="submit">등록</button>
-        </form>
+          <table className="post_detail">
+            {MyPost == null ? "표시할 정보가 없습니다." : MyPost}
+          </table>
+          <ReactPaginate
+            pageCount={userData?.postPagination.totalPages} //총 페이지 수
+            pageRangeDisplayed={10} //한 페이지에 표시할 게시글 수
+            initialPage={currentPage} // 선택한 초기 페이지
+            marginPagesDisplayed={1} //페이지 여백 수
+            previousLabel={"<"} //이전 라벨
+            nextLabel={">"} //다음 라벨
+            breakLabel={"..."} //줄임 라벨
+            onPageChange={changePage} //클릭 할 때 호출 할 메서드
+            containerClassName={"pagination-ul"} //페이지 매김 컨테이너의 클래스 이름
+            pageClassName={"page-li"} //각 페이지 요소의 li태그에 있는 클래스 이름
+            activeClassName={"currentPage"} //활성 페이지의 클래스 이름
+            previousClassName={"pageLabel-btn"} //이전 라벨의 클래스 이름
+            nextClassName={"pageLabel-btn"} //다음 라벨의 클래스 이름
+          />
+        </div>
       </div>
     </div>
   );

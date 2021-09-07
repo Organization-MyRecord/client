@@ -79,8 +79,8 @@ export default function RegisterPage() {
         major,
         Name,
         Password,
-        PasswordCheck,
-      ),
+        PasswordCheck
+      )
     );
     console.log(radioState);
   };
@@ -116,7 +116,9 @@ export default function RegisterPage() {
   };
 
   const aaa = () => {
-    axios.get(`api/verify?email=${Email}&randomCode=${Anum}`).then((res) => console.log(res));
+    axios
+      .get(`api/verify?email=${Email}&randomCode=${Anum}`)
+      .then((res) => console.log(res));
   };
   return (
     <div className="big_container">
@@ -141,13 +143,21 @@ export default function RegisterPage() {
               <td>비밀번호</td>
               <td>
                 {" "}
-                <input type="password" value={Password} onChange={PasswordHandler} />
+                <input
+                  type="password"
+                  value={Password}
+                  onChange={PasswordHandler}
+                />
               </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <input type="password" value={PasswordCheck} onChange={PasswordCheckHandler} />
+                <input
+                  type="password"
+                  value={PasswordCheck}
+                  onChange={PasswordCheckHandler}
+                />
               </td>
             </tr>
             <tr>
@@ -184,7 +194,11 @@ export default function RegisterPage() {
             <tr>
               <td>관심분야</td>
               <td>
-                <select className="inputSelect" onChange={FieldHandler} placeholder={field}>
+                <select
+                  className="inputSelect"
+                  onChange={FieldHandler}
+                  placeholder={field}
+                >
                   {fieldList}
                 </select>
               </td>
@@ -193,7 +207,11 @@ export default function RegisterPage() {
             <tr>
               <td>전공계열</td>
               <td>
-                <select className="MajorSelect" onChange={majorHandler} placeholder={major}>
+                <select
+                  className="MajorSelect"
+                  onChange={majorHandler}
+                  placeholder={major}
+                >
                   {majorList}
                 </select>
               </td>
@@ -202,7 +220,11 @@ export default function RegisterPage() {
               <td>세부전공</td>
 
               <td>
-                <input type="text" value={majorDetail} onChange={majorDetailHander}></input>
+                <input
+                  type="text"
+                  value={majorDetail}
+                  onChange={majorDetailHander}
+                ></input>
               </td>
             </tr>
           </tbody>

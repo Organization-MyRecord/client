@@ -5,8 +5,20 @@ import {Action} from '../actions/index'
 import {Dispatch} from 'redux'
 import axios from "axios"
 
-export const LoginHandler = (Email : string, Password : string) => {
+export const CloseModalHandler = () => {
+    return (dispatch : Dispatch<Action>) => {
+        dispatch({
+            type : ActionType.CLOSE_MODAL
+        })
+    }
+}
+
+export const LoginHandler = (Email : string, Password : string, setopenmodal : any) => {
+    console.log("여기1");
+    
     return async(dispatch : Dispatch<Action>) => {
+        console.log("durl2");
+        
         await axios.post('/api/authenticate',{
             email : Email,
             password : Password
@@ -17,6 +29,12 @@ export const LoginHandler = (Email : string, Password : string) => {
             dispatch({
                 type : ActionType.LOGIN_USER,
                 payload : response.data
+            })
+        })
+        .then(() => {
+            setopenmodal(false)
+            dispatch({
+                type : ActionType.OPEN_MODAL
             })
         })
     }
@@ -52,6 +70,31 @@ export const RegisterHandler = (
             dispatch({
                 type : ActionType.REGISTER_USER
             })
+        })
+    }
+}
+
+export const GetUserInfo = () =>{
+    
+    return async(dispatch : Dispatch<Action>) => {
+                
+        await axios.get('/api/mypage', {
+            headers : {'Authorization' : `Bearer ${localStorage.getItem("token")}`}
+        })
+        .then(res => {
+            dispatch({
+                type : ActionType.USER_INFO,
+                payload : res.data
+            })
+        })
+    }
+}
+
+export const LogoutHandler = () => {
+    return (dispatch : Dispatch<Action>) => {
+        localStorage.removeItem("token")
+        dispatch({
+            type : ActionType.LOGOUT_USER
         })
     }
 }
