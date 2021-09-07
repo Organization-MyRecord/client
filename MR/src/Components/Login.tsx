@@ -33,6 +33,7 @@ function login(props : Iprops) {
     //   password : Password
     // }).then(res => localStorage.setItem("token", res.data))   //그 다음 토큰을 로컬스토리지에 저장 , 궁금할 시 console.log로 res 검색
     dispatch(LoginHandler(Email, Password, setopenmodal))
+    console.log("눌리긴하냐 이거");
     
     
   }
@@ -58,7 +59,6 @@ function login(props : Iprops) {
               <tr>
                 <td>아이디</td>
                 <td>
-                  {" "}
                   <input type="text" placeholder="이메일을 입력하세요" onChange = {EmailHandler}/>
                 </td>
               </tr>
@@ -70,8 +70,10 @@ function login(props : Iprops) {
               </tr>
             </tbody>
           </table>
-          <button onClick = {login}>로그인</button>
-          <button>아이디/비밀번호 찾기</button>
+          <div className = "btn_container">
+            <button id = "loginBtn" className = "login_btn" onClick = {login}>로그인</button>
+            <button id = "loginBtn" className = "login_btn">아이디/비밀번호 찾기</button>
+          </div>
         </div>
       </div>
     </div>

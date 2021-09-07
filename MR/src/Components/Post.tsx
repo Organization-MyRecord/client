@@ -2,7 +2,7 @@ import React, {useRef, useMemo,useState } from "react";
 import ReactQuill, {Quill} from "react-quill";
 import "../styles/post.scss";
 import 'react-quill/dist/quill.snow.css';
-import ImageResize from '@looop/quill-image-resize-module-react'
+import ImageResize from 'quill-image-resize-module-react'
 import axios, { AxiosError } from "axios";
 
 function Post() {
@@ -71,7 +71,8 @@ function Post() {
 
   const modules = useMemo(() =>({
     ImageResize : {
-      modules : ['Resize']
+      parchment : Quill.import('parchment'),
+      modules : ['Resize', 'DisplaySize']
     },
     toolbar: {
       container: [
@@ -128,7 +129,7 @@ function Post() {
           }}
           style = {{height : "650px"}}
           value = {contents || ""}
-          onChange = {() => {setcontents}}
+          onChange = {setcontents}
           modules = {modules}
           formats = {formats}
           theme = "snow"

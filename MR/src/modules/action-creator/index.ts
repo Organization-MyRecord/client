@@ -14,7 +14,11 @@ export const CloseModalHandler = () => {
 }
 
 export const LoginHandler = (Email : string, Password : string, setopenmodal : any) => {
+    console.log("여기1");
+    
     return async(dispatch : Dispatch<Action>) => {
+        console.log("durl2");
+        
         await axios.post('/api/authenticate',{
             email : Email,
             password : Password
