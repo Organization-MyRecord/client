@@ -77,4 +77,4 @@ function Login(props : Iprops) {
   );
 }
 
-export default login;
+export default Login;
