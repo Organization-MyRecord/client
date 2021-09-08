@@ -4,17 +4,17 @@ import {PostAction} from './actions/index'
 type PostState = {
     MyData : any,
     TotalData : any,
-    LoadingData : boolean
+    LoadingData : boolean,
+    modalText : string
 }
 
 const initialState : PostState = {
     MyData : null,
     TotalData : null,
-    LoadingData : false
-
+    LoadingData : false,
+    modalText : ""
 }
 
-//로그인
 
 const Post = (state : PostState = initialState, action: PostAction) => {
     switch(action.type) {
@@ -22,6 +22,14 @@ const Post = (state : PostState = initialState, action: PostAction) => {
             return {
                 ...state,
                 TotalData : action.payload
+            }
+        case ActionType.POST_REGISTRATION :
+            return {
+                ...state
+            }
+        case ActionType.POST_DELETE :
+            return {
+                ...state
             }
         default :
             return state
