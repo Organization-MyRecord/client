@@ -5,6 +5,7 @@ import { PostAction } from "../actions/index";
 import { Dispatch } from "redux";
 import axios from "axios";
 
+//메인페이지 게시글 가져오기
 export const GetPostHandler = (setLoading: any) => {
   return async (dispatch: Dispatch<PostAction>) => {
     if (localStorage.getItem("token") == null) {
@@ -31,26 +32,37 @@ export const GetPostHandler = (setLoading: any) => {
   };
 };
 
-export const PostRegistHandler = (formdata) => {
-  console.log("여기?");
-
+//게시글 등록
+export const PostRegistHandler = (
+  postName: string,
+  content: string,
+  diretoryName: string,
+  postImage: string | null,
+) => {
   return async (dispatch: Dispatch<PostAction>) => {
-    console.log("d여기?");
-
     await axios
-      .post("/api/create_post", formdata, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
+      .post(
+        "/api/create_post",
+        {
+          postName: postName,
+          content: content,
+          diretoryName: diretoryName,
+          postImage: postImage,
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        },
+      )
       .then((res) => {
         dispatch({
           type: ActionType.POST_REGISTRATION,
           payload: res.data,
         });
-        console.log(res);
       });
   };
 };
 
+//게시글 삭제
 export const DeletePostHandler = (postId) => {
   return async (dispatch: Dispatch<PostAction>) => {
     await axios
@@ -63,5 +75,18 @@ export const DeletePostHandler = (postId) => {
         });
         console.log(res);
       });
+  };
+};
+
+//게시글 세부
+export const GetPostingHandler = (postId, history) => {
+  return async (dispatch: Dispatch<PostAction>) => {
+    await axios.get(`api/post/${postId}`).then((res) => {
+      dispatch({
+        type: ActionType.POST_GET,
+        payload: res.data,
+      });
+      history.push("/posting");
+    });
   };
 };

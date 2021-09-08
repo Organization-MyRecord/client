@@ -5,6 +5,7 @@ import { Action } from "../actions/index";
 import { Dispatch } from "redux";
 import axios from "axios";
 
+//모달 닫기
 export const CloseModalHandler = () => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
@@ -13,6 +14,7 @@ export const CloseModalHandler = () => {
   };
 };
 
+//로그인
 export const LoginHandler = (Email: string, Password: string, setopenmodal: any) => {
   console.log("여기1");
 
@@ -41,6 +43,7 @@ export const LoginHandler = (Email: string, Password: string, setopenmodal: any)
   };
 };
 
+//회원가입
 export const RegisterHandler = (
   age: number,
   birth: string,
@@ -52,6 +55,7 @@ export const RegisterHandler = (
   name: string,
   password: string,
   secondPassword: string,
+  hisory,
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     await axios
@@ -72,10 +76,12 @@ export const RegisterHandler = (
         dispatch({
           type: ActionType.REGISTER_USER,
         });
-      });
+      })
+      .then(() => hisory.push("/"));
   };
 };
 
+// 마이페이지 유저정보 가져오기
 export const GetUserInfo = () => {
   return async (dispatch: Dispatch<Action>) => {
     await axios
@@ -91,6 +97,7 @@ export const GetUserInfo = () => {
   };
 };
 
+//로그아웃
 export const LogoutHandler = (hisory: any) => {
   return (dispatch: Dispatch<Action>) => {
     localStorage.removeItem("token");

@@ -76,22 +76,9 @@ function Post() {
 
   //게시글 등록
   const PostHandler = () => {
-    const formdata = new FormData();
+    const url = localStorage.getItem("url");
 
-    //제목이 적혀 있다면
-    formdata.append("postName", Title);
-
-    //content 내용이 있다면
-    formdata.append("content", contents);
-
-    //디렉토리 명 같이
-    formdata.append("directoryName", directoryName);
-    formdata.append("postImage", url);
-    console.log(Title);
-    console.log(contents);
-    console.log(directoryName);
-    console.log(localStorage.getItem("url"));
-    dispatch(PostRegistHandler(formdata));
+    dispatch(PostRegistHandler(Title, contents, directoryName, url));
     localStorage.removeItem("url");
   };
 

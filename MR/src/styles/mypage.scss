@@ -84,7 +84,9 @@
     .list {
       .list_item {
         margin-bottom: 60px;
-
+        &:hover {
+          background-color: rgb(214, 210, 210);
+        }
         .content {
           clear: both;
 
@@ -196,7 +198,7 @@
   padding: 10px 0px 0px 0px;
   margin: 0 auto;
   position: absolute;
-  width: 70%;
+  width: 50%;
   //bottom: 25px;
   text-align: center;
   * {
