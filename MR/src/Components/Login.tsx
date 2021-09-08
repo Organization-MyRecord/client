@@ -8,7 +8,7 @@ interface Iprops {
   setopenmodal : Dispatch<SetStateAction<boolean>>
 }
 
-function login(props : Iprops) {
+function Login(props : Iprops) {
   
   const {setopenmodal, openmodal} = props;
   
