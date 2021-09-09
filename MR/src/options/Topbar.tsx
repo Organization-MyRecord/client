@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import { FaAdversal, FaSearch, FaUserCircle } from "react-icons/fa";
 import Login from "../Components/Login";
@@ -35,15 +35,10 @@ function Topbar() {
 
   return (
     <header className="topbar">
-      <div
-        className="bar_logo"
-        onClick={() => {
-          history.push("/");
-        }}
-      >
+      <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
         <FaAdversal className="logo" />
         <a>MyRecord</a>
-      </div>
+      </Link>
       <div className="bar_search">
         <input type="text" placeholder="Search..." value={Keyword} onChange={onchange} />
         <button className="search_logo">

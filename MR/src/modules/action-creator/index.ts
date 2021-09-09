@@ -16,19 +16,15 @@ export const CloseModalHandler = () => {
 
 //로그인
 export const LoginHandler = (Email: string, Password: string, setopenmodal: any) => {
-  console.log("여기1");
-
   return async (dispatch: Dispatch<Action>) => {
-    console.log("durl2");
-
     await axios
       .post("/api/authenticate", {
         email: Email,
         password: Password,
       })
       .then((response) => {
-        localStorage.setItem("token", response.data);
-        console.log(response);
+        sessionStorage.setItem("token", response.data.token);
+
         dispatch({
           type: ActionType.LOGIN_USER,
           payload: response.data,
@@ -82,25 +78,21 @@ export const RegisterHandler = (
 };
 
 // 마이페이지 유저정보 가져오기
-export const GetUserInfo = () => {
+export const GetUserInfo = (email) => {
   return async (dispatch: Dispatch<Action>) => {
-    await axios
-      .get("/api/mypage", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => {
-        dispatch({
-          type: ActionType.USER_INFO,
-          payload: res.data,
-        });
+    await axios.get(`/api/mypage?email=${email}`).then((res) => {
+      dispatch({
+        type: ActionType.USER_INFO,
+        payload: res.data,
       });
+    });
   };
 };
 
 //로그아웃
 export const LogoutHandler = (hisory: any) => {
   return (dispatch: Dispatch<Action>) => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     dispatch({
       type: ActionType.LOGOUT_USER,
     });

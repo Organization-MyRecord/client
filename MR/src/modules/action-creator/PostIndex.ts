@@ -8,7 +8,7 @@ import axios from "axios";
 //메인페이지 게시글 가져오기
 export const GetPostHandler = (setLoading: any) => {
   return async (dispatch: Dispatch<PostAction>) => {
-    if (localStorage.getItem("token") == null) {
+    if (sessionStorage.getItem("token") == null) {
       await axios.get("/api/main").then((res) => {
         dispatch({
           type: ActionType.POST_INFO,
@@ -19,7 +19,7 @@ export const GetPostHandler = (setLoading: any) => {
     } else {
       await axios
         .get("/api/main", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         })
         .then((res) => {
           dispatch({
@@ -50,7 +50,7 @@ export const PostRegistHandler = (
           postImage: postImage,
         },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         },
       )
       .then((res) => {
@@ -67,7 +67,7 @@ export const DeletePostHandler = (postId) => {
   return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .delete(`/api/post_delete/${postId}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
       })
       .then((res) => {
         dispatch({
@@ -79,14 +79,25 @@ export const DeletePostHandler = (postId) => {
 };
 
 //게시글 세부
-export const GetPostingHandler = (postId, history) => {
+export const GetPostingHandler = (postId) => {
   return async (dispatch: Dispatch<PostAction>) => {
-    await axios.get(`api/post/${postId}`).then((res) => {
+    await axios.get(`/api/post/${postId}`).then((res) => {
       dispatch({
         type: ActionType.POST_GET,
         payload: res.data,
       });
-      history.push("/posting");
+    });
+  };
+};
+
+//분야별 조회
+export const GetFieldPostHandler = (field) => {
+  return async (dispatch: Dispatch<PostAction>) => {
+    await axios.get(`/api/post?field=${field}`).then((res) => {
+      dispatch({
+        type: ActionType.POST_GET_FIELD,
+        payload: res.data,
+      });
     });
   };
 };
