@@ -39,12 +39,12 @@ function Post() {
             .post("/api/upload", formData, {
               headers: {
                 "content-type": "multipart/form-data",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
               },
             })
             .then((res) => {
               url = res.data;
-              localStorage.setItem("url", url);
+              sessionStorage.setItem("url", url);
 
               // 커서의 위치를 알고 해당 위치에 이미지 태그를 넣어주는 코드
               // 해당 DOM의 데이터가 필요하기에 useRef를 사용한다.
