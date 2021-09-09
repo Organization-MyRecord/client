@@ -49,5 +49,9 @@ interface GetPostingAction {
   payload: string;
 }
 
+interface GetFieldAction {
+  type: ActionType.POST_GET_FIELD;
+  payload: string;
+}
 export type Action = LoginAction | RegisterAction | GetUserInfo | LogoutAction | ModalAction | CloseModalAction;
-export type PostAction = GetPostAction | RegisterPostAction | DeletePostAction | GetPostingAction;
+export type PostAction = GetPostAction | RegisterPostAction | DeletePostAction | GetPostingAction | GetFieldAction;

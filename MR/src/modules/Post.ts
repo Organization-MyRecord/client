@@ -2,10 +2,12 @@ import { ActionType } from "./action-type";
 import { PostAction } from "./actions/index";
 
 type PostState = {
-  MyData: any;
-  TotalData: any;
+  MyData: any; //나의 게시물
+  FieldData: any; //분야별 게시물
+  PostData: any; //게시물 데이터
+  TotalData: any; //메인페이지 전체 데이터
   LoadingData: boolean;
-  modalText: string;
+  modalText: string; //모달 텍스트
 };
 
 const initialState: PostState = {
@@ -13,6 +15,8 @@ const initialState: PostState = {
   TotalData: null,
   LoadingData: false,
   modalText: "",
+  PostData: null,
+  FieldData: null,
 };
 
 const Post = (state: PostState = initialState, action: PostAction) => {
@@ -33,7 +37,12 @@ const Post = (state: PostState = initialState, action: PostAction) => {
     case ActionType.POST_GET:
       return {
         ...state,
-        Mydata: action.payload,
+        PostData: action.payload,
+      };
+    case ActionType.POST_GET_FIELD:
+      return {
+        ...state,
+        FieldData: action.payload,
       };
     default:
       return state;

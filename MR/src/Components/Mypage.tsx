@@ -7,15 +7,15 @@ import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
 import "../styles/mypage.scss";
-import { url } from "inspector";
+import { Link } from "react-router-dom";
 
 function Mypage() {
   const [currentPage, setcurrentPage] = useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const email = useSelector((state: RootState) => state.User.myData.email);
   useEffect(() => {
-    dispatch(GetUserInfo());
+    dispatch(GetUserInfo(email));
   }, []);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
@@ -24,15 +24,15 @@ function Mypage() {
     setcurrentPage(page);
   };
 
-  const MyPost = userData?.myPostList?.map((item: any, index: number) => {
+  const MyPost = userData?.myPostList?.map((item: any) => {
     return (
       <li className="list_item" key={item.id}>
         <div className="content">
-          <a href="ddd" className="post_image" style={{ backgroundImage: `url(${item.id})` }}></a>
+          <a href="ddd" className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></a>
           <div className="box_content">
-            <a className="link_title">
+            <Link className="link_title" to={`/post/${userData.name}/${item.id}`}>
               <strong className="post_title">{item.postName}</strong>
-            </a>
+            </Link>
             <div className="post_info">
               <a className="userName">
                 <span className="nametag">{userData.name}</span>
@@ -59,7 +59,7 @@ function Mypage() {
           <h1>{userData?.name}</h1>
           <a>{userData?.email}</a>
           <br />
-          <button id="user_edit">기본정보 수정</button>
+          {sessionStorage.getItem("token") ? <button id="user_edit">기본정보 수정</button> : ""}
 
           <table>
             <tbody>

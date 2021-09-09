@@ -95,7 +95,7 @@ export default function RegisterPage() {
   const fieldList = options.map((item) => {
     return (
       <option key={item.label} value={item.value}>
-        {item.label}
+        {item.value}
       </option>
     );
   });
