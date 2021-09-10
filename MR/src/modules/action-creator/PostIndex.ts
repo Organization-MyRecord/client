@@ -33,12 +33,7 @@ export const GetPostHandler = (setLoading: any) => {
 };
 
 //게시글 등록
-export const PostRegistHandler = (
-  postName: string,
-  content: string,
-  diretoryName: string,
-  postImage: string | null,
-) => {
+export const PostRegistHandler = (postName: string, content: string, diretoryName: string, postImage: any) => {
   return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .post(

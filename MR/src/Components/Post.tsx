@@ -76,7 +76,8 @@ function Post() {
 
   //게시글 등록
   const PostHandler = () => {
-    const url = localStorage.getItem("url");
+    const url = sessionStorage.getItem("url");
+    console.log(url);
 
     dispatch(PostRegistHandler(Title, contents, directoryName, url));
     localStorage.removeItem("url");

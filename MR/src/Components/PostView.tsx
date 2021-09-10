@@ -38,7 +38,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
             <span className="post_date">{postData?.date}</span>
           </div>
         </div>
-        <div className="view">{postData?.content}</div>
+        <div className="view" dangerouslySetInnerHTML={{ __html: postData?.content }}></div>
       </div>
     </div>
   );
