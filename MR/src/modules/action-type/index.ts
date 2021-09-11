@@ -15,4 +15,5 @@ export enum ActionType {
   POST_DELETE = "POST_DELETE",
   POST_GET = "GET_POST",
   POST_GET_FIELD = "POST_GET_FIELD",
+  POST_UPDATE = "POST_UPDATE",
 }

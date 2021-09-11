@@ -44,6 +44,11 @@ const Post = (state: PostState = initialState, action: PostAction) => {
         ...state,
         FieldData: action.payload,
       };
+    case ActionType.POST_UPDATE:
+      return {
+        ...state,
+        modalText: action.payload,
+      };
     default:
       return state;
   }

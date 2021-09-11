@@ -96,3 +96,27 @@ export const GetFieldPostHandler = (field) => {
     });
   };
 };
+
+//게시글 수정
+export const PostUpdateHandelr = (content: string, newPostName: string, postId: number) => {
+  return async (dispatch: Dispatch<PostAction>) => {
+    await axios
+      .put(
+        "/api/update_post",
+        {
+          content: content,
+          newPostName: newPostName,
+          postId: postId,
+        },
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        dispatch({
+          type: ActionType.POST_UPDATE,
+          payload: res.data,
+        });
+      });
+  };
+};
