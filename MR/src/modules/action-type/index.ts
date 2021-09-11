@@ -7,6 +7,7 @@ export enum ActionType {
   USER_INFO = "USER_INFO",
   OPEN_MODAL = "OPEN_MODAL",
   CLOSE_MODAL = "CLOSE_MODAL",
+  USER_ISLOGIN = "USER_ISLOGIN",
 
   //게시글 관련 Action 타입
   POST_INFO = "POST_INFO",

@@ -99,3 +99,12 @@ export const LogoutHandler = (hisory: any) => {
     hisory.push("/");
   };
 };
+
+//로그인정보 확인
+export const IsLoginHandler = () => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.USER_ISLOGIN,
+    });
+  };
+};

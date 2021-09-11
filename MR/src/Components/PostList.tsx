@@ -1,5 +1,4 @@
-import { url } from "inspector";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { GetFieldPostHandler } from "../modules/action-creator/PostIndex";
@@ -22,7 +21,7 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
   const data = useSelector((state: RootState) => state.Post.FieldData);
   const date = data?.myPostList?.postDate;
 
-  const fieldPost = data?.myPostList?.map((item: any, index: any) => {
+  const fieldPost = data?.myPostList?.map((item: any) => {
     return (
       <li className="list_item" key={item.id}>
         <div className="content">

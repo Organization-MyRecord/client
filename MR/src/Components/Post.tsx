@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { DeletePostHandler, PostRegistHandler } from "../modules/action-creator/PostIndex";
+import { PostRegistHandler } from "../modules/action-creator/PostIndex";
 
 function Post() {
   const dispatch = useDispatch();
@@ -83,11 +83,6 @@ function Post() {
     localStorage.removeItem("url");
   };
 
-  //게시글 삭제
-  const Delete = () => {
-    dispatch(DeletePostHandler);
-  };
-
   const DirectoryNameHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setdirectoryName(e.currentTarget.value);
   };
@@ -149,9 +144,8 @@ function Post() {
           </select>
           <div className="button_container">
             <button className="modify" onClick={PostHandler}>
-              수정
+              등록
             </button>
-            <button className="delete">삭제</button>
           </div>
         </div>
         <textarea placeholder="제목을 입력하세요" value={Title} onChange={titleHandler}></textarea>

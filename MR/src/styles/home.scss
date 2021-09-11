@@ -2,6 +2,7 @@
   .myfeed_container {
     margin-top: -29px;
     animation: fadeIn 0.7s linear;
+    overflow: hidden;
     h2 {
       padding-top: 5px;
       margin: 0px;
@@ -9,17 +10,22 @@
     }
     .feed_container {
       display: flex;
+      justify-content: space-between;
       .feed {
         background-color: #86b1e4;
-        border-radius: 5% / 50%;
         margin: 0px 2px;
 
-        width: 33%;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
         h6 {
+          width: 50%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
           color: black;
         }
 
@@ -40,19 +46,28 @@
     }
     .feed_container {
       display: flex;
-
+      justify-content: space-between;
       .feed {
-        border-radius: 5% / 50%;
         background-color: #dde4ee;
         margin: 0px 2px;
-        width: 33%;
 
         flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
         h6 {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
           color: black;
+        }
+
+        img {
+          min-width: 300px;
+          max-height: 400px;
         }
       }
     }
@@ -70,6 +85,17 @@
       justify-content: center;
       text-align: center;
       a {
+        color: black;
+      }
+
+      h6 {
+        width: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        text-align: center;
         color: black;
       }
     }

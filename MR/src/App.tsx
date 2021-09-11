@@ -36,8 +36,8 @@ function App() {
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
-            <Route exact={true} path="/post" component={Post} />
-            <Route exact={true} path="/post/:userName/:postId" component={PostView} />
+            <Route exact={true} path="/post/:update" component={Post} />
+            <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />
             <Route exact={true} path="/postList/:Field" component={PostList} />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />

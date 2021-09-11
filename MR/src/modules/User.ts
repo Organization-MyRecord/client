@@ -51,6 +51,11 @@ const user = (state: userState = initialState, action: Action) => {
         ...state,
         modalstate: false,
       };
+    case ActionType.USER_ISLOGIN:
+      return {
+        ...state,
+        userLoding: false,
+      };
     default:
       return state;
   }
