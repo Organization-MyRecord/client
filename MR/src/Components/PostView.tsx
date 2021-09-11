@@ -8,26 +8,31 @@ import "../styles/post-view.scss";
 
 interface MatchParams {
   postId: string;
-  userName: string;
+  userEmail: string;
 }
 
 function PostView({ match }: RouteComponentProps<MatchParams>) {
   console.log(match);
 
   const dispatch = useDispatch();
-  const { postId, userName } = match.params;
+  const { postId, userEmail } = match.params;
   const history = useHistory();
   useEffect(() => {
     dispatch(GetPostingHandler(postId));
-  }, [postId, userName]);
+  }, [postId, userEmail]);
 
   const postData = useSelector((state: RootState) => state.Post.PostData);
+  const myEmail = useSelector((state: RootState) => state.User.myData.email);
+
+  const bool: boolean = myEmail === userEmail;
 
   return (
     <div className="view_wrapper">
-      <button style={{ float: "right" }} onClick={() => history.goBack()}>
-        목록
-      </button>
+      <div style={{ float: "right" }}>
+        <button onClick={() => history.goBack()}>목록</button>
+        <button style={bool ? { marginLeft: "30px" } : { display: "none" }}>수정</button>
+        <button style={bool ? { marginLeft: "30px" } : { display: "none" }}>삭제</button>
+      </div>
       <div className="view_content">
         <div className="content_info">
           <h2>{postData?.postName}</h2>

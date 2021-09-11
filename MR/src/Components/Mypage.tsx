@@ -30,7 +30,7 @@ function Mypage() {
         <div className="content">
           <a href="ddd" className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></a>
           <div className="box_content">
-            <Link className="link_title" to={`/post/${userData.name}/${item.id}`}>
+            <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
               <strong className="post_title">{item.postName}</strong>
             </Link>
             <div className="post_info">

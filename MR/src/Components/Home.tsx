@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetPostHandler } from "../modules/action-creator/PostIndex";
 import { RootState } from "../modules/Store";
 import Loader from "react-loader-spinner";
+import DOMPurify from "dompurify";
 import "../styles/home.scss";
+import { IsLoginHandler } from "../modules/action-creator";
 
 interface IPost {
   id: number;
@@ -18,6 +20,9 @@ function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (!sessionStorage.getItem("token")) {
+      dispatch(IsLoginHandler());
+    }
     dispatch(GetPostHandler(setLoading));
   }, [isLogin]);
 
@@ -31,7 +36,12 @@ function Home() {
       <div className="feed" key={item.id}>
         <img src={item.postImage} />
         <h4>{item.postName}</h4>
-        <h6 style={{ textOverflow: "ellipsis" }} dangerouslySetInnerHTML={{ __html: item.content }}></h6>
+        <h6
+          style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(item.content),
+          }}
+        ></h6>
       </div>
     );
   });
@@ -42,7 +52,12 @@ function Home() {
       <div className="feed" key={item.id}>
         <img src={item.postImage} width="500px" />
         <h4>{item.postName}</h4>
-        <h6 style={{ textOverflow: "ellipsis" }}>{item.content}</h6>
+        <h6
+          style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(item.content),
+          }}
+        ></h6>
       </div>
     );
   });
@@ -53,7 +68,12 @@ function Home() {
         <img src={item.postImage} alt="" width="92px" height="92px" />
         <div className="content_container">
           <h2>{item.postName}</h2>
-          <h6 style={{ textOverflow: "ellipsis" }}>{item.content}</h6>
+          <h6
+            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(item.content),
+            }}
+          ></h6>
         </div>
       </div>
     );

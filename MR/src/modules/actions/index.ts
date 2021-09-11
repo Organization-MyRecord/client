@@ -29,6 +29,10 @@ interface GetUserInfo {
   payload: string;
 }
 
+interface ToggleHanlder {
+  type: ActionType.USER_ISLOGIN;
+}
+
 //게시물 관련
 interface GetPostAction {
   type: ActionType.POST_INFO;
@@ -53,5 +57,12 @@ interface GetFieldAction {
   type: ActionType.POST_GET_FIELD;
   payload: string;
 }
-export type Action = LoginAction | RegisterAction | GetUserInfo | LogoutAction | ModalAction | CloseModalAction;
+export type Action =
+  | LoginAction
+  | RegisterAction
+  | GetUserInfo
+  | LogoutAction
+  | ModalAction
+  | CloseModalAction
+  | ToggleHanlder;
 export type PostAction = GetPostAction | RegisterPostAction | DeletePostAction | GetPostingAction | GetFieldAction;
