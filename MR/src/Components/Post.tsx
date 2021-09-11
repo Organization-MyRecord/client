@@ -1,14 +1,31 @@
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "../styles/post.scss";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { PostRegistHandler } from "../modules/action-creator/PostIndex";
+import { PostRegistHandler, PostUpdateHandelr } from "../modules/action-creator/PostIndex";
+import { RouteComponentProps } from "react-router";
+import Loader from "react-loader-spinner";
 
-function Post() {
+interface Iparam {
+  update: string;
+}
+
+function Post({ match }: RouteComponentProps<Iparam>) {
   const dispatch = useDispatch();
+  const { update } = match.params;
+
+  useEffect(() => {
+    if (update != undefined) {
+      CallPostData(update).then(() => setLoading(false));
+    } else {
+      console.log("여기??");
+      setLoading(false);
+      return;
+    }
+  }, []);
 
   //Content 내부에서 사진 이미지 리사이징을 위한 모듈
   Quill.register("modules/ImageResize", ImageResize);
@@ -16,6 +33,16 @@ function Post() {
   const [Title, setTitle] = useState(""); // 제목을 저장할 state
   const [contents, setcontents] = useState(""); //내용을 저장할 state
   const [directoryName, setdirectoryName] = useState("IT/웹통신");
+  const [Loading, setLoading] = useState(true); //로딩창 구현을 위한 state
+  const [state, setstate] = useState(false); //수정인지 새글 작성인지 확인을 위한 state
+
+  async function CallPostData(id: string) {
+    await axios.get(`/api/post/${id}`).then((res) => {
+      setTitle(res.data.postName);
+      setcontents(res.data.content);
+      setstate(true);
+    });
+  }
 
   let url: string;
   // 이미지를 업로드 하기 위한 함수
@@ -69,6 +96,7 @@ function Post() {
       }
     };
   };
+
   const titleHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setTitle(e.currentTarget.value);
@@ -81,6 +109,15 @@ function Post() {
 
     dispatch(PostRegistHandler(Title, contents, directoryName, url));
     localStorage.removeItem("url");
+    console.log("등록");
+  };
+
+  //게시글 수정
+  const updateHander = () => {
+    const id = update as unknown as number;
+    dispatch(PostUpdateHandelr(contents, Title, id));
+
+    console.log("수정");
   };
 
   const DirectoryNameHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -134,47 +171,49 @@ function Post() {
   ];
 
   return (
-    <div className="post">
-      <div className="post_header">
-        <div className="division">
-          <select onChange={DirectoryNameHander}>
-            <option value={directoryName} disabled selected hidden>
-              카테고리
-            </option>
-          </select>
-          <div className="button_container">
-            <button className="modify" onClick={PostHandler}>
-              등록
-            </button>
+    <React.Fragment>
+      {Loading ? (
+        <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
+      ) : (
+        <div className="post">
+          <div className="post_header">
+            <div className="division">
+              <select onChange={DirectoryNameHander}>
+                <option value={directoryName} disabled selected hidden>
+                  카테고리
+                </option>
+              </select>
+              <div className="button_container">
+                <button className={state ? "modify_none" : "modify"} onClick={PostHandler}>
+                  등록
+                </button>
+                <button className={state ? "modify" : "modify_none"} onClick={updateHander}>
+                  수정
+                </button>
+              </div>
+            </div>
+            <textarea placeholder="제목을 입력하세요" value={Title} onChange={titleHandler}></textarea>
+            <h6>2021.08.23</h6>
+          </div>
+          <div className="post_content">
+            <ReactQuill
+              ref={(element) => {
+                if (element !== null) {
+                  QuillRef.current = element;
+                }
+              }}
+              style={{ height: "650px" }}
+              value={contents || ""}
+              onChange={setcontents}
+              modules={modules}
+              formats={formats}
+              theme="snow"
+              placeholder="내용을 입력해주세요"
+            />
           </div>
         </div>
-        <textarea placeholder="제목을 입력하세요" value={Title} onChange={titleHandler}></textarea>
-        <h6>2021.08.23</h6>
-      </div>
-      <div className="post_content">
-        <ReactQuill
-          ref={(element) => {
-            if (element !== null) {
-              QuillRef.current = element;
-            }
-          }}
-          style={{ height: "650px" }}
-          value={contents || ""}
-          onChange={setcontents}
-          modules={modules}
-          formats={formats}
-          theme="snow"
-          placeholder="내용을 입력해주세요"
-        />
-      </div>
-      <div className="post_list">
-        <ul>
-          <li>글1</li>
-          <li>글2</li>
-          <li>글3</li>
-        </ul>
-      </div>
-    </div>
+      )}
+    </React.Fragment>
   );
 }
 

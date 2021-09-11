@@ -16,7 +16,7 @@ function Mypage() {
   const email = useSelector((state: RootState) => state.User.myData.email);
   useEffect(() => {
     dispatch(GetUserInfo(email));
-  }, []);
+  }, [email]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
 
@@ -28,15 +28,17 @@ function Mypage() {
     return (
       <li className="list_item" key={item.id}>
         <div className="content">
-          <a href="ddd" className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></a>
+          <Link to={`/post/${userData.email}/${item.id}`}>
+            <div className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></div>
+          </Link>
           <div className="box_content">
             <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
               <strong className="post_title">{item.postName}</strong>
             </Link>
             <div className="post_info">
-              <a className="userName">
+              <Link to="" className="userName">
                 <span className="nametag">{userData.name}</span>
-              </a>
+              </Link>
               <span className="date">2021.09.08</span>
             </div>
           </div>

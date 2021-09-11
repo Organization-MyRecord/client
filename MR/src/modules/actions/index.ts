@@ -57,6 +57,11 @@ interface GetFieldAction {
   type: ActionType.POST_GET_FIELD;
   payload: string;
 }
+
+interface UpdatePostAction {
+  type: ActionType.POST_UPDATE;
+  payload: string;
+}
 export type Action =
   | LoginAction
   | RegisterAction
@@ -65,4 +70,10 @@ export type Action =
   | ModalAction
   | CloseModalAction
   | ToggleHanlder;
-export type PostAction = GetPostAction | RegisterPostAction | DeletePostAction | GetPostingAction | GetFieldAction;
+export type PostAction =
+  | GetPostAction
+  | RegisterPostAction
+  | DeletePostAction
+  | GetPostingAction
+  | GetFieldAction
+  | UpdatePostAction;
