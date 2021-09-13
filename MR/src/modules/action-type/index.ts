@@ -5,8 +5,6 @@ export enum ActionType {
   LOGOUT_USER = "LOGOUT_USER",
   REGISTER_USER = "REGISTER_USER",
   USER_INFO = "USER_INFO",
-  OPEN_MODAL = "OPEN_MODAL",
-  CLOSE_MODAL = "CLOSE_MODAL",
   USER_ISLOGIN = "USER_ISLOGIN",
 
   //게시글 관련 Action 타입
@@ -16,4 +14,8 @@ export enum ActionType {
   POST_GET = "GET_POST",
   POST_GET_FIELD = "POST_GET_FIELD",
   POST_UPDATE = "POST_UPDATE",
+
+  //모달 관련
+  OPEN_MODAL = "OPEN_MODAL",
+  CLOSE_MODAL = "CLOSE_MODAL",
 }

@@ -1,7 +1,7 @@
 //액션 생성함수 지정
 
 import { ActionType } from "../action-type";
-import { Action } from "../actions/index";
+import { Action, ModalAction } from "../actions/index";
 import { Dispatch } from "redux";
 import axios from "axios";
 
@@ -15,8 +15,8 @@ export const CloseModalHandler = () => {
 };
 
 //로그인
-export const LoginHandler = (Email: string, Password: string, setopenmodal: any) => {
-  return async (dispatch: Dispatch<Action>) => {
+export const LoginHandler = (Email: string, Password: string) => {
+  return async (dispatch: Dispatch<Action>, dispatch2: Dispatch<ModalAction>) => {
     await axios
       .post("/api/authenticate", {
         email: Email,
@@ -31,9 +31,9 @@ export const LoginHandler = (Email: string, Password: string, setopenmodal: any)
         });
       })
       .then(() => {
-        setopenmodal(false);
-        dispatch({
+        dispatch2({
           type: ActionType.OPEN_MODAL,
+          payload: "로그인에 성공했습니다.",
         });
       });
   };

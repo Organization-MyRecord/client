@@ -7,7 +7,7 @@ import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
 import Sidebar from "./options/Sidebar";
 import Modal from "./options/Modal";
-import { CloseModalHandler } from "./modules/action-creator/index";
+import { CloseModalHandler } from "./modules/action-creator/ModalIndex";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./modules/Store";
 import PostView from "./Components/PostView";
@@ -16,7 +16,7 @@ import PostList from "./Components/PostList";
 function App() {
   const dispatch = useDispatch();
 
-  const bool = useSelector((state: RootState) => state.User.modalstate);
+  const bool = useSelector((state: RootState) => state.Modal);
 
   const CloseModal = () => {
     dispatch(CloseModalHandler());
@@ -44,11 +44,7 @@ function App() {
           </Switch>
         </section>
       </BrowserRouter>
-      <Modal
-        open={bool}
-        close={CloseModal}
-        header={bool ? "로그인이 완료되었습니다" : "비밀번호를 확인해주시기 바랍니다"}
-      />
+      <Modal open={bool.ModalState} close={CloseModal} header={bool?.ModalText} />
     </div>
   );
 }

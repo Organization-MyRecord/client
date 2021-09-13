@@ -6,6 +6,7 @@ import Loader from "react-loader-spinner";
 import DOMPurify from "dompurify";
 import "../styles/home.scss";
 import { IsLoginHandler } from "../modules/action-creator";
+import { Link } from "react-router-dom";
 
 interface IPost {
   id: number;
@@ -42,6 +43,26 @@ function Home() {
             __html: DOMPurify.sanitize(item.content),
           }}
         ></h6>
+      </div>
+    );
+  });
+
+  const popular: IPost = pop?.map((item: any) => {
+    return (
+      <div className="card_container">
+        <Link to="" className="card">
+          <div className="thumb" style={{ backgroundImage: `url(${item.postImage})` }} />
+          <article>
+            <h1>{item.postName}</h1>
+            <h6
+              style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(item.content),
+              }}
+            />
+            <span></span>
+          </article>
+        </Link>
       </div>
     );
   });

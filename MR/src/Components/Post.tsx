@@ -6,7 +6,7 @@ import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { PostRegistHandler, PostUpdateHandelr } from "../modules/action-creator/PostIndex";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, useHistory } from "react-router";
 import Loader from "react-loader-spinner";
 
 interface Iparam {
@@ -16,6 +16,7 @@ interface Iparam {
 function Post({ match }: RouteComponentProps<Iparam>) {
   const dispatch = useDispatch();
   const { update } = match.params;
+  const history = useHistory();
 
   useEffect(() => {
     if (update != undefined) {
@@ -107,7 +108,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     const url = sessionStorage.getItem("url");
     console.log(url);
 
-    dispatch(PostRegistHandler(Title, contents, directoryName, url));
+    dispatch(PostRegistHandler(Title, contents, directoryName, url, history));
     localStorage.removeItem("url");
     console.log("등록");
   };
@@ -115,7 +116,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   //게시글 수정
   const updateHander = () => {
     const id = update as unknown as number;
-    dispatch(PostUpdateHandelr(contents, Title, id));
+    dispatch(PostUpdateHandelr(contents, Title, id, history));
 
     console.log("수정");
   };

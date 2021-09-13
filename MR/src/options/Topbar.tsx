@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
-import { FaAdversal, FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaSearch, FaUserCircle } from "react-icons/fa";
+import TextLogo from "./text_logo.png";
 import Login from "../Components/Login";
 import "../styles/topbar.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,9 +36,10 @@ function Topbar() {
 
   return (
     <header className="topbar">
-      <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
-        <FaAdversal className="logo" />
-        <a>MyRecord</a>
+      <Link to="/">
+        <div className="logo_area">
+          <img src={TextLogo} alt="text_logo" width="180px" height="45px" />
+        </div>
       </Link>
       <div className="bar_search">
         <input type="text" placeholder="Search..." value={Keyword} onChange={onchange} />

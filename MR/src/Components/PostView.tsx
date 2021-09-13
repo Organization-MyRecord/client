@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps, useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { RootState } from "../modules/Store";
 import Loader from "react-loader-spinner";
 import "../styles/post-view.scss";
+import { DeletePostHandler } from "../modules/action-creator/PostIndex";
 
 interface MatchParams {
   postId: string;
@@ -29,6 +30,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
   const { postId, userEmail } = match.params;
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function CallPostData(id: string) {
@@ -42,6 +44,11 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
 
   const bool: boolean = myEmail === userEmail;
 
+  const DeleteHandler = () => {
+    const id = postId as unknown as number;
+    dispatch(DeletePostHandler(id, history));
+  };
+
   return (
     <React.Fragment>
       {loading ? (
@@ -53,7 +60,9 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
             <Link to={`/post/${postId}`}>
               <button style={bool ? { marginLeft: "30px" } : { display: "none" }}>수정</button>
             </Link>
-            <button style={bool ? { marginLeft: "30px" } : { display: "none" }}>삭제</button>
+            <button onClick={DeleteHandler} style={bool ? { marginLeft: "30px" } : { display: "none" }}>
+              삭제
+            </button>
           </div>
           <div className="view_content">
             <div className="content_info">

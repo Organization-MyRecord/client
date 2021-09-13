@@ -1,16 +1,17 @@
 //액션의 interface 지정
-
 import { ActionType } from "../action-type";
 
-//User 관련
-interface ModalAction {
+//모달관련
+interface OpenModalAction {
   type: ActionType.OPEN_MODAL;
+  payload: string;
 }
 
 interface CloseModalAction {
   type: ActionType.CLOSE_MODAL;
 }
 
+//User 관련
 interface LoginAction {
   type: ActionType.LOGIN_USER;
   payload: string;
@@ -77,3 +78,5 @@ export type PostAction =
   | GetPostingAction
   | GetFieldAction
   | UpdatePostAction;
+
+export type ModalAction = OpenModalAction | CloseModalAction;
