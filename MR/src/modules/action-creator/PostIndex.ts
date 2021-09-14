@@ -1,9 +1,10 @@
 //게시글 관련 액션 함수 지정
 
 import { ActionType } from "../action-type";
-import { PostAction, ModalAction } from "../actions/index";
+import { PostAction } from "../actions/index";
 import { Dispatch } from "redux";
 import axios from "axios";
+import { OpenModalHandler } from "./ModalIndex";
 
 //메인페이지 게시글 가져오기
 export const GetPostHandler = (setLoading: any) => {
@@ -39,8 +40,9 @@ export const PostRegistHandler = (
   diretoryName: string,
   postImage: any,
   history: any,
+  dispa: any,
 ) => {
-  return async (dispatch: Dispatch<PostAction>, dispatch2: Dispatch<ModalAction>) => {
+  return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .post(
         "/api/create_post",
@@ -60,18 +62,15 @@ export const PostRegistHandler = (
           payload: res.data,
         });
 
-        dispatch2({
-          type: ActionType.OPEN_MODAL,
-          payload: "등록이 완료되었습니다!",
-        });
+        dispa(OpenModalHandler("등록이 완료되었습니다!"));
         history.push(`/post/${res.data.postUserEmail}/${res.data.id}`);
       });
   };
 };
 
 //게시글 삭제
-export const DeletePostHandler = (postId: number, hitsory: any) => {
-  return async (dispatch: Dispatch<PostAction>, dispatch2: Dispatch<ModalAction>) => {
+export const DeletePostHandler = (postId: number, hitsory: any, dispa) => {
+  return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .delete(`/api/post_delete/${postId}`, {
         headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
@@ -81,18 +80,12 @@ export const DeletePostHandler = (postId: number, hitsory: any) => {
           type: ActionType.POST_DELETE,
         });
         if (res.data) {
-          dispatch2({
-            type: ActionType.OPEN_MODAL,
-            payload: "게시글이 정상적으로 삭제되었습니다.",
-          });
+          dispa(OpenModalHandler("게시글이 정상적으로 삭제되었습니다."));
         } else {
-          dispatch2({
-            type: ActionType.OPEN_MODAL,
-            payload: "게시글 삭제에 실패하였습니다.",
-          });
+          dispa(OpenModalHandler("게시글 삭제에 실패하였습니다."));
         }
       })
-      .then(() => hitsory.goback());
+      .then(() => hitsory.push("/mypage"));
   };
 };
 
@@ -121,8 +114,8 @@ export const GetFieldPostHandler = (field) => {
 };
 
 //게시글 수정
-export const PostUpdateHandelr = (content: string, newPostName: string, postId: number, history: any) => {
-  return async (dispatch: Dispatch<PostAction>, dispatch2: Dispatch<ModalAction>) => {
+export const PostUpdateHandelr = (content: string, newPostName: string, postId: number, history: any, dispa) => {
+  return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .put(
         "/api/update_post",
@@ -140,11 +133,7 @@ export const PostUpdateHandelr = (content: string, newPostName: string, postId: 
           type: ActionType.POST_UPDATE,
           payload: res.data,
         });
-
-        dispatch2({
-          type: ActionType.OPEN_MODAL,
-          payload: "게시글이 정상적으로 수정되었습니다.",
-        });
+        dispa(OpenModalHandler("게시글이 정상적으로 수정되었습니다."));
 
         history.push("/mypage");
       });

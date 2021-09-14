@@ -29,7 +29,15 @@ function Mypage() {
       <li className="list_item" key={item.id}>
         <div className="content">
           <Link to={`/post/${userData.email}/${item.id}`}>
-            <div className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></div>
+            <div
+              className="post_image"
+              style={{
+                backgroundImage:
+                  item.postImage == null || item.postImage == "string"
+                    ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                    : `url(${item.postImage})`,
+              }}
+            ></div>
           </Link>
           <div className="box_content">
             <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
@@ -51,7 +59,7 @@ function Mypage() {
     <div className="mypage">
       <div className="profile_cotainer">
         <div className="profile">
-          {userData?.lenth == "string" ? (
+          {userData?.image == "string" ? (
             <FaUserCircle id="user_icon" />
           ) : (
             <div className="box">

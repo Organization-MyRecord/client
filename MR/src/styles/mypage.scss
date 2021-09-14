@@ -89,15 +89,18 @@
         }
         .content {
           clear: both;
+          display: flex;
 
           .post_image {
             width: 200px;
             height: 200px;
             margin-right: 24px;
+            display: flex;
           }
 
           .box_content {
             overflow: hidden;
+            margin-left: 24px;
 
             .link_title {
               color: #111;

@@ -1,6 +1,7 @@
 import React, { useRef, useMemo, useState, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "../styles/post.scss";
+import { formats } from "../options/options";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
@@ -108,7 +109,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     const url = sessionStorage.getItem("url");
     console.log(url);
 
-    dispatch(PostRegistHandler(Title, contents, directoryName, url, history));
+    dispatch(PostRegistHandler(Title, contents, directoryName, url, history, dispatch));
     localStorage.removeItem("url");
     console.log("등록");
   };
@@ -116,7 +117,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   //게시글 수정
   const updateHander = () => {
     const id = update as unknown as number;
-    dispatch(PostUpdateHandelr(contents, Title, id, history));
+    dispatch(PostUpdateHandelr(contents, Title, id, history, dispatch));
 
     console.log("수정");
   };
@@ -147,29 +148,6 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     }),
     [],
   );
-
-  const formats = [
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "size",
-    "small",
-    "large",
-    "huge",
-    "color",
-    "list",
-    "ordered",
-    "bullet",
-    "indent",
-    "align",
-    "image",
-    "video",
-    "link",
-    "clean",
-    "code-block",
-  ];
 
   return (
     <React.Fragment>

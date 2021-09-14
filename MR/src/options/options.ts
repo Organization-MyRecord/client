@@ -39,3 +39,26 @@ export const lim_num = /[^0-9]/gi; //숫자만 허용
 export const lim_al = /[^a-z]/gi; //영문만 허용
 export const lim_kor = /[a-z0-9]|[ \]{}()<>?|`~!@#$%^&*-_+=,.;:'\\]/g; //한글만 허용
 export const lim_email = /^([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/; //이메일 정규식
+
+export const formats = [
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "size",
+  "small",
+  "large",
+  "huge",
+  "color",
+  "list",
+  "ordered",
+  "bullet",
+  "indent",
+  "align",
+  "image",
+  "video",
+  "link",
+  "clean",
+  "code-block",
+];

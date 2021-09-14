@@ -57,7 +57,7 @@ function Topbar() {
         <button
           className={isLogin ? "small_btn" : "small_btn unvisible"}
           onClick={() => {
-            dispatch(LogoutHandler(history));
+            dispatch(LogoutHandler(history, dispatch));
           }}
         >
           Logout

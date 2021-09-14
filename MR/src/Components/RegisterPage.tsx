@@ -82,6 +82,7 @@ export default function RegisterPage() {
         Password,
         PasswordCheck,
         history,
+        dispatch,
       ),
     );
   };

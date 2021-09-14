@@ -46,7 +46,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
 
   const DeleteHandler = () => {
     const id = postId as unknown as number;
-    dispatch(DeletePostHandler(id, history));
+    dispatch(DeletePostHandler(id, history, dispatch));
   };
 
   return (

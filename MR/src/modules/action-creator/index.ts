@@ -1,9 +1,10 @@
 //액션 생성함수 지정
 
 import { ActionType } from "../action-type";
-import { Action, ModalAction } from "../actions/index";
+import { Action } from "../actions/index";
 import { Dispatch } from "redux";
 import axios from "axios";
+import { OpenModalHandler } from "./ModalIndex";
 
 //모달 닫기
 export const CloseModalHandler = () => {
@@ -15,8 +16,8 @@ export const CloseModalHandler = () => {
 };
 
 //로그인
-export const LoginHandler = (Email: string, Password: string) => {
-  return async (dispatch: Dispatch<Action>, dispatch2: Dispatch<ModalAction>) => {
+export const LoginHandler = (Email: string, Password: string, dispa: any, setopenmodal) => {
+  return async (dispatch: Dispatch<Action>) => {
     await axios
       .post("/api/authenticate", {
         email: Email,
@@ -31,10 +32,8 @@ export const LoginHandler = (Email: string, Password: string) => {
         });
       })
       .then(() => {
-        dispatch2({
-          type: ActionType.OPEN_MODAL,
-          payload: "로그인에 성공했습니다.",
-        });
+        setopenmodal(false);
+        dispa(OpenModalHandler("로그인이 완료되었습니다."));
       });
   };
 };
@@ -52,6 +51,7 @@ export const RegisterHandler = (
   password: string,
   secondPassword: string,
   hisory,
+  dispa,
 ) => {
   return async (dispatch: Dispatch<Action>) => {
     await axios
@@ -73,7 +73,10 @@ export const RegisterHandler = (
           type: ActionType.REGISTER_USER,
         });
       })
-      .then(() => hisory.push("/"));
+      .then(() => {
+        dispa(OpenModalHandler("회원가입이 성공적으로 완료되었습니다!"));
+        hisory.push("/");
+      });
   };
 };
 
@@ -90,12 +93,14 @@ export const GetUserInfo = (email) => {
 };
 
 //로그아웃
-export const LogoutHandler = (hisory: any) => {
+export const LogoutHandler = (hisory: any, dispa: any) => {
   return (dispatch: Dispatch<Action>) => {
     sessionStorage.removeItem("token");
     dispatch({
       type: ActionType.LOGOUT_USER,
     });
+
+    dispa(OpenModalHandler("로그아웃 되었습니다."));
     hisory.push("/");
   };
 };

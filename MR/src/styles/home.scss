@@ -1,6 +1,7 @@
 .home {
   .myfeed_container {
     margin-top: -29px;
+    margin-bottom: 20px;
     animation: fadeIn 0.7s linear;
     overflow: hidden;
     h2 {
@@ -73,30 +74,76 @@
     }
   }
 
-  .new_post {
-    animation: fadeIn 0.7s linear;
-    .post_container {
-      border-radius: 3% / 50%;
-      margin: 0px 10px;
-      background-color: #b8cae1;
-      margin-bottom: 30px;
-
-      display: flex;
-      justify-content: center;
-      text-align: center;
-      a {
-        color: black;
+  .list {
+    list-style: none;
+    padding-bottom: 30px;
+    .list_item {
+      margin-bottom: 60px;
+      &:hover {
+        background-color: rgb(214, 210, 210);
       }
+      .content {
+        clear: both;
+        display: flex;
 
-      h6 {
-        width: 50%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        text-align: center;
-        color: black;
+        .post_image {
+          width: 200px;
+          height: 200px;
+          margin-right: 24px;
+        }
+
+        .box_content {
+          overflow: hidden;
+          margin-left: 24px;
+
+          .link_title {
+            color: #111;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+
+            .post_title {
+              padding: 8px 0 4px 0;
+              font-size: x-large;
+              line-height: 34px;
+            }
+          }
+
+          .post_info {
+            padding-bottom: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+
+            .userName {
+              color: #888;
+              text-decoration: underline;
+            }
+            .date {
+              margin-left: 5px;
+              padding-left: 9px;
+              color: #888;
+            }
+          }
+
+          .post_text {
+            max-height: 55px;
+            margin-bottom: 20px;
+            line-height: 26px;
+            -webkit-line-clamp: 2;
+          }
+          .readMore {
+            background: #1eb49f;
+            display: block;
+            width: 105px;
+            height: 35px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+          }
+        }
       }
     }
   }
@@ -114,7 +161,7 @@
 }
 
 .card_container {
-  max-width: 1000px;
+  max-width: 1200px;
   width: 75%;
   display: grid;
   grid-template-columns: 1fr;
@@ -126,7 +173,8 @@
     color: #444;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    min-height: 100%;
+    width: 500px;
+    height: 400px;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
@@ -141,9 +189,20 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+
+      h1 {
+        text-decoration: none;
+      }
 
       h6 {
         flex: 1;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
     }
 
