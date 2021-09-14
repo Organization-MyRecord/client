@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { FaUserCircle } from "react-icons/fa";
@@ -8,84 +7,35 @@ import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
 import "../styles/mypage.scss";
-import { options, Major } from "../options/options";
-import { RegisterHandler } from "../modules/action-creator";
 
 function Mypage() {
-  const GetMyInfo = async () => {
-    await axios
-      .get("/api/mypage", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => console.log(res.data));
-  };
+  const [currentPage, setcurrentPage] = useState(1);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const [birth, setbirth] = useState(""); //생년월일
-  const [Password, setPassword] = useState(""); //패스워드
-  const [PasswordCheck, setPasswordCheck] = useState(""); //패스워드 확인
-  const [Name, setName] = useState(""); //이름
-  const [Email, setEmail] = useState(""); //이메일
-  const [toggle, settoggle] = useState<boolean>(false); //인증번호 시에 나올 입력창 토글
-  const [Anum, setAnum] = useState(""); //인증번호
-  const [radioState, setradioState] = useState(""); //성별
-  const [field, setfield] = useState(""); //분야
-  const [major, setmajor] = useState(""); //전공계열
-  const [majorDetail, setmajorDetail] = useState(""); //전공세부
+  useEffect(() => {
+    dispatch(GetUserInfo());
+  }, []);
 
-  const BirthHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //생년월일 input onchange 함수
-    setbirth(e.currentTarget.value);
-  };
-  const PasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.currentTarget.value);
-  };
-  const PasswordCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.currentTarget.value);
-  };
-  const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.currentTarget.value);
-  };
-  const EamilHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.currentTarget.value);
+  const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
+
+  const changePage = (page) => {
+    setcurrentPage(page);
   };
 
-  const AnumHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAnum(e.currentTarget.value);
-  };
-
-  const FieldHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setfield(e.currentTarget.value);
-  };
-
-  const majorHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setmajor(e.currentTarget.value);
-  };
-
-  const majorDetailHander = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setmajorDetail(e.currentTarget.value);
-  };
-
-  const onRadioChange = (e: any) => {
-    setradioState(e.target.value);
-  };
-  //분야를 select option
-  const fieldList = options.map((item) => {
+  const MyPost = userData?.myPostList?.map((item: any, index: number) => {
     return (
-      <option key={item.label} value={item.value}>
-        {item.label}
-      </option>
+      <tbody id={"body" + index} key={item.id}>
+        <tr>
+          <td id="title">{item.postName}</td>
+        </tr>
+        <tr>
+          <td id="content">{item.content}</td>
+        </tr>
+      </tbody>
     );
   });
 
-  //계열 select option
-  const majorList = Major.map((item) => {
-    return (
-      <option key={item.label} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
   return (
     <div className="mypage">
       <div className="profile_cotainer">
@@ -101,6 +51,7 @@ function Mypage() {
           <a>{userData?.email}</a>
           <br />
           <button id="user_edit">기본정보 수정</button>
+
           <table>
             <tbody>
               <tr>
@@ -134,10 +85,10 @@ function Mypage() {
                 <td>전공 계열</td>
                 <td>{userData?.major}</td>
               </tr>
-              Discription : <br />
-              무엇 전직업 대학교
             </tbody>
           </table>
+          Discription : <br />
+          무엇 전직업 대학교
         </div>
       </div>
       <div className="mypost_container">

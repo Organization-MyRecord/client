@@ -1,78 +1,75 @@
-import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import "../styles/mypage.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { GetUserInfo } from "../modules/action-creator";
+import { RootState } from "../modules/Store";
+import ReactPaginate from "react-paginate";
+import "../styles/change.scss";
 
-function Mypage() {
-  const GetMyInfo = async () => {
-    await axios
-      .get("/api/mypage", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      })
-      .then((res) => console.log(res.data));
+function ChangeInfo() {
+
+  const [currentPage, setcurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(GetUserInfo());
+  }, []);
+
+  const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
+
+  const changePage = (page) => {
+    setcurrentPage(page);
   };
 
+  const MyPost = userData?.myPostList?.map((item: any, index: number) => {
+    return (
+      <tbody id={"body" + index} key={item.id}>
+        <tr>
+          <td id="title">{item.postName}</td>
+        </tr>
+        <tr>
+          <td id="content">{item.content}</td>
+        </tr>
+      </tbody>
+    );
+  });
+  //분야를 select option
+  const fieldList = options.map((item) => {
+    return (
+      <option key={item.label} value={item.value}>
+        {item.label}
+      </option>
+    );
+  });
+
+  //계열 select option
+  const majorList = Major.map((item) => {
+    return (
+      <option key={item.label} value={item.value}>
+        {item.label}
+      </option>
+    );
+  });
   return (
-    <div className="mypage">
-      <div className="profile_cotainer">
-        <div className="profile">
-          <FaUserCircle id="user_icon" />
-          <h1>김정수</h1>
-          <a>sunpl0718@naver.com</a>
-          <br />
-          <button id="user_edit">기본정보 수정</button>
-
-          <table>
-            <tbody>
-              <tr>
-                <td>팔로잉</td>
-                <td>123명</td>
-              </tr>
-              <tr>
-                <td>팔로워</td>
-                <td>83명</td>
-              </tr>
-
-              <tr>
-                <td>나의 게시물</td>
-                <td>13개</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="interests">
-          <table>
-            <tbody>
-              <tr>
-                <td>나이:</td>
-                <td>100세</td>
-              </tr>
-              <tr>
-                <td>관심분야:</td>
-                <td>IT산업</td>
-              </tr>
-              <tr>
-                <td>전공 계열:</td>
-                <td>공학계열</td>
-              </tr>
-              Discription : <br />
-              무엇 전직업 대학교
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="mypost_container">
-        <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
-        <div className="mypost">
-          <div className="post_info">
-            전체글 0개
-            <button>글쓰기</button>
-          </div>
-          <div className="post_detail">여기에 내 글 정보들이 들어갈 꺼입니다.</div>
-        </div>
-      </div>
+    <div className="editing-container">
+      <table>
+        <thead>기본정보 수정</thead>
+        <tbody>
+          <tr>
+            <td>닉네임</td>
+            <td><input type="text" value={(userData?.name)}/></td>
+          </tr>
+          <tr>
+          <td>관심분야</td>
+          <td><select classNae="inputSelect" onChange={FieldHandler} placeholder={field}>
+            {fieldList}</select>></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
 
-export default Mypage;
+export default ChangeInfo;
