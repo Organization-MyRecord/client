@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/Home";
 import Mypage from "./Components/Mypage";
 import RegisterPage from "./Components/RegisterPage";
-import ChangeInfo from "./Components/ChageInfo";
+
 import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
 import Sidebar from "./options/Sidebar";
@@ -37,7 +37,7 @@ function App() {
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
             <Route path="/post" component={Post} />
-            <Route path="/post" component={ChangeInfo} />
+
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>
