@@ -29,6 +29,7 @@ export const LoginHandler = (Email: string, Password: string, dispa: any, setope
         dispatch({
           type: ActionType.LOGIN_USER,
           payload: response.data,
+          email: response.data.email,
         });
       })
       .then(() => {

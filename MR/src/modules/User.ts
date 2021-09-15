@@ -7,6 +7,7 @@ type userState = {
   myData: any;
   error: any;
   modalstate: boolean;
+  userEmail: string;
 };
 
 const initialState: userState = {
@@ -15,6 +16,7 @@ const initialState: userState = {
   error: null,
   myData: null,
   modalstate: false,
+  userEmail: "",
 };
 
 //로그인
@@ -26,11 +28,13 @@ const user = (state: userState = initialState, action: Action) => {
         ...state,
         userLoading: true,
         myData: action.payload,
+        userEmail: action.email,
       };
     case ActionType.LOGOUT_USER:
       return {
         ...state,
         userLoading: false,
+        userEmail: "",
       };
     case ActionType.REGISTER_USER:
       return {

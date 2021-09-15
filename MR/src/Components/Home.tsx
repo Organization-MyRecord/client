@@ -61,7 +61,7 @@ function Home() {
 
   const popular2: IPost = pop2?.map((item: any) => {
     return (
-      <Link to={`/post/${item.postUserEmail}/${item.id}`} className="card">
+      <Link to={`/post/${item.postUserEmail}/${item.id}`} className="card" key={item.id}>
         <div
           className="thumb"
           style={{

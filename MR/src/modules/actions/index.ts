@@ -15,6 +15,7 @@ interface CloseModalAction {
 interface LoginAction {
   type: ActionType.LOGIN_USER;
   payload: string;
+  email: string;
 }
 
 interface LogoutAction {

@@ -7,6 +7,7 @@ import { RootState } from "../modules/Store";
 import Loader from "react-loader-spinner";
 import "../styles/post-view.scss";
 import { DeletePostHandler } from "../modules/action-creator/PostIndex";
+import Reply from "./Reply";
 
 interface MatchParams {
   postId: string;
@@ -27,6 +28,7 @@ export type IData = {
 function PostView({ match }: RouteComponentProps<MatchParams>) {
   const [data, setdata] = useState<IData>();
   const [loading, setloading] = useState(true);
+  const [comment, setcomment] = useState("");
   const { postId, userEmail } = match.params;
 
   const history = useHistory();
@@ -40,9 +42,30 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
     CallPostData(postId).then(() => setloading(false));
   }, [postId, userEmail]);
 
-  const myEmail = useSelector((state: RootState) => state.User.myData.email);
+  const myEmail = useSelector((state: RootState) => state.User.userEmail);
 
   const bool: boolean = myEmail === userEmail;
+
+  const commentOnchangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setcomment(e.currentTarget.value);
+  };
+
+  const onsubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await axios
+      .post(
+        `/api/comment/${postId}`,
+        {
+          comment: comment,
+          parentCommentId: 0,
+        },
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => console.log(res.data));
+  };
 
   const DeleteHandler = () => {
     const id = postId as unknown as number;
@@ -76,6 +99,39 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
             </div>
             <div className="view" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
           </div>
+          <div className="reply_area">
+            <div className="reply_info">
+              <p className="item_inf">
+                댓글
+                <span className="reply_count">5개</span>
+              </p>
+              <button className="fold" style={{ display: "none" }}>
+                댓글 접기
+              </button>
+              <button className="spread" style={{ display: "none" }}>
+                댓글 펼치기
+              </button>
+            </div>
+            <ul className="reply_content">
+              <Reply />
+            </ul>
+          </div>
+          <form onSubmit={onsubmit}>
+            <div className="reply_write">
+              <div className="form_content">
+                <textarea
+                  value={comment}
+                  onChange={commentOnchangeHandler}
+                  placeholder="댓글을 입력해주세요."
+                ></textarea>
+              </div>
+              <div className="form_reg">
+                <button type="submit" className="comment_btn">
+                  등록
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       )}
     </React.Fragment>
