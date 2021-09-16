@@ -23,6 +23,7 @@ export type IData = {
   postUserEmail: string;
   views: number;
   date: string;
+  commentList: any;
 };
 
 function PostView({ match }: RouteComponentProps<MatchParams>) {
@@ -46,11 +47,13 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
 
   const bool: boolean = myEmail === userEmail;
 
+  //댓글 작성
   const commentOnchangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setcomment(e.currentTarget.value);
   };
 
+  //댓글 전송 함수
   const onsubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
@@ -67,6 +70,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
       .then((res) => console.log(res.data));
   };
 
+  //게시글 삭제 버튼
   const DeleteHandler = () => {
     const id = postId as unknown as number;
     dispatch(DeletePostHandler(id, history, dispatch));
@@ -112,9 +116,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
                 댓글 펼치기
               </button>
             </div>
-            <ul className="reply_content">
-              <Reply />
-            </ul>
+            <ul className="reply_content"></ul>
           </div>
           <form onSubmit={onsubmit}>
             <div className="reply_write">
