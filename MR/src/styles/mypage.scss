@@ -68,6 +68,9 @@
       table {
         text-align: justify;
       }
+      td {
+        padding-right: 10px;
+      }
     }
   }
   .mypost_container {
@@ -193,6 +196,12 @@
       display: flex;
       justify-content: space-between;
     }
+  }
+
+  .change_info {
+    display: flex;
+    width: 10px;
+    height: 10px;
   }
 }
 

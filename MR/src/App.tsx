@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Home from "./Components/Home";
 import Mypage from "./Components/Mypage";
 import RegisterPage from "./Components/RegisterPage";
+
 import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
 import Sidebar from "./options/Sidebar";
@@ -37,14 +38,22 @@ function App() {
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
             <Route exact={true} path="/post/:update?" component={Post} />
-            <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />
+            <Route
+              exact={true}
+              path="/post/:userEmail/:postId"
+              component={PostView}
+            />
             <Route exact={true} path="/postList/:Field" component={PostList} />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>
         </section>
       </BrowserRouter>
-      <Modal open={bool.ModalState} close={CloseModal} header={bool?.ModalText} />
+      <Modal
+        open={bool.ModalState}
+        close={CloseModal}
+        header={bool?.ModalText}
+      />
     </div>
   );
 }

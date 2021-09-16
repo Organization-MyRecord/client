@@ -1,0 +1,81 @@
+.mypage {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  white-space: nowrap;
+  .profile_cotainer {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 20px;
+
+    height: 400px;
+    .profile {
+      display: flex;
+      background-color: white;
+      justify-content: center;
+      padding: 20px;
+      margin-bottom: 40px;
+      flex-direction: column;
+
+      text-align: center;
+      align-items: center;
+
+      #user_icon {
+        margin-top: 5px;
+        font-size: 60px;
+        color: rgba(1, 1, 1, 0.6);
+      }
+
+      h1 {
+        margin: 0px;
+      }
+      a {
+        color: gray;
+        font-size: 10px;
+      }
+      table {
+        font-size: 12px;
+        text-align: justify;
+      }
+      td {
+        padding-right: 10px;
+      }
+    }
+    .interests {
+      background-color: white;
+      display: flex;
+      padding: 20px;
+      flex-direction: column;
+      align-items: center;
+      font-size: 12px;
+      table {
+        text-align: justify;
+      }
+      td {
+        padding-right: 10px;
+      }
+    }
+  }
+  .mypost_container {
+    display: flex;
+    width: 50%;
+    height: 600px;
+    flex-direction: column;
+    .motto {
+      background-color: #cbdfec;
+      text-align: center;
+      color: white;
+      font-size: 15px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+    .post_detail {
+      background-color: white;
+    }
+    .post_info {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
