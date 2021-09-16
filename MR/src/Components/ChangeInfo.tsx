@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-
+import { options, Major } from "../options/options";
 import { FaUserCircle } from "react-icons/fa";
+import Mypage from "../Components/Mypage";
 import { useDispatch, useSelector } from "react-redux";
+import { RegisterHandler } from "../modules/action-creator";
 import { useHistory } from "react-router";
 import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
@@ -17,46 +19,45 @@ function ChangeInfo() {
   useEffect(() => {
     dispatch(GetUserInfo(email));
   }, [email]);
+  const [Name, setName] = useState(""); //이름
+  const [major, setmajor] = useState(""); //전공계열
+  const [Description, setDescription] = useState(""); //전공세부
+  const [field, setfield] = useState(""); //분야
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
-
+  const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
+  };
   const changePage = (page) => {
     setcurrentPage(page);
   };
 
-  const MyPost = userData?.myPostList?.map((item: any) => {
+  //분야를 select option
+  const fieldList = options.map((item) => {
     return (
-      <li className="list_item" key={item.id}>
-        <div className="content">
-          <Link to={`/post/${userData.email}/${item.id}`}>
-            <div
-              className="post_image"
-              style={{
-                backgroundImage:
-                  item.postImage == null || item.postImage == "string"
-                    ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
-                    : `url(${item.postImage})`,
-              }}
-            ></div>
-          </Link>
-          <div className="box_content">
-            <Link
-              className="link_title"
-              to={`/post/${userData.email}/${item.id}`}
-            >
-              <strong className="post_title">{item.postName}</strong>
-            </Link>
-            <div className="post_info">
-              <Link to="" className="userName">
-                <span className="nametag">{userData.name}</span>
-              </Link>
-              <span className="date">2021.09.08</span>
-            </div>
-          </div>
-        </div>
-      </li>
+      <option key={item.label} value={item.value}>
+        {item.value}
+      </option>
     );
   });
+  const majorList = Major.map((item) => {
+    return (
+      <option key={item.label} value={item.value}>
+        {item.label}
+      </option>
+    );
+  });
+
+  const FieldHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setfield(e.currentTarget.value);
+  };
+  const majorHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setmajor(e.currentTarget.value);
+  };
+
+  const DescriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.currentTarget.value);
+  };
 
   return (
     <div className="mypage">
@@ -120,35 +121,85 @@ function ChangeInfo() {
       <div className="mypost_container">
         <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
         <div className="mypost">
-          <div className="post_info">
-            전체글 {userData?.postPagination.totalElements}개
-            <button
-              onClick={() => {
-                history.push("/post");
-              }}
-            >
-              글쓰기
-            </button>
+          <div className="interests">
+            <table>
+              <tbody>
+                <tr>
+                  <td>현재 닉네임</td>
+                  <td>{userData?.name}</td>
+                </tr>
+                <tr>
+                  <td>새로운 닉네임</td>
+                  <td>
+                    {" "}
+                    <input
+                      type="text"
+                      placeholder="변경 닉네임"
+                      value={Name}
+                      onChange={NameHandler}
+                    />
+                  </td>
+                </tr>
+                <br />
+                <tr>
+                  <td>현재 관심분야</td>
+                  <td>{userData?.field}</td>
+                </tr>
+                <tr>
+                  <td>새로운 관심분야</td>
+                  <td>
+                    <select
+                      className="inputSelect"
+                      onChange={FieldHandler}
+                      placeholder={field}
+                    >
+                      {fieldList}
+                    </select>
+                  </td>
+                </tr>
+                <br />
+                <tr>
+                  <td>전공 계열</td>
+                  <td>{userData?.major}</td>
+                </tr>
+                <tr>
+                  <td>새로운 전공계열</td>
+                  <td>
+                    <select
+                      className="MajorSelect"
+                      onChange={majorHandler}
+                      placeholder={major}
+                    >
+                      {majorList}
+                    </select>
+                  </td>
+                </tr>
+                <br />
+                <tr>
+                  <td>Discription :</td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="내용을 입력하세요
+                      ex) 전직업, 대학교, 세부관심사항"
+                      value={Description}
+                      onChange={DescriptionHandler}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <ul className="list">
-            {MyPost == null ? "표시할 정보가 없습니다." : MyPost}
-          </ul>
-          <ReactPaginate
-            pageCount={userData?.postPagination.totalPages} //총 페이지 수
-            pageRangeDisplayed={10} //한 페이지에 표시할 게시글 수
-            initialPage={currentPage} // 선택한 초기 페이지
-            marginPagesDisplayed={1} //페이지 여백 수
-            previousLabel={"<"} //이전 라벨
-            nextLabel={">"} //다음 라벨
-            breakLabel={"..."} //줄임 라벨
-            onPageChange={changePage} //클릭 할 때 호출 할 메서드
-            containerClassName={"pagination-ul"} //페이지 매김 컨테이너의 클래스 이름
-            pageClassName={"page-li"} //각 페이지 요소의 li태그에 있는 클래스 이름
-            activeClassName={"currentPage"} //활성 페이지의 클래스 이름
-            previousClassName={"pageLabel-btn"} //이전 라벨의 클래스 이름
-            nextClassName={"pageLabel-btn"} //다음 라벨의 클래스 이름
-          />
+          <button
+            type="submit"
+            onClick={() => {
+              history.push("/Mypage");
+            }}
+          >
+            개인정보수정 확인
+          </button>
         </div>
+        <ul className="list"></ul>
       </div>
     </div>
   );

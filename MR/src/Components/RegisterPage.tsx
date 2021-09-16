@@ -43,7 +43,7 @@ export default function RegisterPage() {
   const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
   };
-  const EamilHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const EmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
 
@@ -82,8 +82,8 @@ export default function RegisterPage() {
         Password,
         PasswordCheck,
         history,
-        dispatch,
-      ),
+        dispatch
+      )
     );
   };
 
@@ -118,7 +118,9 @@ export default function RegisterPage() {
   };
 
   const aaa = () => {
-    axios.get(`api/verify?email=${Email}&randomCode=${Anum}`).then((res) => console.log(res));
+    axios
+      .get(`api/verify?email=${Email}&randomCode=${Anum}`)
+      .then((res) => console.log(res));
   };
   return (
     <div className="big_container">
@@ -126,7 +128,7 @@ export default function RegisterPage() {
         <div className="Email_auth">
           <table>
             <label>이메일 (필수)</label>
-            <input type="text" value={Email} onChange={EamilHandler} />
+            <input type="text" value={Email} onChange={EmailHandler} />
             <button onClick={emailAuth}>메일 인증</button>
             <h6>*본인 인증시 이메일이 반드시 필요합니다.</h6>
           </table>
@@ -143,13 +145,21 @@ export default function RegisterPage() {
               <td>비밀번호</td>
               <td>
                 {" "}
-                <input type="password" value={Password} onChange={PasswordHandler} />
+                <input
+                  type="password"
+                  value={Password}
+                  onChange={PasswordHandler}
+                />
               </td>
             </tr>
             <tr>
               <td>비밀번호 확인</td>
               <td>
-                <input type="password" value={PasswordCheck} onChange={PasswordCheckHandler} />
+                <input
+                  type="password"
+                  value={PasswordCheck}
+                  onChange={PasswordCheckHandler}
+                />
               </td>
             </tr>
             <tr>
@@ -186,7 +196,11 @@ export default function RegisterPage() {
             <tr>
               <td>관심분야</td>
               <td>
-                <select className="inputSelect" onChange={FieldHandler} placeholder={field}>
+                <select
+                  className="inputSelect"
+                  onChange={FieldHandler}
+                  placeholder={field}
+                >
                   {fieldList}
                 </select>
               </td>
@@ -195,7 +209,11 @@ export default function RegisterPage() {
             <tr>
               <td>전공계열</td>
               <td>
-                <select className="MajorSelect" onChange={majorHandler} placeholder={major}>
+                <select
+                  className="MajorSelect"
+                  onChange={majorHandler}
+                  placeholder={major}
+                >
                   {majorList}
                 </select>
               </td>
@@ -204,7 +222,11 @@ export default function RegisterPage() {
               <td>세부전공</td>
 
               <td>
-                <input type="text" value={majorDetail} onChange={majorDetailHander}></input>
+                <input
+                  type="text"
+                  value={majorDetail}
+                  onChange={majorDetailHander}
+                ></input>
               </td>
             </tr>
           </tbody>

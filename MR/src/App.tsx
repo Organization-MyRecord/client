@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./modules/Store";
 import PostView from "./Components/PostView";
 import PostList from "./Components/PostList";
+import ChangeInfo from "./Components/ChangeInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
+            <Route path="/changeinfo" component={ChangeInfo} />
             <Route exact={true} path="/post/:update?" component={Post} />
             <Route
               exact={true}
