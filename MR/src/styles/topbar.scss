@@ -1,4 +1,4 @@
-@import './app.scss';
+@import "./app.scss";
 
 .topbar {
   display: flex;
@@ -15,6 +15,12 @@
   left: 0;
   right: 0;
 
+  .logo_area {
+    width: 180px;
+    :hover {
+      cursor: pointer;
+    }
+  }
 }
 .bar_logo a {
   font-weight: 600;
@@ -31,7 +37,7 @@
   align-items: center;
   width: 250px;
 
- input {
+  input {
     display: block;
     width: 100%;
     padding: 7px 3px;
@@ -41,11 +47,7 @@
     border-radius: 10px;
     font-size: 15px;
   }
-
-
 }
-
- 
 
 .bar_info {
   display: flex;
@@ -57,7 +59,7 @@
     -moz-appearance: none;
     appearance: none;
     background-color: #5c8fc2;
-    font-family  :'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
     font-size: $x-large;
     color: #e2e2e2;
     margin-right: 8px;
@@ -65,11 +67,10 @@
     cursor: pointer;
 
     &:hover {
-      color :#c4c2c2;
+      color: #c4c2c2;
     }
   }
 }
-
 
 .bar_info .account_logo {
   background-color: transparent;
@@ -87,7 +88,7 @@
 
 .Modal {
   position: absolute;
-  top : 50%;
+  top: 50%;
   left: 50%;
   right: auto;
   bottom: auto;

@@ -3,100 +3,178 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetPostHandler } from "../modules/action-creator/PostIndex";
 import { RootState } from "../modules/Store";
 import Loader from "react-loader-spinner";
+import DOMPurify from "dompurify";
 import "../styles/home.scss";
+import { IsLoginHandler } from "../modules/action-creator";
+import { Link } from "react-router-dom";
 
 interface IPost {
-  id : number,
-  postImage: string,
-  postName : string,
-  content : string
+  id: number;
+  postImage: string;
+  postName: string;
+  content: string;
 }
 
 function Home() {
-  const isLogin = useSelector((state :RootState) => state.User.userLoading)
-  const [Loading, setLoading] = useState(true)
-  const dispatch = useDispatch()
+  const isLogin = useSelector((state: RootState) => state.User.userLoading);
+  const [Loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(GetPostHandler(setLoading))
-  },[isLogin])
-  
-  const MainData = useSelector((state : RootState) => state.Post.TotalData);
-    //최신 글 가져오기
-    const popularList : IPost = MainData?.popularPostResponseList?.map((item : any) => {
-      return (
-        <div className = "feed" key = {item.id}>
-          <img src = {item.postImage} width = "500px"/>
-          <h4>{item.postName}</h4>
-          <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
-        </div>
-      )
-    })
+    if (!sessionStorage.getItem("token")) {
+      dispatch(IsLoginHandler());
+    }
+    dispatch(GetPostHandler(setLoading));
+  }, [isLogin]);
 
-    //내 피드 리스트 가져오기
-    const MyFeedList : IPost = MainData?.recentMyPostResponseList?.map((item : any) => {
-      return (
-        <div className = "feed" key = {item.id}>
-          <img src = {item.postImage} width = "500px"/>
-          <h4>{item.postName}</h4>
-          <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
-        </div>
-      )
-    })
+  const MainData = useSelector((state: RootState) => state.Post.TotalData);
 
-    const MyRecentList : IPost = MainData?.recentEveryPostResponseList?.map((item : any) => {
-      return (
-        <div className="post_container" key = {item.id}>
-          <img src= {item.postImage} alt="" width="92px" height="92px" />
-          <div className="content_container">
-            <h2>{item.postName}</h2>
-            <h6 style = {{textOverflow : "ellipsis"}}>{item.content}</h6>
+  const pop = MainData?.popularPostResponseList?.slice(0, 3);
+  const pop2 = MainData?.popularPostResponseList?.slice(3, 6);
+
+  //인기 글 가져오기
+  const popular: IPost = pop?.map((item: any) => {
+    return (
+      <Link to={`/post/${item.postUserEmail}/${item.id}`} className="card" key={item.id}>
+        <div
+          className="thumb"
+          style={{
+            backgroundImage:
+              item.postImage == null || item.postImage == "string"
+                ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                : `url(${item.postImage})`,
+          }}
+        />
+        <article>
+          <h1>{item.postName}</h1>
+          <h6
+            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(item.content),
+            }}
+          />
+          <span></span>
+        </article>
+      </Link>
+    );
+  });
+
+  const popular2: IPost = pop2?.map((item: any) => {
+    return (
+      <Link to={`/post/${item.postUserEmail}/${item.id}`} className="card" key={item.id}>
+        <div
+          className="thumb"
+          style={{
+            backgroundImage:
+              item.postImage == null || item.postImage == "string"
+                ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                : `url(${item.postImage})`,
+          }}
+        />
+        <article>
+          <h1>{item.postName}</h1>
+          <h6
+            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(item.content),
+            }}
+          />
+          <span></span>
+        </article>
+      </Link>
+    );
+  });
+
+  //내 피드 리스트 가져오기
+  const MyFeedList: IPost = MainData?.recentMyPostResponseList?.map((item: any) => {
+    return (
+      <Link to={`/post/${item.postUserEmail}/${item.id}`} className="card" key={item.id}>
+        <div
+          className="thumb"
+          style={{
+            backgroundImage:
+              item.postImage == null || item.postImage == "string"
+                ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                : `url(${item.postImage})`,
+          }}
+        />
+        <article>
+          <h1>{item.postName}</h1>
+          <h6
+            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(item.content),
+            }}
+          />
+          <span></span>
+        </article>
+      </Link>
+    );
+  });
+
+  const MyRecentList: IPost = MainData?.recentEveryPostResponseList?.map((item: any) => {
+    return (
+      <li className="list_item" key={item.id}>
+        <div className="content">
+          <Link to={`/post/${item.postUserEmail}/${item.id}`}>
+            <div
+              className="post_image"
+              style={{
+                backgroundImage:
+                  item.postImage == null || item.postImage == "string"
+                    ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                    : `url(${item.postImage})`,
+              }}
+            ></div>
+          </Link>
+          <div className="box_content">
+            <Link className="link_title" to={`/post/${item.postUserEmail}/${item.id}`}>
+              <strong className="post_title">{item.postName}</strong>
+            </Link>
+            <div className="post_info">
+              <Link to="" className="userName">
+                <span className="nametag">{item.postUserEmail}</span>
+              </Link>
+              <span className="date">2021.09.08</span>
+            </div>
           </div>
         </div>
-      )
-    })
-   
+      </li>
+    );
+  });
 
   return (
     <React.Fragment>
-      {Loading ?
-        <Loader
-        type = "Oval"
-        color = "#3d66ba"
-        height = {30}
-        width = {30}
-        timeout = {3000}/>
-        :
-    <div className="home">
-      {isLogin ? (
-        <>
-          <div className="myfeed_container">
-            <h2>My 피드</h2>
-            <div className="feed_container">
-              {MyFeedList}
-            </div>
-          </div>
-          <div className="populer_feed">
-            <h2>인기글</h2>
-            <div className="feed_container">
-              {popularList}
-            </div>
-          </div>
-        </>
+      {Loading ? (
+        <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
       ) : (
-        <div className="populer_feed">
-          <h2>인기글</h2>
-          <div className="feed_container">
-            {popularList}
+        <div className="home">
+          {isLogin ? (
+            <>
+              <div className="myfeed_container">
+                <h2>My 피드</h2>
+                <div className="card_container">{MyFeedList}</div>
+              </div>
+              <div className="myfeed_container">
+                <h2>인기글</h2>
+                <div className="card_container">{popular}</div>
+              </div>
+            </>
+          ) : (
+            <div className="myfeed_container">
+              <h2>인기글</h2>
+              <div className="card_container" style={{ marginBottom: "20px" }}>
+                {popular}
+              </div>
+              <div className="card_container">{popular2}</div>
+            </div>
+          )}
+          <div className="new_post">
+            <h2>최신 자료</h2>
+            <ul className="list">{MyRecentList}</ul>
           </div>
         </div>
       )}
-      <div className="new_post">
-        <h2>최신 자료</h2>
-        {MyRecentList}
-      </div>
-    </div>
-  }
     </React.Fragment>
   );
 }

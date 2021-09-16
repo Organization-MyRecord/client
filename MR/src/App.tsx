@@ -8,15 +8,16 @@ import Topbar from "./options/Topbar";
 import Post from "./Components/Post";
 import Sidebar from "./options/Sidebar";
 import Modal from "./options/Modal";
-import { CloseModalHandler } from "./modules/action-creator/index";
+import { CloseModalHandler } from "./modules/action-creator/ModalIndex";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./modules/Store";
+import PostView from "./Components/PostView";
+import PostList from "./Components/PostList";
 
 function App() {
   const dispatch = useDispatch();
 
-  const bool = useSelector((state: RootState) => state.User.modalstate);
-  console.log("bool", bool);
+  const bool = useSelector((state: RootState) => state.Modal);
 
   const CloseModal = () => {
     dispatch(CloseModalHandler());
@@ -36,19 +37,22 @@ function App() {
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
-            <Route path="/post" component={Post} />
-
+            <Route exact={true} path="/post/:update?" component={Post} />
+            <Route
+              exact={true}
+              path="/post/:userEmail/:postId"
+              component={PostView}
+            />
+            <Route exact={true} path="/postList/:Field" component={PostList} />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>
         </section>
       </BrowserRouter>
       <Modal
-        open={bool}
+        open={bool.ModalState}
         close={CloseModal}
-        header={
-          bool ? "로그인이 완료되었습니다" : "비밀번호를 확인해주시기 바랍니다"
-        }
+        header={bool?.ModalText}
       />
     </div>
   );

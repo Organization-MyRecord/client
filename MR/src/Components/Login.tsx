@@ -9,7 +9,7 @@ interface Iprops {
 }
 
 function Login(props: Iprops) {
-  const { setopenmodal, openmodal } = props;
+  const { openmodal, setopenmodal } = props;
 
   const dispatch = useDispatch();
   const [Email, setEmail] = useState(""); //이메일 담을 State
@@ -31,8 +31,7 @@ function Login(props: Iprops) {
     //   email : Email,
     //   password : Password
     // }).then(res => localStorage.setItem("token", res.data))   //그 다음 토큰을 로컬스토리지에 저장 , 궁금할 시 console.log로 res 검색
-    dispatch(LoginHandler(Email, Password, setopenmodal));
-    console.log("눌리긴하냐 이거");
+    dispatch(LoginHandler(Email, Password, dispatch, setopenmodal));
   };
 
   return (

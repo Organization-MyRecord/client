@@ -1,4 +1,4 @@
-@import './app.scss';
+@import "./app.scss";
 
 .mypage {
   width: 100%;
@@ -44,7 +44,7 @@
         padding-right: 10px;
       }
 
-      .box{
+      .box {
         background-color: #bdbdbd;
         width: 60px;
         height: 60px;
@@ -75,13 +75,86 @@
   }
   .mypost_container {
     display: flex;
-    width: 50%;
+    width: 70%;
     height: 600px;
     flex-direction: column;
-
     ul {
-      width: 50%;
-      margin : 0 auto;
+      list-style: none;
+    }
+    .mypost {
+      width: 70%;
+    }
+    .list {
+      .list_item {
+        margin-bottom: 60px;
+        &:hover {
+          background-color: rgb(214, 210, 210);
+        }
+        .content {
+          clear: both;
+          display: flex;
+
+          .post_image {
+            width: 200px;
+            height: 200px;
+            margin-right: 24px;
+            display: flex;
+          }
+
+          .box_content {
+            overflow: hidden;
+            margin-left: 24px;
+
+            .link_title {
+              color: #111;
+              font-weight: bold;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+
+              .post_title {
+                padding: 8px 0 4px 0;
+                font-size: x-large;
+                line-height: 34px;
+              }
+            }
+
+            .post_info {
+              padding-bottom: 20px;
+              font-family: Arial, Helvetica, sans-serif;
+
+              .userName {
+                color: #888;
+                text-decoration: underline;
+              }
+              .date {
+                margin-left: 5px;
+                padding-left: 9px;
+                color: #888;
+              }
+            }
+
+            .post_text {
+              max-height: 55px;
+              margin-bottom: 20px;
+              line-height: 26px;
+              -webkit-line-clamp: 2;
+            }
+            .readMore {
+              background: #1eb49f;
+              display: block;
+              width: 105px;
+              height: 35px;
+              color: #fff;
+              font-weight: bold;
+              cursor: pointer;
+              outline: none;
+            }
+          }
+        }
+      }
     }
 
     .motto {
@@ -99,19 +172,22 @@
       tbody {
         display: block;
         border-collapse: separate;
-        
+
         text-align: center;
         tr {
           width: 100%;
-          
-          #title{
+
+          #title {
             font-weight: bold;
           }
         }
         td {
-          padding : 10px 10px;
+          padding: 10px 10px;
         }
-        #body0, #body1, #body2, #body3 {
+        #body0,
+        #body1,
+        #body2,
+        #body3 {
           border-top: 1px solid black;
         }
       }
@@ -134,41 +210,42 @@
   padding: 10px 0px 0px 0px;
   margin: 0 auto;
   position: absolute;
+  width: 50%;
   //bottom: 25px;
   text-align: center;
   * {
-      display: inline-block;
-      margin: 0 auto;
-      width: 30px;
-      height: 30px;
-      margin: 0 auto;
-      text-align: center;
-      border-radius: 30px;
-      line-height: 30px;
-      :hover {
-          background-color: $BackGray;
-          color: $fontWhite;
-      }
+    display: inline-block;
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 30px;
+    line-height: 30px;
+    :hover {
+      background-color: $BackGray;
+      color: $fontWhite;
+    }
   }
   .pageLabel-btn {
+    width: 60px;
+    margin: 0 5px;
+    padding: 0;
+    border: 1px solid $BackGray;
+    * {
       width: 60px;
-      margin: 0 5px;
-      padding: 0;
-      border: 1px solid $BackGray;
-      * {
-          width: 60px;
-      }
-      cursor: pointer;
+    }
+    cursor: pointer;
   }
   .page-li {
-      padding: 0;
-      margin: 0 3px;
+    padding: 0;
+    margin: 0 3px;
   }
   .currentPage {
-      background-color: $BackSkyBlue;
-      cursor: pointer;
-      * {
-          color: $fontWhite;
-      }
+    background-color: $BackSkyBlue;
+    cursor: pointer;
+    * {
+      color: $fontWhite;
+    }
   }
 }

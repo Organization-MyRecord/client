@@ -6,10 +6,10 @@ import { useHistory } from "react-router";
 import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
-import "../styles/mypage.scss";
+import "../styles/change-info.scss";
 import { Link } from "react-router-dom";
 
-function Mypage() {
+function ChangeInfo() {
   const [currentPage, setcurrentPage] = useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -154,4 +154,4 @@ function Mypage() {
   );
 }
 
-export default Mypage;
+export default ChangeInfo;

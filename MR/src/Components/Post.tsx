@@ -1,148 +1,198 @@
-import React, {useRef, useMemo,useState } from "react";
-import ReactQuill, {Quill} from "react-quill";
+import React, { useRef, useMemo, useState, useEffect } from "react";
+import ReactQuill, { Quill } from "react-quill";
 import "../styles/post.scss";
-import 'react-quill/dist/quill.snow.css';
-import ImageResize from 'quill-image-resize-module-react'
+import { formats } from "../options/options";
+import "react-quill/dist/quill.snow.css";
+import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { PostRegistHandler, PostUpdateHandelr } from "../modules/action-creator/PostIndex";
+import { RouteComponentProps, useHistory } from "react-router";
+import Loader from "react-loader-spinner";
 
-function Post() {
-  
+interface Iparam {
+  update: string;
+}
+
+function Post({ match }: RouteComponentProps<Iparam>) {
+  const dispatch = useDispatch();
+  const { update } = match.params;
+  const history = useHistory();
+
+  useEffect(() => {
+    if (update != undefined) {
+      CallPostData(update).then(() => setLoading(false));
+    } else {
+      console.log("여기??");
+      setLoading(false);
+      return;
+    }
+  }, []);
+
   //Content 내부에서 사진 이미지 리사이징을 위한 모듈
-  Quill.register('modules/ImageResize', ImageResize)
+  Quill.register("modules/ImageResize", ImageResize);
   const QuillRef = useRef<ReactQuill>();
-  const [Title, setTitle] = useState("")  // 제목을 저장할 state
-  const [contents, setcontents] = useState("")    //내용을 저장할 state
+  const [Title, setTitle] = useState(""); // 제목을 저장할 state
+  const [contents, setcontents] = useState(""); //내용을 저장할 state
+  const [directoryName, setdirectoryName] = useState("IT/웹통신");
+  const [Loading, setLoading] = useState(true); //로딩창 구현을 위한 state
+  const [state, setstate] = useState(false); //수정인지 새글 작성인지 확인을 위한 state
 
+  async function CallPostData(id: string) {
+    await axios.get(`/api/post/${id}`).then((res) => {
+      setTitle(res.data.postName);
+      setcontents(res.data.content);
+      setstate(true);
+    });
+  }
+
+  let url: string;
   // 이미지를 업로드 하기 위한 함수
   const imageHandler = () => {
-      // 파일을 업로드 하기 위한 input 태그 생성
+    // 파일을 업로드 하기 위한 input 태그 생성
     const input = document.createElement("input");
     const formData = new FormData();
-    let url : string;
-
 
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
 
     input.onchange = async () => {
-      if(input.files) {
+      if (input.files) {
         const file: any = input.files[0];
-        console.log(file);
-        
-        formData.append("file", file)
+
+        formData.append("file", file);
 
         try {
-          axios.post('/api/upload', formData, {
-            headers: {
-            'content-type': 'multipart/form-data',
-            'Authorization' : `Bearer ${localStorage.getItem("token")}`
-        }})
-        .then(res => {
-          
-          url = res.data
+          axios
+            .post("/api/upload", formData, {
+              headers: {
+                "content-type": "multipart/form-data",
+                Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              },
+            })
+            .then((res) => {
+              url = res.data;
+              sessionStorage.setItem("url", url);
 
-        	// 커서의 위치를 알고 해당 위치에 이미지 태그를 넣어주는 코드 
-    	    // 해당 DOM의 데이터가 필요하기에 useRef를 사용한다.
-          const range = QuillRef.current?.getEditor().getSelection()?.index;
-            if (range !== null && range !== undefined) {
-              const quill = QuillRef.current?.getEditor();
+              // 커서의 위치를 알고 해당 위치에 이미지 태그를 넣어주는 코드
+              // 해당 DOM의 데이터가 필요하기에 useRef를 사용한다.
+              const range = QuillRef.current?.getEditor().getSelection()?.index;
+              if (range !== null && range !== undefined) {
+                const quill = QuillRef.current?.getEditor();
 
-              quill?.setSelection(range, 1);
+                quill?.setSelection(range, 1);
 
-              quill?.clipboard.dangerouslyPasteHTML(
-                range,
-                `<img src=${url} alt="이미지 태그가 삽입됩니다." style = {{overflow : "hidden"}}/>`
-              );
-            }
+                quill?.clipboard.dangerouslyPasteHTML(
+                  range,
+                  `<img src=${url} alt="이미지 태그가 삽입됩니다." style = {{overflow : "hidden"}}/>`,
+                );
+              }
 
-          return { ...res};
-        })} catch (error) {
+              return { ...res, url };
+            });
+        } catch (error) {
           const err = error as AxiosError;
-          return {...err.response}
+          return { ...err.response };
         }
       }
-    }
-  }
-  const titleHandler = (e : React.ChangeEvent<HTMLTextAreaElement>) => {
-      e.preventDefault()
-      setTitle(e.currentTarget.value)
-  }
+    };
+  };
 
-  const modules = useMemo(() =>({
-    ImageResize : {
-      parchment : Quill.import('parchment'),
-      modules : ['Resize', 'DisplaySize']
-    },
-    toolbar: {
-      container: [
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [{ size: ["small", false, "large", "huge"] }, { color: [] }],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
-          { align: [] },
-        ],
-        ["image", "video", "link"],
-        ["clean"],
-        ["code-block"]
-      ],
-      handlers: {
-        image: imageHandler,
+  const titleHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setTitle(e.currentTarget.value);
+  };
+
+  //게시글 등록
+  const PostHandler = () => {
+    const url = sessionStorage.getItem("url");
+    console.log(url);
+
+    dispatch(PostRegistHandler(Title, contents, directoryName, url, history, dispatch));
+    localStorage.removeItem("url");
+    console.log("등록");
+  };
+
+  //게시글 수정
+  const updateHander = () => {
+    const id = update as unknown as number;
+    dispatch(PostUpdateHandelr(contents, Title, id, history, dispatch));
+
+    console.log("수정");
+  };
+
+  const DirectoryNameHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setdirectoryName(e.currentTarget.value);
+  };
+
+  const modules = useMemo(
+    () => ({
+      ImageResize: {
+        parchment: Quill.import("parchment"),
+        modules: ["Resize", "DisplaySize"],
       },
-    },
-  }),[])
-  
-
-  const formats = [
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'size', 'small', 'large', 'huge', 'color',
-    'list', 'ordered', 'bullet', 'indent', 'align',
-    "image", "video", "link",
-    "clean",
-    "code-block"
-  ]
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+          [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }, { align: [] }],
+          ["image", "video", "link"],
+          ["clean"],
+          ["code-block"],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    }),
+    [],
+  );
 
   return (
-    <div className="post">
-      <div className="post_header">
-        <div className="division">
-          <select>
-            <option value = "" disabled selected hidden>카테고리</option>
-          </select>
-          <div className="button_container">
-            <button className="modify">수정</button>
-            <button className="delete">삭제</button>
+    <React.Fragment>
+      {Loading ? (
+        <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
+      ) : (
+        <div className="post">
+          <div className="post_header">
+            <div className="division">
+              <select onChange={DirectoryNameHander}>
+                <option value={directoryName} disabled selected hidden>
+                  카테고리
+                </option>
+              </select>
+              <div className="button_container">
+                <button className={state ? "modify_none" : "modify"} onClick={PostHandler}>
+                  등록
+                </button>
+                <button className={state ? "modify" : "modify_none"} onClick={updateHander}>
+                  수정
+                </button>
+              </div>
+            </div>
+            <textarea placeholder="제목을 입력하세요" value={Title} onChange={titleHandler}></textarea>
+            <h6>2021.08.23</h6>
+          </div>
+          <div className="post_content">
+            <ReactQuill
+              ref={(element) => {
+                if (element !== null) {
+                  QuillRef.current = element;
+                }
+              }}
+              style={{ height: "650px" }}
+              value={contents || ""}
+              onChange={setcontents}
+              modules={modules}
+              formats={formats}
+              theme="snow"
+              placeholder="내용을 입력해주세요"
+            />
           </div>
         </div>
-        <textarea placeholder = "제목을 입력하세요" value = {Title} onChange = {titleHandler}></textarea>
-        <h6>2021.08.23</h6>
-      </div>
-      <div className="post_content">
-        <ReactQuill
-          ref={(element) => {
-            if (element !== null) {
-              QuillRef.current = element;
-            }
-          }}
-          style = {{height : "650px"}}
-          value = {contents || ""}
-          onChange = {setcontents}
-          modules = {modules}
-          formats = {formats}
-          theme = "snow"
-          placeholder = "내용을 입력해주세요"/>
-      </div>
-      <div className="post_list">
-        <ul>
-          <li>글1</li>
-          <li>글2</li>
-          <li>글3</li>
-        </ul>
-      </div>
-    </div>
+      )}
+    </React.Fragment>
   );
 }
 
