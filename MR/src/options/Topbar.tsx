@@ -42,16 +42,25 @@ function Topbar() {
         </div>
       </Link>
       <div className="bar_search">
-        <input type="text" placeholder="Search..." value={Keyword} onChange={onchange} />
-        <button className="search_logo">
-          <FaSearch className="logo" onClick={onclick} />
-        </button>
+        <input
+          type="text"
+          placeholder="레코드를 입력하세요."
+          value={Keyword}
+          onChange={onchange}
+        />
+        <button className="search_logo">검색</button>
       </div>
       <div className="bar_info">
-        <button className={isLogin ? "small_btn unvisible" : "small_btn"} onClick={onOpen}>
+        <button
+          className={isLogin ? "small_btn unvisible" : "small_btn"}
+          onClick={onOpen}
+        >
           Login
         </button>
-        <button className={isLogin ? "small_btn unvisible" : "small_btn"} onClick={() => history.push("/registerpage")}>
+        <button
+          className={isLogin ? "small_btn unvisible" : "small_btn"}
+          onClick={() => history.push("/registerpage")}
+        >
           Sign Up
         </button>
         <button
@@ -72,7 +81,12 @@ function Topbar() {
         </button>
       </div>
 
-      <Modal className="Modal" isOpen={OpenModal} ariaHideApp={false} onRequestClose={handleCloseModal}>
+      <Modal
+        className="Modal"
+        isOpen={OpenModal}
+        ariaHideApp={false}
+        onRequestClose={handleCloseModal}
+      >
         <Login setopenmodal={setOpenModal} openmodal={OpenModal} />
       </Modal>
     </header>

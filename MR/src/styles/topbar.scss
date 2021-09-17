@@ -1,12 +1,12 @@
 @import "./app.scss";
-
 .topbar {
   display: flex;
   width: 100%;
   justify-content: space-between;
   white-space: nowrap;
   align-items: center;
-  background-color: #5c8fc2;
+  background-color: white;
+  border-bottom: 2px solid rgba(1, 1, 1, 0.3);
   animation: fadeInY 0.8s linear;
   position: fixed;
   padding: 15px 10px 5px 25px;
@@ -27,11 +27,16 @@
   font-size: 21px;
   text-decoration: double;
 }
-
-.logo {
-  font-size: 35px;
+.search_logo {
+  font-size: 17px;
+  padding: 4px 8px;
+  color: #5c8fc2;
+  font-family: "IBMPlexSansKR-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-
 .bar_search {
   display: flex;
   align-items: center;
@@ -41,10 +46,11 @@
   input {
     display: block;
     width: 100%;
-    padding: 7px 4px;
+    padding: 7px 7px;
     margin-right: 3px;
-    border: none;
-    border-radius: 10px;
+    border-style: none;
+    border-bottom: 1px solid #5c8fc2;
+    background-color: white;
     font-size: 15px;
   }
 }
@@ -81,6 +87,7 @@
 
 .bar_info .account_logo {
   background-color: transparent;
+  color: #5c8fc2;
 }
 @keyframes fadeInY {
   from {
