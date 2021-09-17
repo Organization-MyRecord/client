@@ -7,7 +7,7 @@ function Sidebar() {
     return (
       <li key={item.label}>
         <Link to={`/postList/${item.label}`}>
-          <h2>{item.value}</h2>
+          <h2 className="sidebar">{item.value}</h2>
         </Link>
       </li>
     );
