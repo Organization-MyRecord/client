@@ -29,6 +29,7 @@ export type IData = {
 function PostView({ match }: RouteComponentProps<MatchParams>) {
   const [data, setdata] = useState<IData>();
   const [loading, setloading] = useState(true);
+  const [btnLoading, setbtnLoading] = useState(false);
   const [comment, setcomment] = useState("");
   const { postId, userEmail } = match.params;
 
@@ -46,6 +47,19 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
   const myEmail = useSelector((state: RootState) => state.User.userEmail);
 
   const bool: boolean = myEmail === userEmail;
+  const replyList = data?.commentList.map((item) => {
+    return (
+      <Reply
+        key={item.commentId}
+        commentId={item.commentId}
+        userImage={item.userImage}
+        userName={item.userName}
+        comment={item.comment}
+        commentTime={item.commentTime}
+        commentList={item.commentList}
+      />
+    );
+  });
 
   //댓글 작성
   const commentOnchangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -56,6 +70,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
   //댓글 전송 함수
   const onsubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setbtnLoading(true);
     await axios
       .post(
         `/api/comment/${postId}`,
@@ -67,7 +82,11 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
           headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         },
       )
-      .then((res) => console.log(res.data));
+      .then((res) => {
+        console.log(res.data);
+        setcomment("");
+        setbtnLoading(false);
+      });
   };
 
   //게시글 삭제 버튼
@@ -106,8 +125,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
           <div className="reply_area">
             <div className="reply_info">
               <p className="item_inf">
-                댓글
-                <span className="reply_count">5개</span>
+                댓글 <span className="reply_count">{data?.commentList.length}개</span>
               </p>
               <button className="fold" style={{ display: "none" }}>
                 댓글 접기
@@ -116,7 +134,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
                 댓글 펼치기
               </button>
             </div>
-            <ul className="reply_content"></ul>
+            <ul className="reply_content">{replyList}</ul>
           </div>
           <form onSubmit={onsubmit}>
             <div className="reply_write">
@@ -129,7 +147,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
               </div>
               <div className="form_reg">
                 <button type="submit" className="comment_btn">
-                  등록
+                  {btnLoading ? <Loader type="Oval" color="#3d66ba" height={15} width={15} timeout={3000} /> : "등록"}
                 </button>
               </div>
             </div>
