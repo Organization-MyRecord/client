@@ -19,11 +19,11 @@ interface IReply {
 
 function Reply(props: IReply) {
   return (
-    <li className="comment" key={props.commentId}>
+    <li className="comment">
       <Link to="" className="reply_thumb">
         <img
           src={
-            props.userImage === null
+            props.userImage === null || props.userImage === "string"
               ? "https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png"
               : props.userImage
           }
