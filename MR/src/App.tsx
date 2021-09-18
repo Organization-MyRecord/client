@@ -40,22 +40,14 @@ function App() {
             <Route path="/registerpage" component={RegisterPage} />
             <Route path="/changeinfo" component={ChangeInfo} />
             <Route exact={true} path="/post/:update?" component={Post} />
-            <Route
-              exact={true}
-              path="/post/:userEmail/:postId"
-              component={PostView}
-            />
+            <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />
             <Route exact={true} path="/postList/:Field" component={PostList} />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>
         </section>
       </BrowserRouter>
-      <Modal
-        open={bool.ModalState}
-        close={CloseModal}
-        header={bool?.ModalText}
-      />
+      <Modal open={bool.ModalState} close={CloseModal} header={bool?.ModalText} />
     </div>
   );
 }

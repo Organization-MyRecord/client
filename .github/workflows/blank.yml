@@ -27,4 +27,7 @@ jobs:
             git reset --hard
             git fetch
             git pull
-            cd myrecord
+            cd MR
+            pm2 stop 'npm start'
+            pm2 delete 'npm start'
+            pm2 start 'npm start'

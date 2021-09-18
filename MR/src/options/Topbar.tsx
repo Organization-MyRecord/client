@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import { FaSearch, FaUserCircle } from "react-icons/fa";
-import TextLogo from "./text_logo.png";
+import TextLogo from "./text_logo2.png";
 import Login from "../Components/Login";
 import "../styles/topbar.scss";
 import { useDispatch, useSelector } from "react-redux";

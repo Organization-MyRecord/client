@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { options, Major } from "../options/options";
 import { FaUserCircle } from "react-icons/fa";
-import Mypage from "../Components/Mypage";
 import { useDispatch, useSelector } from "react-redux";
-import { RegisterHandler } from "../modules/action-creator";
 import { useHistory } from "react-router";
 import { GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
-import ReactPaginate from "react-paginate";
 import "../styles/change-info.scss";
-import { Link } from "react-router-dom";
 
 function ChangeInfo() {
   const [currentPage, setcurrentPage] = useState(1);
@@ -73,11 +69,7 @@ function ChangeInfo() {
           <h1>{userData?.name}</h1>
           <a>{userData?.email}</a>
           <br />
-          {sessionStorage.getItem("token") ? (
-            <button id="user_edit">기본정보 수정</button>
-          ) : (
-            ""
-          )}
+          {sessionStorage.getItem("token") ? <button id="user_edit">기본정보 수정</button> : ""}
 
           <table>
             <tbody>
@@ -132,12 +124,7 @@ function ChangeInfo() {
                   <td>새로운 닉네임</td>
                   <td>
                     {" "}
-                    <input
-                      type="text"
-                      placeholder="변경 닉네임"
-                      value={Name}
-                      onChange={NameHandler}
-                    />
+                    <input type="text" placeholder="변경 닉네임" value={Name} onChange={NameHandler} />
                   </td>
                 </tr>
                 <br />
@@ -148,11 +135,7 @@ function ChangeInfo() {
                 <tr>
                   <td>새로운 관심분야</td>
                   <td>
-                    <select
-                      className="inputSelect"
-                      onChange={FieldHandler}
-                      placeholder={field}
-                    >
+                    <select className="inputSelect" onChange={FieldHandler} placeholder={field}>
                       {fieldList}
                     </select>
                   </td>
@@ -165,11 +148,7 @@ function ChangeInfo() {
                 <tr>
                   <td>새로운 전공계열</td>
                   <td>
-                    <select
-                      className="MajorSelect"
-                      onChange={majorHandler}
-                      placeholder={major}
-                    >
+                    <select className="MajorSelect" onChange={majorHandler} placeholder={major}>
                       {majorList}
                     </select>
                   </td>
