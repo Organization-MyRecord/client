@@ -1,18 +1,25 @@
 .home {
+  margin-top: 45px;
   .myfeed_container {
+    display: inline-block;
+    width: 100%;
     margin-top: -29px;
     margin-bottom: 20px;
     animation: fadeIn 0.7s linear;
-    overflow: hidden;
     h2 {
       padding-top: 5px;
       margin: 0px;
-      padding: 19.2px 0px;
+      padding: 19px 0px;
+      color: #5090df;
+      font-weight: 500;
     }
     .feed_container {
       display: flex;
+      flex: auto;
       justify-content: space-between;
       .feed {
+        display: flex;
+        max-width: 300px;
         background-color: #86b1e4;
         margin: 0px 2px;
 
@@ -80,7 +87,9 @@
     .list_item {
       margin-bottom: 60px;
       &:hover {
-        background-color: rgb(214, 210, 210);
+        background-color: rgb(183, 203, 247);
+        top: -2px;
+        box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
       }
       .content {
         clear: both;
@@ -97,7 +106,7 @@
           margin-left: 24px;
 
           .link_title {
-            color: #111;
+            color: black;
             font-weight: bold;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -159,25 +168,27 @@
     opacity: 0.8;
   }
 }
-
+.new_post h2 {
+  margin: 10px 0px;
+  color: #5c8fc2;
+  font-weight: 600;
+}
 .card_container {
-  max-width: 1200px;
-  width: 75%;
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
   grid-template-rows: auto;
-  grid-gap: 30px 15px;
+  grid-gap: 30px 10px;
+  justify-content: space-around;
 
   .card {
     background-color: #fff;
     color: #444;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    width: 500px;
+    width: 320px;
     height: 400px;
     flex-direction: column;
-    justify-content: space-between;
-    position: relative;
+    justify-content: start;
     top: 0;
     .thumb {
       padding-bottom: 60%;
@@ -213,13 +224,13 @@
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 150px) {
   .card_container {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media screen and (min-width: 850px) {
+@media screen and (min-width: 50px) {
   .card_container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
