@@ -6,7 +6,7 @@
   white-space: nowrap;
   align-items: center;
   background-color: white;
-  border-bottom: 2px solid rgba(1, 1, 1, 0.3);
+  border-bottom: 2px solid #5c8fc2;
   animation: fadeInY 0.8s linear;
   position: fixed;
   padding: 15px 10px 5px 25px;
@@ -32,7 +32,8 @@
   padding: 4px 8px;
   color: #5c8fc2;
   font-family: "IBMPlexSansKR-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
