@@ -155,7 +155,7 @@ function ChangeInfo() {
                 </tr>
                 <br />
                 <tr>
-                  <td>Discription :</td>
+                  <td>Description :</td>
                   <td>
                     <input
                       type="text"
