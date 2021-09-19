@@ -18,4 +18,8 @@ export enum ActionType {
   //모달 관련
   OPEN_MODAL = "OPEN_MODAL",
   CLOSE_MODAL = "CLOSE_MODAL",
+
+  //사이드바 관련
+  SIDEBAR_OPEN = "SIDEBAR_OPEN",
+  SIDEBAR_NONE = "SIDEBAR_NONE",
 }

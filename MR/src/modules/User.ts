@@ -2,21 +2,23 @@ import { ActionType } from "./action-type";
 import { Action } from "./actions/index";
 
 type userState = {
-  userLoading: boolean;
+  isLogin: boolean;
   userData: any;
   myData: any;
   error: any;
   modalstate: boolean;
   userEmail: string;
+  toggleSidebar: boolean;
 };
 
 const initialState: userState = {
-  userLoading: false,
+  isLogin: false,
   userData: null,
   error: null,
   myData: null,
   modalstate: false,
   userEmail: "",
+  toggleSidebar: true,
 };
 
 //로그인
@@ -26,14 +28,14 @@ const user = (state: userState = initialState, action: Action) => {
     case ActionType.LOGIN_USER:
       return {
         ...state,
-        userLoading: true,
+        isLogin: true,
         myData: action.payload,
         userEmail: action.email,
       };
     case ActionType.LOGOUT_USER:
       return {
         ...state,
-        userLoading: false,
+        isLogin: false,
         userEmail: "",
       };
     case ActionType.REGISTER_USER:
@@ -58,7 +60,17 @@ const user = (state: userState = initialState, action: Action) => {
     case ActionType.USER_ISLOGIN:
       return {
         ...state,
-        userLoding: false,
+        isLogin: false,
+      };
+    case ActionType.SIDEBAR_OPEN:
+      return {
+        ...state,
+        toggleSidebar: true,
+      };
+    case ActionType.SIDEBAR_NONE:
+      return {
+        ...state,
+        toggleSidebar: false,
       };
     default:
       return state;

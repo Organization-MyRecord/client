@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { GetUserInfo } from "../modules/action-creator";
+import { GetUserInfo, SideBarOpenHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
 import "../styles/mypage.scss";
@@ -14,8 +14,13 @@ function Mypage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const email = useSelector((state: RootState) => state.User.myData.email);
+
   useEffect(() => {
     dispatch(GetUserInfo(email));
+
+    return () => {
+      dispatch(SideBarOpenHandler());
+    };
   }, [email]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
@@ -40,10 +45,7 @@ function Mypage() {
             ></div>
           </Link>
           <div className="box_content">
-            <Link
-              className="link_title"
-              to={`/post/${userData.email}/${item.id}`}
-            >
+            <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
               <strong className="post_title">{item.postName}</strong>
             </Link>
             <div className="post_info">
@@ -125,6 +127,7 @@ function Mypage() {
           <div className="post_info">
             전체글 {userData?.postPagination.totalElements}개
             <button
+              className="post_btn"
               onClick={() => {
                 history.push("/post");
               }}
@@ -132,9 +135,7 @@ function Mypage() {
               글쓰기
             </button>
           </div>
-          <ul className="list">
-            {MyPost == null ? "표시할 정보가 없습니다." : MyPost}
-          </ul>
+          <ul className="list">{MyPost == null ? "표시할 정보가 없습니다." : MyPost}</ul>
           <ReactPaginate
             pageCount={userData?.postPagination.totalPages} //총 페이지 수
             pageRangeDisplayed={10} //한 페이지에 표시할 게시글 수

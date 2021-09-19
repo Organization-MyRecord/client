@@ -135,23 +135,6 @@
               color: #888;
             }
           }
-
-          .post_text {
-            max-height: 55px;
-            margin-bottom: 20px;
-            line-height: 26px;
-            -webkit-line-clamp: 2;
-          }
-          .readMore {
-            background: #1eb49f;
-            display: block;
-            width: 105px;
-            height: 35px;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-            outline: none;
-          }
         }
       }
     }
@@ -188,7 +171,7 @@
     width: 320px;
     height: 400px;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     top: 0;
     .thumb {
       padding-bottom: 60%;

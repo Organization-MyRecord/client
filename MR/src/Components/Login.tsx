@@ -34,6 +34,12 @@ function Login(props: Iprops) {
     dispatch(LoginHandler(Email, Password, dispatch, setopenmodal));
   };
 
+  const HandleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      dispatch(LoginHandler(Email, Password, dispatch, setopenmodal));
+    }
+  };
+
   return (
     <div
       style={{
@@ -57,6 +63,7 @@ function Login(props: Iprops) {
                     type="text"
                     placeholder="이메일을 입력하세요"
                     onChange={EmailHandler}
+                    onKeyDown={HandleKeyPress}
                   />
                 </td>
               </tr>
@@ -67,6 +74,7 @@ function Login(props: Iprops) {
                     type="password"
                     placeholder="PW를 입력하세요"
                     onChange={PasswordHandler}
+                    onKeyDown={HandleKeyPress}
                   />
                 </td>
               </tr>

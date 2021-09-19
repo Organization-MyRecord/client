@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { GetFieldPostHandler } from "../modules/action-creator/PostIndex";
+import DOMPurify from "dompurify";
 import { RootState } from "../modules/Store";
 import "../styles/post-list.scss";
 
@@ -38,7 +39,12 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
               </Link>
               <span className="date">{date}</span>
             </div>
-            <p className="post_text">{item.content}</p>
+            <p
+              className="post_text"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(item.content),
+              }}
+            ></p>
             <button className="readMore">더보기..</button>
           </div>
         </div>

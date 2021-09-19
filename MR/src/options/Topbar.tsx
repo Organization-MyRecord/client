@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 import TextLogo from "./text_logo2.png";
 import Login from "../Components/Login";
 import "../styles/topbar.scss";
@@ -12,7 +12,7 @@ import { RootState } from "../modules/Store";
 function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false);
-  const isLogin = useSelector((state: RootState) => state.User.userLoading); //사용자가 로그인 되어 있는지 확인
+  const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -23,11 +23,6 @@ function Topbar() {
 
   const onOpen = () => {
     setOpenModal(true);
-  };
-
-  const onclick = () => {
-    //클릭 시 함수
-    console.log(Keyword);
   };
 
   const handleCloseModal = () => {
@@ -42,31 +37,20 @@ function Topbar() {
         </div>
       </Link>
       <div className="bar_search">
-        <input
-          type="text"
-          placeholder="레코드를 입력하세요."
-          value={Keyword}
-          onChange={onchange}
-        />
+        <input type="text" placeholder="레코드를 입력하세요." value={Keyword} onChange={onchange} />
         <button className="search_logo">검색</button>
       </div>
       <div className="bar_info">
-        <button
-          className={isLogin ? "small_btn unvisible" : "small_btn"}
-          onClick={onOpen}
-        >
+        <button className={isLogin ? "small_btn unvisible" : "small_btn"} onClick={onOpen}>
           Login
         </button>
-        <button
-          className={isLogin ? "small_btn unvisible" : "small_btn"}
-          onClick={() => history.push("/registerpage")}
-        >
+        <button className={isLogin ? "small_btn unvisible" : "small_btn"} onClick={() => history.push("/registerpage")}>
           Sign Up
         </button>
         <button
           className={isLogin ? "small_btn" : "small_btn unvisible"}
           onClick={() => {
-            dispatch(LogoutHandler(history, dispatch));
+            dispatch(LogoutHandler(dispatch));
           }}
         >
           Logout
@@ -81,12 +65,7 @@ function Topbar() {
         </button>
       </div>
 
-      <Modal
-        className="Modal"
-        isOpen={OpenModal}
-        ariaHideApp={false}
-        onRequestClose={handleCloseModal}
-      >
+      <Modal className="Modal" isOpen={OpenModal} ariaHideApp={false} onRequestClose={handleCloseModal}>
         <Login setopenmodal={setOpenModal} openmodal={OpenModal} />
       </Modal>
     </header>
