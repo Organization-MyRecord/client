@@ -69,6 +69,7 @@
         font-size: 16px;
         box-sizing: border-box;
         vertical-align: top;
+        resize: none;
       }
     }
     .form_reg {
@@ -76,10 +77,21 @@
       margin-top: 15px;
 
       .comment_btn {
+        background-color: #5c8fc2;
         float: right;
         width: 105px;
         height: 36px;
         cursor: pointer;
+        outline: none;
+      }
+
+      .comment_btn_not_login {
+        background-color: rgb(131, 130, 130);
+        color: #000;
+        font-weight: bold;
+        float: right;
+        width: 105px;
+        height: 36px;
         outline: none;
       }
     }

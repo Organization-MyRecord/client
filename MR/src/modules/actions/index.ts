@@ -35,6 +35,14 @@ interface ToggleHanlder {
   type: ActionType.USER_ISLOGIN;
 }
 
+interface ToggleOpenSideBar {
+  type: ActionType.SIDEBAR_OPEN;
+}
+
+interface ToggleNoneSideBar {
+  type: ActionType.SIDEBAR_NONE;
+}
+
 //게시물 관련
 interface GetPostAction {
   type: ActionType.POST_INFO;
@@ -71,7 +79,9 @@ export type Action =
   | LogoutAction
   | ModalAction
   | CloseModalAction
-  | ToggleHanlder;
+  | ToggleHanlder
+  | ToggleOpenSideBar
+  | ToggleNoneSideBar;
 export type PostAction =
   | GetPostAction
   | RegisterPostAction

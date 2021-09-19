@@ -17,8 +17,8 @@ import ChangeInfo from "./Components/ChangeInfo";
 
 function App() {
   const dispatch = useDispatch();
-
   const bool = useSelector((state: RootState) => state.Modal);
+  const toggleSideBar = useSelector((state: RootState) => state.User.toggleSidebar); //true면 사이드바 보이고 false면 안보임
 
   const CloseModal = () => {
     dispatch(CloseModalHandler());
@@ -30,7 +30,7 @@ function App() {
         <header>
           <Topbar />
         </header>
-        <aside>
+        <aside style={{ display: toggleSideBar ? "" : "none" }}>
           <Sidebar />
         </aside>
         <section className="Global_section">

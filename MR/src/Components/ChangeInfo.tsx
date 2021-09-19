@@ -8,7 +8,6 @@ import { RootState } from "../modules/Store";
 import "../styles/change-info.scss";
 
 function ChangeInfo() {
-  const [currentPage, setcurrentPage] = useState(1);
   const dispatch = useDispatch();
   const history = useHistory();
   const email = useSelector((state: RootState) => state.User.myData.email);
@@ -23,9 +22,6 @@ function ChangeInfo() {
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
   const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
-  };
-  const changePage = (page) => {
-    setcurrentPage(page);
   };
 
   //분야를 select option

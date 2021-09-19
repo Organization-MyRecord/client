@@ -30,6 +30,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
   const [data, setdata] = useState<IData>();
   const [loading, setloading] = useState(true);
   const [btnLoading, setbtnLoading] = useState(false);
+  const [PostCommentData, setPostCommentData] = useState<any>();
   const [comment, setcomment] = useState("");
   const { postId, userEmail } = match.params;
 
@@ -40,14 +41,20 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
     async function CallPostData(id: string) {
       await axios.get(`/api/post/${id}`).then((res) => setdata(res.data));
     }
+    async function CallComment(postId: string) {
+      await axios.get(`/api/post/${postId}/comment`).then((res) => setPostCommentData(res.data));
+    }
 
     CallPostData(postId).then(() => setloading(false));
-  }, [postId, userEmail]);
+    CallComment(postId);
+  }, [postId, userEmail, comment]);
 
   const myEmail = useSelector((state: RootState) => state.User.userEmail);
+  const isLogin = useSelector((state: RootState) => state.User.isLogin); //유저의 로그인 정보 확인
 
   const bool: boolean = myEmail === userEmail;
-  const replyList = data?.commentList.map((item) => {
+
+  const replyList = PostCommentData?.map((item) => {
     return (
       <Reply
         key={item.commentId}
@@ -98,7 +105,9 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
   return (
     <React.Fragment>
       {loading ? (
-        <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
+        <div style={{ left: "50%", top: "50%" }}>
+          <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
+        </div>
       ) : (
         <div className="view_wrapper">
           <div style={{ float: "right" }}>
@@ -125,7 +134,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
           <div className="reply_area">
             <div className="reply_info">
               <p className="item_inf">
-                댓글 <span className="reply_count">{data?.commentList.length}개</span>
+                댓글 <span className="reply_count">{PostCommentData?.length}개</span>
               </p>
               <button className="fold" style={{ display: "none" }}>
                 댓글 접기
@@ -142,11 +151,16 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
                 <textarea
                   value={comment}
                   onChange={commentOnchangeHandler}
-                  placeholder="댓글을 입력해주세요."
+                  placeholder={isLogin ? "댓글을 입력해주세요" : "댓글을 남기시려면 로그인을 해주세요!"}
+                  readOnly={isLogin ? false : true}
                 ></textarea>
               </div>
               <div className="form_reg">
-                <button type="submit" className="comment_btn">
+                <button
+                  type="submit"
+                  className={isLogin ? "comment_btn" : "comment_btn_not_login"}
+                  disabled={isLogin ? false : true}
+                >
                   {btnLoading ? <Loader type="Oval" color="#3d66ba" height={15} width={15} timeout={3000} /> : "등록"}
                 </button>
               </div>

@@ -26,11 +26,15 @@ export const LoginHandler = (Email: string, Password: string, dispa: any, setope
       .then((response) => {
         sessionStorage.setItem("token", response.data.token);
 
-        dispatch({
-          type: ActionType.LOGIN_USER,
-          payload: response.data,
-          email: response.data.email,
-        });
+        if (response.data.ok) {
+          dispatch({
+            type: ActionType.LOGIN_USER,
+            payload: response.data,
+            email: response.data.email,
+          });
+        } else {
+          dispa(OpenModalHandler(response.data.description));
+        }
       })
       .then(() => {
         setopenmodal(false);
@@ -89,12 +93,15 @@ export const GetUserInfo = (email) => {
         type: ActionType.USER_INFO,
         payload: res.data,
       });
+      dispatch({
+        type: ActionType.SIDEBAR_NONE,
+      });
     });
   };
 };
 
 //로그아웃
-export const LogoutHandler = (hisory: any, dispa: any) => {
+export const LogoutHandler = (dispa: any) => {
   return (dispatch: Dispatch<Action>) => {
     sessionStorage.removeItem("token");
     dispatch({
@@ -102,7 +109,6 @@ export const LogoutHandler = (hisory: any, dispa: any) => {
     });
 
     dispa(OpenModalHandler("로그아웃 되었습니다."));
-    hisory.push("/");
   };
 };
 
@@ -111,6 +117,24 @@ export const IsLoginHandler = () => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
       type: ActionType.USER_ISLOGIN,
+    });
+  };
+};
+
+//사이드바 있음
+export const SideBarOpenHandler = () => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SIDEBAR_OPEN,
+    });
+  };
+};
+
+//사이드바 없음
+export const SideBarNoneHandler = () => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SIDEBAR_NONE,
     });
   };
 };

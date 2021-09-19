@@ -8,7 +8,7 @@ interface IArray {
   commentTime: string;
 }
 
-interface IReply {
+export interface IReply {
   commentId: number;
   userName: string;
   userImage: string;
@@ -44,6 +44,7 @@ function Reply(props: IReply) {
           </Link>
         </div>
       </div>
+      <ul></ul>
     </li>
   );
 }
