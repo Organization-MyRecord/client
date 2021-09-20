@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaPlusSquare } from "react-icons/fa";
 import "../styles/reply.scss";
 interface IArray {
   commentId: number;
@@ -16,7 +17,6 @@ export interface IReply {
   commentTime: string;
   commentList: Array<IArray>;
 }
-
 function Reply(props: IReply) {
   return (
     <li className="comment">
@@ -36,12 +36,8 @@ function Reply(props: IReply) {
         <p>{props.comment}</p>
         <span className="date">{props.commentTime}</span>
         <div className="modify">
-          <Link to="">
-            <p>답글</p>
-          </Link>
-          <Link to="">
-            <p>수정/삭제</p>
-          </Link>
+          <FaPlusSquare className="plus" size="19" />
+          <p>2개의 답글</p>
         </div>
       </div>
       <ul></ul>

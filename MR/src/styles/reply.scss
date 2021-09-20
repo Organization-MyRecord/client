@@ -36,11 +36,17 @@
     }
     .modify {
       display: flex;
-      margin-top: 8px;
+      margin-top: 18px;
       font-size: 15px;
+      cursor: pointer;
       p {
         margin-right: 8px;
-        color: #777;
+        color: #5c8fc2;
+        font-weight: bold;
+      }
+      .plus {
+        color: #5c8fc2;
+        margin-right: 0.5rem;
       }
     }
   }
