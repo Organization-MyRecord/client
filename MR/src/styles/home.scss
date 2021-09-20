@@ -172,6 +172,7 @@
     height: 400px;
     flex-direction: column;
     justify-content: flex-start;
+    text-decoration: none;
     top: 0;
     .thumb {
       padding-bottom: 60%;
@@ -189,7 +190,7 @@
       -webkit-box-orient: vertical;
 
       h1 {
-        text-decoration: none;
+        font-weight: bold;
       }
 
       h6 {

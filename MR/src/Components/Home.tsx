@@ -15,6 +15,15 @@ interface IPost {
   content: string;
 }
 
+//텍스트에서 이미지 및 줄바꿈 삭제
+function DeleteTag(content: string) {
+  const brTag = /<BR(.*?)>/gi;
+  const imageTag = /<IMG(.*?)>/gi;
+  const text = content.replace(brTag, "");
+
+  return text.replace(imageTag, "");
+}
+
 function Home() {
   const isLogin = useSelector((state: RootState) => state.User.isLogin);
   const [Loading, setLoading] = useState(true);
@@ -30,7 +39,7 @@ function Home() {
 
   const MainData = useSelector((state: RootState) => state.Post.TotalData);
 
-  const pop = MainData?.popularPostResponseList?.slice(0, 3);
+  const pop = MainData?.popularPostResponseList?.slice(0, 4);
   const pop2 = MainData?.popularPostResponseList?.slice(3, 6);
 
   //인기 글 가져오기
@@ -51,7 +60,7 @@ function Home() {
           <h6
             style={{ overflow: "hidden", textOverflow: "ellipsis" }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(item.content),
+              __html: DOMPurify.sanitize(DeleteTag(item.content)),
             }}
           />
           <span></span>
@@ -77,7 +86,7 @@ function Home() {
           <h6
             style={{ overflow: "hidden", textOverflow: "ellipsis" }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(item.content),
+              __html: DOMPurify.sanitize(DeleteTag(item.content)),
             }}
           />
           <span></span>
@@ -104,7 +113,7 @@ function Home() {
           <h6
             style={{ overflow: "hidden", textOverflow: "ellipsis" }}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(item.content),
+              __html: DOMPurify.sanitize(DeleteTag(item.content)),
             }}
           />
           <span></span>
