@@ -47,7 +47,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
 
     CallPostData(postId).then(() => setloading(false));
     CallComment(postId);
-  }, [postId, userEmail, comment]);
+  }, [postId, userEmail, comment, data?.commentList]);
 
   const myEmail = useSelector((state: RootState) => state.User.userEmail);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //유저의 로그인 정보 확인
@@ -64,6 +64,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
         comment={item.comment}
         commentTime={item.commentTime}
         commentList={item.commentList}
+        MainPostId={postId}
       />
     );
   });
@@ -136,12 +137,6 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
               <p className="item_inf">
                 댓글 <span className="reply_count">{PostCommentData?.length}개</span>
               </p>
-              <button className="fold" style={{ display: "none" }}>
-                댓글 접기
-              </button>
-              <button className="spread" style={{ display: "none" }}>
-                댓글 펼치기
-              </button>
             </div>
             <ul className="reply_content">{replyList}</ul>
           </div>

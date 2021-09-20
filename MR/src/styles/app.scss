@@ -45,6 +45,49 @@ $large: 1.05em;
 $x-large: 1.1em;
 $xx-large: 1.15em;
 
+@mixin replyForm {
+  .reply_write {
+    margin-top: 10px;
+    .form_content {
+      padding-bottom: 10px;
+
+      textarea {
+        border: 1px solid #1eb49f;
+        width: 100%;
+        height: 102px;
+        padding: 9px 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+        vertical-align: top;
+        resize: none;
+      }
+    }
+    .form_reg {
+      display: block;
+      margin-top: 15px;
+
+      .comment_btn {
+        background-color: #5c8fc2;
+        float: right;
+        width: 105px;
+        height: 36px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .comment_btn_not_login {
+        background-color: rgb(131, 130, 130);
+        color: #000;
+        font-weight: bold;
+        float: right;
+        width: 105px;
+        height: 36px;
+        outline: none;
+      }
+    }
+  }
+}
+
 .app {
   width: 100%;
   height: 100%;
