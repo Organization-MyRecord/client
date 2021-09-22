@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,17 +6,29 @@ import { useHistory } from "react-router";
 import { GetUserInfo, SideBarOpenHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
+import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 import "../styles/mypage.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+async function GetDirectoryList(setdirectoties: any) {
+  await axios
+    .get("/api/directory", {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+    })
+    .then((res) => setdirectoties(res.data));
+}
 
 function Mypage() {
   const [currentPage, setcurrentPage] = useState(1);
+  const [directoties, setdirectoties] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const email = useSelector((state: RootState) => state.User.myData.email);
 
   useEffect(() => {
     dispatch(GetUserInfo(email));
+    GetDirectoryList(setdirectoties);
 
     return () => {
       dispatch(SideBarOpenHandler());
@@ -27,6 +39,14 @@ function Mypage() {
 
   const changePage = (page) => {
     setcurrentPage(page);
+  };
+
+  const onClickHandler = () => {
+    if (directoties === null) {
+      dispatch(OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!"));
+    } else {
+      history.push("/post");
+    }
   };
 
   const MyPost = userData?.myPostList?.map((item: any) => {
@@ -126,12 +146,7 @@ function Mypage() {
         <div className="mypost">
           <div className="post_info">
             전체글 {userData?.postPagination.totalElements}개
-            <button
-              className="post_btn"
-              onClick={() => {
-                history.push("/post");
-              }}
-            >
+            <button className="post_btn" onClick={onClickHandler}>
               글쓰기
             </button>
           </div>
