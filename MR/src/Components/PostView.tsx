@@ -14,7 +14,7 @@ interface MatchParams {
   userEmail: string;
 }
 
-export type IData = {
+type IData = {
   classification: string;
   content: any;
   id: number;
@@ -26,12 +26,25 @@ export type IData = {
   commentList: any;
 };
 
+type IAnother = {
+  postUnderResponseList: IAnotherArray[];
+};
+
+type IAnotherArray = {
+  postDate: string;
+  postId: number;
+  postName: string;
+};
+
 function PostView({ match }: RouteComponentProps<MatchParams>) {
   const [data, setdata] = useState<IData>();
   const [loading, setloading] = useState(true);
   const [btnLoading, setbtnLoading] = useState(false);
   const [PostCommentData, setPostCommentData] = useState<any>();
+  const [anotherPostList, setanotherPostList] = useState<IAnother>();
   const [comment, setcomment] = useState("");
+  const [recomment, setrecomment] = useState("");
+  const [active, setactive] = useState(-1);
   const { postId, userEmail } = match.params;
 
   const history = useHistory();
@@ -44,16 +57,21 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
     async function CallComment(postId: string) {
       await axios.get(`/api/post/${postId}/comment`).then((res) => setPostCommentData(res.data));
     }
-
+    async function AnotherPostList(postId: string) {
+      await axios.get(`/api/post/another/${postId}`).then((res) => {
+        setanotherPostList(res.data);
+      });
+    }
+    AnotherPostList(postId);
     CallPostData(postId).then(() => setloading(false));
     CallComment(postId);
-  }, [postId, userEmail, comment, data?.commentList]);
+  }, [postId, userEmail, comment, recomment]);
 
-  const myEmail = useSelector((state: RootState) => state.User.userEmail);
+  const myEmail = useSelector((state: RootState) => state.User.userEmail); //이메일 정보 확인
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //유저의 로그인 정보 확인
 
   const bool: boolean = myEmail === userEmail;
-
+  //댓글 리스트 보여주기
   const replyList = PostCommentData?.map((item) => {
     return (
       <Reply
@@ -65,6 +83,10 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
         commentTime={item.commentTime}
         commentList={item.commentList}
         MainPostId={postId}
+        recomment={recomment}
+        setrecomment={setrecomment}
+        active={active}
+        setactive={setactive}
       />
     );
   });
@@ -103,6 +125,17 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
     dispatch(DeletePostHandler(id, history, dispatch));
   };
 
+  const anotherList = anotherPostList?.postUnderResponseList.map((item) => {
+    return (
+      <tr key={item.postId} className="another_tr">
+        <td>
+          <Link to={`/post/${userEmail}/${item.postId}`}>{item.postName}</Link>
+        </td>
+        <td>{item.postDate}</td>
+      </tr>
+    );
+  });
+
   return (
     <React.Fragment>
       {loading ? (
@@ -131,6 +164,16 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
               </div>
             </div>
             <div className="view" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
+          </div>
+          <div className="another_post_area">
+            <table className="another_post">
+              <thead>
+                <tr>
+                  <th>{data?.postUserEmail}의 다른 글</th>
+                </tr>
+              </thead>
+              <tbody>{anotherList}</tbody>
+            </table>
           </div>
           <div className="reply_area">
             <div className="reply_info">

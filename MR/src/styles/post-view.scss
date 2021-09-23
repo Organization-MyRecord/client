@@ -35,7 +35,27 @@
       line-height: 28px;
     }
   }
+  .another_post_area {
+    margin: 25px 0px 0px 10px;
 
+    .another_post {
+      padding: 10px 10px 5px;
+      border: 1px solid #e5e5e5;
+      clear: both;
+      width: 100%;
+    }
+
+    tbody {
+      margin-top: 10px;
+      color: #909090;
+    }
+    .another_tr {
+      border-bottom: 1px solid #dadce0;
+      &:hover {
+        background-color: #dadce0;
+      }
+    }
+  }
   .reply_area {
     margin-top: 40px;
     width: 100%;

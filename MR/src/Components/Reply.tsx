@@ -22,17 +22,23 @@ export interface IReply {
   commentTime: string;
   MainPostId: string;
   commentList: IArray[];
+  recomment: string;
+  setrecomment: (text: string) => void;
+  active: number;
+  setactive: (num: number) => void;
 }
 function Reply(props: IReply) {
   const dispatch = useDispatch();
   const [state, setstate] = useState(false); //대댓글 리스트보이게 하는 state
-  const [formState, setformState] = useState(false); //답글달기 보이게 하는 state
-  const [recomment, setrecomment] = useState(""); //댓글 달기
   const [btnLoading, setbtnLoading] = useState(false);
-  //댓글 작성
-  const commentOnchangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    setrecomment(e.currentTarget.value);
+  const { recomment, setrecomment } = props;
+
+  //답글달기 하나만 보이게 하기
+  const toggleHandler = () => {
+    props.setactive(props.commentId);
+    if (props.active === props.commentId) {
+      props.setactive(-1);
+    }
   };
 
   //대댓글 작성 함수
@@ -55,6 +61,12 @@ function Reply(props: IReply) {
         setrecomment("");
         setbtnLoading(false);
       });
+  };
+
+  //대댓글 작성
+  const reCommentOnchangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    setrecomment(e.currentTarget.value);
   };
 
   //댓글 삭제 함수
@@ -115,19 +127,23 @@ function Reply(props: IReply) {
             <FaPlusSquare className="plus" size="19" />
             <p>{props.commentList.length}개의 답글</p>
           </div>
-          <h5 className="recomment_btn" onClick={() => setformState(!formState)}>
+          <h5 className="recomment_btn" onClick={toggleHandler}>
             답글달기
           </h5>
           <h5 className="recomment_btn" onClick={DeleteCommentHandler}>
             삭제
           </h5>
         </div>
-        <form className={formState ? "" : "recomment_form"} onSubmit={onsubmit} style={{ marginBottom: "70px" }}>
+        <form
+          className={props.active === props.commentId ? "" : "recomment_form"}
+          onSubmit={onsubmit}
+          style={{ marginBottom: "70px" }}
+        >
           <div className="reply_write">
             <div className="form_content">
               <textarea
                 value={recomment}
-                onChange={commentOnchangeHandler}
+                onChange={reCommentOnchangeHandler}
                 placeholder="답글을 입력해주세요."
               ></textarea>
             </div>
