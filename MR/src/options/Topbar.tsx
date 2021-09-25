@@ -29,6 +29,12 @@ function Topbar() {
     setOpenModal(false);
   };
 
+  const HandleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      history.push(`/postList/-/${Keyword}`);
+    }
+  };
+
   return (
     <header className="topbar">
       <Link to="/">
@@ -37,8 +43,16 @@ function Topbar() {
         </div>
       </Link>
       <div className="bar_search">
-        <input type="text" placeholder="레코드를 입력하세요." value={Keyword} onChange={onchange} />
-        <button className="search_logo">검색</button>
+        <input
+          type="text"
+          placeholder="레코드를 입력하세요."
+          value={Keyword}
+          onChange={onchange}
+          onKeyDown={HandleKeyPress}
+        />
+        <Link to={`/postList/-/${Keyword}`}>
+          <button className="search_logo">검색</button>
+        </Link>
       </div>
       <div className="bar_info">
         <button className={isLogin ? "small_btn unvisible" : "small_btn"} onClick={onOpen}>
