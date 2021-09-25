@@ -23,7 +23,6 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     if (update != undefined) {
       CallPostData(update).then(() => setLoading(false));
     } else {
-      console.log("여기??");
       setLoading(false);
       return;
     }

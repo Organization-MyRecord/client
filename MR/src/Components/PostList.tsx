@@ -8,16 +8,24 @@ import "../styles/post-list.scss";
 
 interface Iprams {
   Field: string;
+  KeyWord: string;
 }
 
 function PostList({ match }: RouteComponentProps<Iprams>) {
-  const { Field } = match.params;
+  const { Field, KeyWord } = match.params;
   const field: string = Field.replace(/-/gi, "/");
   const dispatch = useDispatch();
 
+  console.log(Field, KeyWord);
+  console.log(match);
+
   useEffect(() => {
-    dispatch(GetFieldPostHandler(field));
-  }, [Field]);
+    if (Field === "-") {
+      //여기에 키워드값 실행
+    } else {
+      dispatch(GetFieldPostHandler(field));
+    }
+  }, [Field, KeyWord]);
 
   const data = useSelector((state: RootState) => state.Post.FieldData);
   const date = data?.myPostList?.postDate;

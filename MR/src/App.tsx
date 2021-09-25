@@ -50,7 +50,11 @@ function App() {
               path="/post/:userEmail/:postId"
               component={PostView}
             />
-            <Route exact={true} path="/postList/:Field" component={PostList} />
+            <Route
+              exact={true}
+              path="/postList/:Field?/:KeyWord?"
+              component={PostList}
+            />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>
