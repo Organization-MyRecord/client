@@ -43,7 +43,9 @@ function Mypage() {
 
   const onClickHandler = () => {
     if (directoties === null) {
-      dispatch(OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!"));
+      dispatch(
+        OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!")
+      );
     } else {
       history.push("/post");
     }
@@ -65,7 +67,10 @@ function Mypage() {
             ></div>
           </Link>
           <div className="box_content">
-            <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
+            <Link
+              className="link_title"
+              to={`/post/${userData.email}/${item.id}`}
+            >
               <strong className="post_title">{item.postName}</strong>
             </Link>
             <div className="post_info">
@@ -137,7 +142,8 @@ function Mypage() {
               </tr>
             </tbody>
           </table>
-          Discription : <br />
+          Description:
+          <br />
           무엇 전직업 대학교
         </div>
       </div>
@@ -150,7 +156,9 @@ function Mypage() {
               글쓰기
             </button>
           </div>
-          <ul className="list">{MyPost == null ? "표시할 정보가 없습니다." : MyPost}</ul>
+          <ul className="list">
+            {MyPost == null ? "표시할 정보가 없습니다." : MyPost}
+          </ul>
           <ReactPaginate
             pageCount={userData?.postPagination.totalPages} //총 페이지 수
             pageRangeDisplayed={10} //한 페이지에 표시할 게시글 수

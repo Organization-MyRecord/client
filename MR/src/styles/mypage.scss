@@ -1,32 +1,42 @@
 @import "./app.scss";
-
+* {
+  font-family: "IBMPlexSansKR-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 .mypage {
+  margin-left: -150px;
+  margin-top: 25px;
   width: 100%;
   position: absolute;
   display: flex;
   white-space: nowrap;
+  font-family: "IBMPlexSansKR-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+
   .profile_cotainer {
     justify-content: center;
     flex-direction: column;
     align-items: center;
     margin: 0px 20px;
 
-    height: 400px;
     .profile {
       display: flex;
-      background-color: white;
       justify-content: center;
       padding: 20px;
       margin-bottom: 40px;
       flex-direction: column;
-      border: 1px solid #5c8fc2;
-
       text-align: center;
       align-items: center;
 
       #user_icon {
         margin-top: 5px;
-        font-size: 60px;
+        font-size: 80px;
         color: rgba(1, 1, 1, 0.6);
       }
 
@@ -35,18 +45,22 @@
       }
       a {
         color: gray;
-        font-size: 10px;
+        font-size: 12px;
       }
       table {
         font-size: 12px;
         text-align: justify;
       }
       td {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         padding-right: 10px;
+        font-size: 14px;
       }
 
       .box {
-        background-color: #bdbdbd;
+        background-color: #5c8fc2;
         width: 60px;
         height: 60px;
         border-radius: 70%;
@@ -64,7 +78,7 @@
       display: flex;
       padding: 20px;
       flex-direction: column;
-      align-items: center;
+      align-items: left;
       font-size: 12px;
       border: 1px solid #5c8fc2;
       table {
@@ -77,30 +91,32 @@
   }
   .mypost_container {
     display: flex;
-    width: 70%;
+    width: 100%;
     height: 600px;
     flex-direction: column;
     ul {
       list-style: none;
     }
     .mypost {
-      width: 70%;
+      width: 85%;
     }
     .list {
       .list_item {
-        margin-bottom: 60px;
+        margin-bottom: 30px;
         &:hover {
-          background-color: rgb(214, 210, 210);
+          background-color: #e3f0f8;
         }
         .content {
           clear: both;
           display: flex;
+          border-bottom: 1px solid #5c8fc2;
 
           .post_image {
             width: 200px;
             height: 200px;
             margin-right: 24px;
             display: flex;
+            border-radius: 30%;
           }
 
           .box_content {
@@ -108,8 +124,8 @@
             margin-left: 24px;
 
             .link_title {
-              color: #111;
-              font-weight: bold;
+              color: black;
+              text-decoration: none;
               overflow: hidden;
               text-overflow: ellipsis;
               display: -webkit-box;
@@ -118,23 +134,23 @@
 
               .post_title {
                 padding: 8px 0 4px 0;
+
                 font-size: x-large;
-                line-height: 34px;
               }
             }
 
             .post_info {
               padding-bottom: 20px;
-              font-family: Arial, Helvetica, sans-serif;
 
               .userName {
-                color: #888;
-                text-decoration: underline;
+                color: #5c8fc2;
+                text-decoration: none;
+                font-weight: 100;
               }
               .date {
                 margin-left: 5px;
                 padding-left: 9px;
-                color: #888;
+                color: #5c8fc2;
               }
             }
 
@@ -160,11 +176,14 @@
     }
 
     .motto {
+      position: relative;
+      width: 85%;
+
       background-color: #cbdfec;
       text-align: center;
       color: white;
-      font-size: 15px;
-      padding: 30px;
+      font-size: 18px;
+      padding: 30px 0px;
       margin-bottom: 20px;
     }
     .post_detail {
@@ -177,8 +196,6 @@
 
         text-align: center;
         tr {
-          width: 100%;
-
           #title {
             font-weight: bold;
           }
@@ -212,7 +229,7 @@
   padding: 10px 0px 0px 0px;
   margin: 0 auto;
   position: absolute;
-  width: 50%;
+  width: 70%;
   //bottom: 25px;
   text-align: center;
   * {
@@ -252,5 +269,7 @@
   }
 }
 .post_btn {
-  background-color: #5c8fc2;
+  cursor: pointer;
+  border: 1px solid #5c8fc2;
+  border-radius: 10px;
 }
