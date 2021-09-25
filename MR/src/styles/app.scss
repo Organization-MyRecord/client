@@ -45,6 +45,11 @@ $large: 1.05em;
 $x-large: 1.1em;
 $xx-large: 1.15em;
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
 @mixin replyForm {
   .reply_write {
     margin-top: 10px;
