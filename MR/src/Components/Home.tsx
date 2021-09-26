@@ -34,10 +34,10 @@ function Home() {
     if (!sessionStorage.getItem("token")) {
       dispatch(IsLoginHandler());
     }
-    dispatch(GetPostHandler(setLoading));
+    dispatch(GetPostHandler(setLoading, dispatch));
   }, [isLogin]);
 
-  const MainData = useSelector((state: RootState) => state.Post.TotalData);
+  const MainData = useSelector((state: RootState) => state.Post.TotalData.value);
 
   const pop = MainData?.popularPostResponseList?.slice(0, 4);
   const pop2 = MainData?.popularPostResponseList?.slice(3, 6);

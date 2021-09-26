@@ -7,15 +7,20 @@ import axios from "axios";
 import { OpenModalHandler } from "./ModalIndex";
 
 //메인페이지 게시글 가져오기
-export const GetPostHandler = (setLoading: any) => {
+export const GetPostHandler = (setLoading: any, dispa: any) => {
   return async (dispatch: Dispatch<PostAction>) => {
     if (sessionStorage.getItem("token") == null) {
       await axios.get("/api/main").then((res) => {
-        dispatch({
-          type: ActionType.POST_INFO,
-          payload: res.data,
-        });
-        setLoading(false);
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.POST_INFO,
+            payload: res.data,
+          });
+          setLoading(false);
+        } else {
+          dispa(OpenModalHandler(res.data.description));
+          setLoading(false);
+        }
       });
     } else {
       await axios
@@ -23,11 +28,16 @@ export const GetPostHandler = (setLoading: any) => {
           headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
         })
         .then((res) => {
-          dispatch({
-            type: ActionType.POST_INFO,
-            payload: res.data,
-          });
-          setLoading(false);
+          if (res.data.result) {
+            dispatch({
+              type: ActionType.POST_INFO,
+              payload: res.data,
+            });
+            setLoading(false);
+          } else {
+            dispa(OpenModalHandler(res.data.description));
+            setLoading(false);
+          }
         });
     }
   };
@@ -57,13 +67,15 @@ export const PostRegistHandler = (
         },
       )
       .then((res) => {
-        dispatch({
-          type: ActionType.POST_REGISTRATION,
-          payload: res.data,
-        });
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.POST_REGISTRATION,
+            payload: res.data.value,
+          });
 
-        dispa(OpenModalHandler("등록이 완료되었습니다!"));
-        history.push(`/post/${res.data.postUserEmail}/${res.data.id}`);
+          dispa(OpenModalHandler(res.data.description));
+          history.push(`/post/${res.data.postUserEmail}/${res.data.id}`);
+        }
       });
   };
 };
@@ -79,10 +91,8 @@ export const DeletePostHandler = (postId: number, hitsory: any, dispa) => {
         dispatch({
           type: ActionType.POST_DELETE,
         });
-        if (res.data) {
-          dispa(OpenModalHandler("게시글이 정상적으로 삭제되었습니다."));
-        } else {
-          dispa(OpenModalHandler("게시글 삭제에 실패하였습니다."));
+        if (res.data.result) {
+          dispa(OpenModalHandler("게시글이 정상적으로 삭제 되었습니다."));
         }
       })
       .then(() => hitsory.push("/mypage"));
@@ -102,13 +112,34 @@ export const GetPostingHandler = (postId) => {
 };
 
 //분야별 조회
-export const GetFieldPostHandler = (field) => {
+export const GetFieldPostHandler = (field: string, dispa: any) => {
   return async (dispatch: Dispatch<PostAction>) => {
     await axios.get(`/api/post?field=${field}`).then((res) => {
-      dispatch({
-        type: ActionType.POST_GET_FIELD,
-        payload: res.data,
-      });
+      if (res.data.result) {
+        dispatch({
+          type: ActionType.POST_GET_FIELD,
+          payload: res.data.value,
+        });
+      } else {
+        dispa(OpenModalHandler(res.data.description));
+      }
+    });
+  };
+};
+
+//게시물 검색
+export const GetSearchHandler = (keyword: string, page: number, dispa: any) => {
+  console.log(keyword);
+  return async (dispatch: Dispatch<PostAction>) => {
+    await axios.get(`/api/search?keyword=${keyword}`).then((res) => {
+      if (res.data.result) {
+        dispatch({
+          type: ActionType.POST_SEARCH,
+          payload: res.data.value,
+        });
+      } else {
+        dispa(OpenModalHandler(res.data.description));
+      }
     });
   };
 };
@@ -129,13 +160,17 @@ export const PostUpdateHandelr = (content: string, newPostName: string, postId: 
         },
       )
       .then((res) => {
-        dispatch({
-          type: ActionType.POST_UPDATE,
-          payload: res.data,
-        });
-        dispa(OpenModalHandler("게시글이 정상적으로 수정되었습니다."));
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.POST_UPDATE,
+            payload: res.data.value,
+          });
+          dispa(OpenModalHandler(res.data.description));
 
-        history.push("/mypage");
+          history.push("/mypage");
+        } else {
+          dispa(OpenModalHandler(res.data.description));
+        }
       });
   };
 };

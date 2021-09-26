@@ -14,6 +14,7 @@ export enum ActionType {
   POST_GET = "GET_POST",
   POST_GET_FIELD = "POST_GET_FIELD",
   POST_UPDATE = "POST_UPDATE",
+  POST_SEARCH = "POST_SEARCH",
 
   //모달 관련
   OPEN_MODAL = "OPEN_MODAL",

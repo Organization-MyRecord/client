@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
-import { GetFieldPostHandler } from "../modules/action-creator/PostIndex";
+import { GetFieldPostHandler, GetSearchHandler } from "../modules/action-creator/PostIndex";
 import DOMPurify from "dompurify";
 import { RootState } from "../modules/Store";
 import "../styles/post-list.scss";
@@ -14,16 +14,18 @@ interface Iprams {
 function PostList({ match }: RouteComponentProps<Iprams>) {
   const { Field, KeyWord } = match.params;
   const field: string = Field.replace(/-/gi, "/");
+  const [page, setpage] = useState(0);
   const dispatch = useDispatch();
 
-  console.log(Field, KeyWord);
-  console.log(match);
+  console.log(setpage);
 
   useEffect(() => {
     if (Field === "-") {
-      //여기에 키워드값 실행
+      dispatch(GetSearchHandler(KeyWord, page, dispatch));
+      console.log("어디로가니~~");
     } else {
-      dispatch(GetFieldPostHandler(field));
+      dispatch(GetFieldPostHandler(field, dispatch));
+      console.log("여기로 갔니~~");
     }
   }, [Field, KeyWord]);
 

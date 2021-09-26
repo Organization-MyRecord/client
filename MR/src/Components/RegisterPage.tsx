@@ -5,6 +5,7 @@ import { options, Major } from "../options/options";
 import { RegisterHandler, SideBarNoneHandler, SideBarOpenHandler } from "../modules/action-creator";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 type ops = { view: string; value: string };
 
 function Getage(day: string): number {
@@ -119,13 +120,17 @@ export default function RegisterPage() {
 
   const emailAuth = () => {
     axios.get(`api/email?email=${Email}`).then((res) => {
-      console.log(res);
+      dispatch(OpenModalHandler(res.data));
       settoggle(true);
     });
   };
 
   const aaa = () => {
-    axios.get(`api/verify?email=${Email}&randomCode=${Anum}`).then((res) => console.log(res));
+    axios.get(`api/verify?email=${Email}&randomCode=${Anum}`).then((res) => {
+      res.data
+        ? dispatch(OpenModalHandler("인증이 성공적으로 완료 되었습니다!"))
+        : dispatch(OpenModalHandler("인증번호가 틀렸습니다."));
+    });
   };
   return (
     <div className="big_container">

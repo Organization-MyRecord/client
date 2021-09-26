@@ -72,6 +72,11 @@ interface UpdatePostAction {
   type: ActionType.POST_UPDATE;
   payload: string;
 }
+
+interface PostSearchAction {
+  type: ActionType.POST_SEARCH;
+  payload: string;
+}
 export type Action =
   | LoginAction
   | RegisterAction
@@ -88,6 +93,7 @@ export type PostAction =
   | DeletePostAction
   | GetPostingAction
   | GetFieldAction
-  | UpdatePostAction;
+  | UpdatePostAction
+  | PostSearchAction;
 
 export type ModalAction = OpenModalAction | CloseModalAction;

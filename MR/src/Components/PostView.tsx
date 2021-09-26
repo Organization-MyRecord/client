@@ -8,6 +8,7 @@ import Loader from "react-loader-spinner";
 import "../styles/post-view.scss";
 import { DeletePostHandler } from "../modules/action-creator/PostIndex";
 import Reply from "./Reply";
+import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 
 interface MatchParams {
   postId: string;
@@ -55,16 +56,32 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
       await axios.get(`/api/post/${id}`).then((res) => setdata(res.data));
     }
     async function CallComment(postId: string) {
-      await axios.get(`/api/post/${postId}/comment`).then((res) => setPostCommentData(res.data));
+      await axios.get(`/api/post/${postId}/comment`).then((res) => {
+        if (res.data.result) {
+          setPostCommentData(res.data.value);
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+          history.push("/");
+        }
+      });
     }
     async function AnotherPostList(postId: string) {
       await axios.get(`/api/post/another/${postId}`).then((res) => {
-        setanotherPostList(res.data);
+        if (res.data.result) {
+          setanotherPostList(res.data.value);
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+        }
       });
     }
     AnotherPostList(postId);
     CallPostData(postId).then(() => setloading(false));
     CallComment(postId);
+
+    return () => {
+      setloading(false);
+      setbtnLoading(false);
+    };
   }, [postId, userEmail, comment, recomment]);
 
   const myEmail = useSelector((state: RootState) => state.User.userEmail); //이메일 정보 확인
