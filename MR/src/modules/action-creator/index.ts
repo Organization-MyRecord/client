@@ -32,13 +32,13 @@ export const LoginHandler = (Email: string, Password: string, dispa: any, setope
             payload: response.data,
             email: response.data.email,
           });
+          dispa(OpenModalHandler(response.data.description));
         } else {
           dispa(OpenModalHandler(response.data.description));
         }
       })
       .then(() => {
         setopenmodal(false);
-        dispa(OpenModalHandler("로그인이 완료되었습니다."));
       });
   };
 };
@@ -77,9 +77,9 @@ export const RegisterHandler = (
         dispatch({
           type: ActionType.REGISTER_USER,
         });
+        dispa(OpenModalHandler(res.data));
       })
       .then(() => {
-        dispa(OpenModalHandler("회원가입이 성공적으로 완료되었습니다!"));
         hisory.push("/");
       });
   };

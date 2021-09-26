@@ -49,6 +49,11 @@ const Post = (state: PostState = initialState, action: PostAction) => {
         ...state,
         modalText: action.payload,
       };
+    case ActionType.POST_SEARCH:
+      return {
+        ...state,
+        FieldData: action.payload,
+      };
     default:
       return state;
   }
