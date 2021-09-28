@@ -14,7 +14,7 @@ export const GetPostHandler = (setLoading: any, dispa: any) => {
         if (res.data.result) {
           dispatch({
             type: ActionType.POST_INFO,
-            payload: res.data,
+            payload: res.data.value,
           });
           setLoading(false);
         } else {
@@ -31,7 +31,7 @@ export const GetPostHandler = (setLoading: any, dispa: any) => {
           if (res.data.result) {
             dispatch({
               type: ActionType.POST_INFO,
-              payload: res.data,
+              payload: res.data.value,
             });
             setLoading(false);
           } else {
@@ -131,7 +131,9 @@ export const GetFieldPostHandler = (field: string, dispa: any) => {
 export const GetSearchHandler = (keyword: string, page: number, dispa: any) => {
   console.log(keyword);
   return async (dispatch: Dispatch<PostAction>) => {
-    await axios.get(`/api/search?keyword=${keyword}`).then((res) => {
+    await axios.get(`/api/search/keyword=${keyword}`).then((res) => {
+      console.log(res);
+
       if (res.data.result) {
         dispatch({
           type: ActionType.POST_SEARCH,
