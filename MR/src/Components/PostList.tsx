@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { GetFieldPostHandler, GetSearchHandler } from "../modules/action-creator/PostIndex";
+import Loader from "react-loader-spinner";
 import DOMPurify from "dompurify";
 import { RootState } from "../modules/Store";
 import "../styles/post-list.scss";
@@ -14,25 +15,22 @@ interface Iprams {
 function PostList({ match }: RouteComponentProps<Iprams>) {
   const { Field, KeyWord } = match.params;
   const field: string = Field.replace(/-/gi, "/");
-  const [page, setpage] = useState(0);
-  const dispatch = useDispatch();
 
-  console.log(setpage);
+  const dispatch = useDispatch();
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
     if (Field === "-") {
-      dispatch(GetSearchHandler(KeyWord, page, dispatch));
-      console.log("어디로가니~~");
+      dispatch(GetSearchHandler(KeyWord, 0, dispatch, setloading));
     } else {
-      dispatch(GetFieldPostHandler(field, dispatch));
-      console.log("여기로 갔니~~");
+      dispatch(GetFieldPostHandler(field, dispatch, setloading));
     }
   }, [Field, KeyWord]);
 
   const data = useSelector((state: RootState) => state.Post.FieldData);
   const date = data?.myPostList?.postDate;
 
-  const fieldPost = data?.myPostList?.map((item: any) => {
+  const fieldPost = data.myPostList.map((item: any) => {
     return (
       <li className="list_item" key={item.id}>
         <div className="content">
@@ -64,9 +62,15 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
 
   return (
     <div className="List_Container">
-      <div className="category_list">
-        <ul className="list">{fieldPost}</ul>
-      </div>
+      {loading ? (
+        <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} />
+      ) : (
+        <div className="category_list">
+          <ul className="list">
+            {fieldPost.length === 0 ? <li className="none_posting">일치하는 글이 없습니다.</li> : fieldPost}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

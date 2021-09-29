@@ -112,37 +112,42 @@ export const GetPostingHandler = (postId) => {
 };
 
 //분야별 조회
-export const GetFieldPostHandler = (field: string, dispa: any) => {
+export const GetFieldPostHandler = (field: string, dispa: any, setloading: (bool: boolean) => void) => {
   return async (dispatch: Dispatch<PostAction>) => {
-    await axios.get(`/api/post?field=${field}`).then((res) => {
-      if (res.data.result) {
-        dispatch({
-          type: ActionType.POST_GET_FIELD,
-          payload: res.data.value,
-        });
-      } else {
-        dispa(OpenModalHandler(res.data.description));
-      }
-    });
+    await axios
+      .get(`/api/post?field=${field}`)
+      .then((res) => {
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.POST_GET_FIELD,
+            payload: res.data.value,
+          });
+        } else {
+          dispa(OpenModalHandler(res.data.description));
+        }
+      })
+      .then(() => setloading(false));
   };
 };
 
 //게시물 검색
-export const GetSearchHandler = (keyword: string, page: number, dispa: any) => {
-  console.log(keyword);
+export const GetSearchHandler = (keyword: string, page: number, dispa: any, setloading: (bool: boolean) => void) => {
   return async (dispatch: Dispatch<PostAction>) => {
-    await axios.get(`/api/search/keyword=${keyword}`).then((res) => {
-      console.log(res);
+    await axios
+      .get(`/api/search?keyword=${keyword}`)
+      .then((res) => {
+        console.log(res);
 
-      if (res.data.result) {
-        dispatch({
-          type: ActionType.POST_SEARCH,
-          payload: res.data.value,
-        });
-      } else {
-        dispa(OpenModalHandler(res.data.description));
-      }
-    });
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.POST_SEARCH,
+            payload: res.data.value,
+          });
+        } else {
+          dispa(OpenModalHandler(res.data.description));
+        }
+      })
+      .then(() => setloading(false));
   };
 };
 
