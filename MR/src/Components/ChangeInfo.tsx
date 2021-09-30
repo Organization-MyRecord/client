@@ -110,6 +110,7 @@ function ChangeInfo() {
         <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
         <div className="mypost">
           <div className="interests">
+            <span>회원정보 관리</span>
             <table>
               <tbody>
                 <tr>
@@ -123,7 +124,7 @@ function ChangeInfo() {
                     <input type="text" placeholder="변경 닉네임" value={Name} onChange={NameHandler} />
                   </td>
                 </tr>
-                <br />
+
                 <tr>
                   <td>현재 관심분야</td>
                   <td>{userData?.field}</td>
@@ -136,7 +137,7 @@ function ChangeInfo() {
                     </select>
                   </td>
                 </tr>
-                <br />
+
                 <tr>
                   <td>전공 계열</td>
                   <td>{userData?.major}</td>
@@ -149,7 +150,7 @@ function ChangeInfo() {
                     </select>
                   </td>
                 </tr>
-                <br />
+
                 <tr>
                   <td>Description :</td>
                   <td>

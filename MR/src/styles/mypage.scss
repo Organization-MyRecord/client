@@ -1,8 +1,7 @@
 @import "./app.scss";
 * {
   font-family: "IBMPlexSansKR-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -14,8 +13,7 @@
   display: flex;
   white-space: nowrap;
   font-family: "IBMPlexSansKR-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 
@@ -110,6 +108,7 @@
           clear: both;
           display: flex;
           border-bottom: 1px solid #5c8fc2;
+          padding: 10px 5px;
 
           .post_image {
             width: 200px;
@@ -214,6 +213,8 @@
     .post_info {
       display: flex;
       justify-content: space-between;
+      margin-left: 20px;
+      margin-bottom: 10px;
     }
   }
 
@@ -221,6 +222,10 @@
     display: flex;
     width: 10px;
     height: 10px;
+  }
+
+  .category {
+    width: 11.5rem;
   }
 }
 

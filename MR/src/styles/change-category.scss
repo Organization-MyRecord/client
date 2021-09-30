@@ -1,0 +1,101 @@
+.change_category {
+  .my_category {
+    padding: 25ps 29px 0;
+    height: 100%;
+    .wrap_order {
+      margin: 21px 0 30px;
+      padding: 8px;
+      border-radius: 1px;
+      background: #b0cdeb;
+      min-height: 200px;
+      .list_order {
+        height: auto;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        .total_list_item {
+          .item_order {
+            padding: 0 19px;
+            height: 52px;
+            margin-bottom: -1px;
+            border: 1px solid #e0e5ee;
+            font-size: 16px;
+            background: #fff;
+            box-sizing: border-box;
+            .text_name {
+              width: auto;
+              max-width: 260px;
+            }
+          }
+        }
+        .add_category_wrapper {
+          .edit {
+            display: flex;
+            padding: 0px 10px;
+            .lab_tf {
+              margin-left: -3px;
+              float: left;
+              margin: 5px 20px 0px -2px;
+              .screen_out {
+                overflow: hidden;
+                position: absolute;
+                width: 0;
+                height: 0;
+                line-height: 0;
+                text-indent: -9999px;
+              }
+              .tf_blog {
+                width: 300px;
+                height: 24px;
+                padding: 6px 14px 8px;
+                border: 1px solid #c5cdd7;
+                font-size: 16px;
+                box-sizing: content-box;
+                outline: none;
+                vertical-align: top;
+              }
+            }
+            .order_btn {
+              float: right;
+              margin-top: 9px;
+              display: flex;
+              .btn_cancel {
+                float: left;
+                border-radius: 4px;
+                border: 1px solid #c5cdd7;
+                margin-right: 5px;
+                background: #fff;
+                text-align: center;
+                box-sizing: content-box;
+              }
+              .btn_ok {
+                background: #fff;
+                border-color: #e0e5ee;
+                color: #959595;
+                box-shadow: none;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+      .wrap_add {
+        position: relative;
+        margin-top: 5px;
+        .lab_btn_lab_add {
+          float: none;
+          display: block;
+          height: 50px;
+          line-height: 48px;
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          border: 1px solid #e0e5ee;
+          &:hover {
+            border: 1px solid #8b8c8d;
+          }
+        }
+      }
+    }
+  }
+}
