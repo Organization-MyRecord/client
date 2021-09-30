@@ -1,0 +1,27 @@
+.category_Wrapper {
+  .title {
+    font-size: 1rem;
+    line-height: 1.5;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgb(173, 181, 189);
+    margin-bottom: 1rem;
+    color: #5c8fc2;
+    font-weight: bold;
+  }
+  .category_list {
+    list-style: none;
+    padding-left: 0px;
+    .item_total {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: #5c8fc2;
+      font-weight: bold;
+    }
+    .category_item {
+      margin-top: 0.25rem;
+      color: rgb(52, 58, 64);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  }
+}

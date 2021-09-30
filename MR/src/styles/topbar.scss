@@ -34,8 +34,7 @@
   padding: 4px 8px;
   color: #5c8fc2;
   font-family: "IBMPlexSansKR-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -68,8 +67,7 @@
     appearance: none;
     background-color: white;
     font-family: "IBMPlexSansKR-Regular";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-      format("woff");
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
     color: #5c8fc2;
     font-size: 18px;
     margin-right: 8px;
@@ -78,7 +76,7 @@
 
     &:hover {
       background-color: #87beeb;
-      color: white;
+      color: #888;
     }
   }
 }

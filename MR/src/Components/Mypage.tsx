@@ -10,6 +10,7 @@ import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 import "../styles/mypage.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Category from "./Category";
 
 async function GetDirectoryList(setdirectoties: any) {
   await axios
@@ -43,9 +44,7 @@ function Mypage() {
 
   const onClickHandler = () => {
     if (directoties === null) {
-      dispatch(
-        OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!")
-      );
+      dispatch(OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!"));
     } else {
       history.push("/post");
     }
@@ -67,10 +66,7 @@ function Mypage() {
             ></div>
           </Link>
           <div className="box_content">
-            <Link
-              className="link_title"
-              to={`/post/${userData.email}/${item.id}`}
-            >
+            <Link className="link_title" to={`/post/${userData.email}/${item.id}`}>
               <strong className="post_title">{item.postName}</strong>
             </Link>
             <div className="post_info">
@@ -100,7 +96,7 @@ function Mypage() {
           <a>{userData?.email}</a>
           <br />
           {sessionStorage.getItem("token") ? (
-            <button id="user_edit" onClick={() => history.push("/ChangeInfo")}>
+            <button id="user_edit" onClick={() => history.push("/changeinfo-category")}>
               기본정보 수정
             </button>
           ) : (
@@ -156,9 +152,7 @@ function Mypage() {
               글쓰기
             </button>
           </div>
-          <ul className="list">
-            {MyPost == null ? "표시할 정보가 없습니다." : MyPost}
-          </ul>
+          <ul className="list">{MyPost == null ? "표시할 정보가 없습니다." : MyPost}</ul>
           <ReactPaginate
             pageCount={userData?.postPagination.totalPages} //총 페이지 수
             pageRangeDisplayed={10} //한 페이지에 표시할 게시글 수
@@ -175,6 +169,9 @@ function Mypage() {
             nextClassName={"pageLabel-btn"} //다음 라벨의 클래스 이름
           />
         </div>
+      </div>
+      <div className="category">
+        <Category userEmail={email} />
       </div>
     </div>
   );
