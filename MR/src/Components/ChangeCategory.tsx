@@ -1,8 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/change-category.scss";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules/Store";
+
+interface ICategory {
+  result: boolean;
+  discription: string;
+  value: any;
+}
 
 function ChangeCategory() {
+  const userEmail = useSelector((state: RootState) => state.User.userEmail);
+
+  useEffect(() => {
+    axios.get(`/api/directory/${userEmail}`).then((res) => {
+      setcategoryList(res.data);
+    });
+  });
   const [inputToggle, setinputToggle] = useState(true);
+  const [categoryList, setcategoryList] = useState<ICategory>();
+
+  const list = categoryList?.value.directoryList.map((item) => {
+    return (
+      <li key={item} className="total_list_item">
+        <div className="item_order">
+          <span className="text_name">{item}</span>
+          <div className="info_btn">
+            <div className="btn_post">수정</div>
+            <div className="btn_post">삭제</div>
+          </div>
+        </div>
+      </li>
+    );
+  });
+
   return (
     <div className="change_category">
       <div>카테고리 관리</div>
@@ -14,6 +46,7 @@ function ChangeCategory() {
                 <span className="text_name">전체보기</span>
               </div>
             </li>
+            {list}
           </ul>
           <div className="wrap_add" onClick={() => setinputToggle(false)}>
             <div className="lab_btn_lab_add">

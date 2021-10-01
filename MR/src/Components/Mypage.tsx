@@ -12,24 +12,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Category from "./Category";
 
-async function GetDirectoryList(setdirectoties: any) {
-  await axios
-    .get("/api/directory", {
-      headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
-    })
-    .then((res) => setdirectoties(res.data));
+//디렉토리 state 인터페이스 정의
+interface ICategory {
+  result: boolean;
+  discription: string;
+  value: any;
+}
+
+export async function GetDirectoryList(userEmail: string, setdirectoties: any) {
+  await axios.get(`/api/directory/${userEmail}`).then((res) => setdirectoties(res.data));
 }
 
 function Mypage() {
   const [currentPage, setcurrentPage] = useState(1);
-  const [directoties, setdirectoties] = useState(null);
+  const [directoties, setdirectoties] = useState<ICategory>();
   const dispatch = useDispatch();
   const history = useHistory();
   const email = useSelector((state: RootState) => state.User.myData.email);
 
   useEffect(() => {
     dispatch(GetUserInfo(email));
-    GetDirectoryList(setdirectoties);
+    GetDirectoryList(email, setdirectoties);
 
     return () => {
       dispatch(SideBarOpenHandler());
@@ -43,7 +46,7 @@ function Mypage() {
   };
 
   const onClickHandler = () => {
-    if (directoties === null) {
+    if (directoties?.value.directoryList.length === 0) {
       dispatch(OpenModalHandler("디렉토리를 만들어야 게시글을 작성할 수 있습니다!"));
     } else {
       history.push("/post");
@@ -171,7 +174,7 @@ function Mypage() {
         </div>
       </div>
       <div className="category">
-        <Category userEmail={email} />
+        <Category directoryList={directoties} />
       </div>
     </div>
   );
