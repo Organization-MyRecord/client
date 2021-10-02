@@ -9,8 +9,10 @@ function Category(props: IProps) {
 
   const category = directoryList?.value.directoryList.map((item) => {
     return (
-      <li key={item} className="category_item">
-        {item}
+      <li key={item.directoryName} className="category_item">
+        {item.directoryName}
+        {` `}
+        <span>({item.count})</span>
       </li>
     );
   });

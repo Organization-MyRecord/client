@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/change-category.scss";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../modules/Store";
+import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
+import Loader from "react-loader-spinner";
 
 interface ICategory {
   result: boolean;
@@ -12,23 +14,77 @@ interface ICategory {
 
 function ChangeCategory() {
   const userEmail = useSelector((state: RootState) => state.User.userEmail);
+  const dispatch = useDispatch();
+  const [inputToggle, setinputToggle] = useState(true);
+  const [Loading, setLoading] = useState(false);
+  const [categoryList, setcategoryList] = useState<ICategory>();
+  //추가할 디렉토리의 input state
+  const [inputDirectory, setinputDirectory] = useState("");
 
   useEffect(() => {
     axios.get(`/api/directory/${userEmail}`).then((res) => {
       setcategoryList(res.data);
     });
-  });
-  const [inputToggle, setinputToggle] = useState(true);
-  const [categoryList, setcategoryList] = useState<ICategory>();
+  }, [userEmail, categoryList]);
 
+  const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setinputDirectory(e.currentTarget.value);
+  };
+
+  //디렉토리 추가 버튼
+  const AddDirectory = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    await axios
+      .post(
+        "/api/directory",
+        {
+          name: inputDirectory,
+        },
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        if (res.data.result) {
+          dispatch(OpenModalHandler("카테고리가 정상적으로 추가되었습니다!"));
+          setinputDirectory("");
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+        }
+        setLoading(false);
+      });
+  };
+
+  //디렉토리 삭제
+  const DeletDirectory = async (directoryName) => {
+    await axios
+      .delete(`/api/directory/${directoryName}`, {
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+      })
+      .then((res) => {
+        if (res.data.result) {
+          dispatch(OpenModalHandler(res.data.description));
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+        }
+      });
+  };
+
+  //내 디렉토리를 표시
   const list = categoryList?.value.directoryList.map((item) => {
     return (
-      <li key={item} className="total_list_item">
+      <li key={item.directoryName} className="total_list_item">
         <div className="item_order">
-          <span className="text_name">{item}</span>
+          <span className="text_name">
+            {item.directoryName}
+            {` `}({item.count})
+          </span>
           <div className="info_btn">
             <div className="btn_post">수정</div>
-            <div className="btn_post">삭제</div>
+            <div className="btn_post" onClick={DeletDirectory}>
+              삭제
+            </div>
           </div>
         </div>
       </li>
@@ -59,14 +115,22 @@ function ChangeCategory() {
           </div>
           <div className="wrap_add" style={inputToggle ? { display: "none" } : { display: "" }}>
             <div className="lab_btn_lab_add">
-              <form className="edit">
+              <form className="edit" onSubmit={AddDirectory}>
                 <label className="lab_tf">
                   <strong className="screen_out">카테고리 Label</strong>
-                  <input type="text" className="tf_blog" maxLength={40} />
+                  <input
+                    value={inputDirectory}
+                    type="text"
+                    className="tf_blog"
+                    maxLength={40}
+                    onChange={inputChangeHandler}
+                  />
                 </label>
                 <div className="order_btn">
-                  <button className="btn_ok">확인</button>
-                  <button className="btn_cancel" onClick={() => setinputToggle(true)}>
+                  <button className={inputDirectory ? "btn_cancel" : "btn_ok"}>
+                    {Loading ? <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} /> : "확인"}
+                  </button>
+                  <button type="button" className="btn_cancel" onClick={() => setinputToggle(true)}>
                     취소
                   </button>
                 </div>
