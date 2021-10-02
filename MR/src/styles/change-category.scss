@@ -97,6 +97,9 @@
                 background: #fff;
                 text-align: center;
                 box-sizing: content-box;
+                &:hover {
+                  color: black;
+                }
               }
               .btn_ok {
                 background: #fff;

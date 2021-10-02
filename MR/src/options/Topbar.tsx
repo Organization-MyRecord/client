@@ -8,6 +8,7 @@ import "../styles/topbar.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { LogoutHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
+import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 
 function Topbar() {
   const [Keyword, setKeyword] = useState("");
@@ -73,7 +74,11 @@ function Topbar() {
           <FaUserCircle
             className="logo"
             onClick={() => {
-              history.push("/mypage");
+              if (sessionStorage.getItem("token")) {
+                history.push("/mypage");
+              } else {
+                dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));
+              }
             }}
           />
         </button>
