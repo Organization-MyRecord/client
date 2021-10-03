@@ -20,6 +20,7 @@ function ChangeCategory() {
   const [categoryList, setcategoryList] = useState<ICategory>();
   //추가할 디렉토리의 input state
   const [inputDirectory, setinputDirectory] = useState("");
+  const [ChangedirectoryInput, setChangedirectoryInput] = useState("");
 
   useEffect(() => {
     axios.get(`/api/directory/${userEmail}`).then((res) => {
@@ -90,6 +91,24 @@ function ChangeCategory() {
       </li>
     );
   });
+
+  const ModifyCategory = async (category) => {
+    await axios
+      .put(
+        `/api/directory/${category}`,
+        { name: ChangedirectoryInput },
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        if (res.data.result) {
+          dispatch(OpenModalHandler(res.data.description));
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+        }
+      });
+  };
 
   return (
     <div className="change_category">
