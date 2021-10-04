@@ -50,7 +50,7 @@ function Home() {
           className="thumb"
           style={{
             backgroundImage:
-              item.postImage == null || item.postImage == "string"
+              item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
           }}
@@ -76,7 +76,7 @@ function Home() {
           className="thumb"
           style={{
             backgroundImage:
-              item.postImage == null || item.postImage == "string"
+              item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
           }}
@@ -103,7 +103,7 @@ function Home() {
           className="thumb"
           style={{
             backgroundImage:
-              item.postImage == null || item.postImage == "string"
+              item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
           }}
@@ -131,7 +131,7 @@ function Home() {
               className="post_image"
               style={{
                 backgroundImage:
-                  item.postImage == null || item.postImage == "string"
+                  item.postImage === null || item.postImage == "string"
                     ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                     : `url(${item.postImage})`,
               }}

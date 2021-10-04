@@ -55,15 +55,15 @@ function ChangeInfo() {
     <div className="mypage">
       <div className="profile_cotainer">
         <div className="profile">
-          {userData?.image == "string" ? (
+          {userData?.image === "string" ? (
             <FaUserCircle id="user_icon" />
           ) : (
             <div className="box">
-              <img className="box_profile" src={userData?.image} />
+              <img alt="profile" className="box_profile" src={userData?.image} />
             </div>
           )}
           <h1>{userData?.name}</h1>
-          <a>{userData?.email}</a>
+          <p>{userData?.email}</p>
           <br />
           {sessionStorage.getItem("token") ? <button id="user_edit">기본정보 수정</button> : ""}
 

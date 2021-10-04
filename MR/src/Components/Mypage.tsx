@@ -63,7 +63,7 @@ function Mypage() {
               className="post_image"
               style={{
                 backgroundImage:
-                  item.postImage == null || item.postImage == "string"
+                  item.postImage === null || item.postImage == "string"
                     ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                     : `url(${item.postImage})`,
               }}
@@ -93,15 +93,15 @@ function Mypage() {
         <div className="mypage">
           <div className="profile_cotainer">
             <div className="profile">
-              {userData?.image == "string" ? (
+              {userData?.image === "string" ? (
                 <FaUserCircle id="user_icon" />
               ) : (
                 <div className="box">
-                  <img className="box_profile" src={userData?.image} />
+                  <img alt="profile_picture" className="box_profile" src={userData?.image} />
                 </div>
               )}
               <h1>{userData?.name}</h1>
-              <a>{userData?.email}</a>
+              <p>{userData?.email}</p>
               <br />
               {sessionStorage.getItem("token") ? (
                 <button id="user_edit" onClick={() => history.push("/changeinfo-category")}>

@@ -25,7 +25,7 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
     } else {
       dispatch(GetFieldPostHandler(field, dispatch, setloading));
     }
-  }, [Field, KeyWord]);
+  }, [Field, KeyWord, field]);
 
   const data = useSelector((state: RootState) => state.Post.FieldData);
   const date = data?.myPostList?.postDate;

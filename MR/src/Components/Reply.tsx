@@ -86,6 +86,7 @@ function Reply(props: IReply) {
         <div className="comment_1">
           <Link to="" className="reply_thumb">
             <img
+              alt="user_profile"
               src={
                 item.userImage === null || item.userImage === "string"
                   ? "https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png"
@@ -109,6 +110,7 @@ function Reply(props: IReply) {
     <li className="comment">
       <Link to="" className="reply_thumb">
         <img
+          alt="user_profile"
           src={
             props.userImage === null || props.userImage === "string"
               ? "https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png"
