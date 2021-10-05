@@ -15,10 +15,12 @@ interface ICategory {
 function ChangeCategory() {
   const userEmail = useSelector((state: RootState) => state.User.userEmail);
   const dispatch = useDispatch();
+  const [changeToggle, setchangeToggle] = useState(true);
   const [inputToggle, setinputToggle] = useState(true);
   const [Loading, setLoading] = useState(false);
   const [categoryList, setcategoryList] = useState<ICategory>();
   //추가할 디렉토리의 input state
+  const [name, setname] = useState("");
   const [inputDirectory, setinputDirectory] = useState("");
   const [ChangedirectoryInput, setChangedirectoryInput] = useState("");
 
@@ -30,6 +32,9 @@ function ChangeCategory() {
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setinputDirectory(e.currentTarget.value);
+  };
+  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChangedirectoryInput(e.currentTarget.value);
   };
 
   //디렉토리 추가 버튼
@@ -71,6 +76,35 @@ function ChangeCategory() {
         }
       });
   };
+  //토글 하나만 하기 구현
+  const modifytoggle = (namex) => {
+    console.log(name);
+    setname(namex);
+    if (name === namex) {
+      setname("");
+    }
+  };
+
+  const ModifyCategory = async (category) => {
+    setLoading(true);
+    await axios
+      .put(
+        `/api/directory/${category}`,
+        { name: ChangedirectoryInput },
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+        if (res.data.result) {
+          dispatch(OpenModalHandler(res.data.description));
+        } else {
+          dispatch(OpenModalHandler(res.data.description));
+        }
+      });
+  };
 
   //내 디렉토리를 표시
   const list = categoryList?.value.directoryList.map((item) => {
@@ -82,33 +116,49 @@ function ChangeCategory() {
             {` `}({item.count})
           </span>
           <div className="info_btn">
-            <div className="btn_post">수정</div>
-            <div className="btn_post" onClick={DeletDirectory}>
+            <div className="btn_post" onClick={() => modifytoggle(item.directoryName)}>
+              수정
+            </div>
+            <div className="btn_post" onClick={() => DeletDirectory(item.directoryName)}>
               삭제
             </div>
+          </div>
+        </div>
+        <div
+          className="wrap_add"
+          style={name === item.directoryName ? { display: "" } : { display: "none" }}
+          key={item.directoryName}
+        >
+          <div className="lab_btn_lab_add">
+            <form className="edit">
+              <label className="lab_tf">
+                <strong className="screen_out">카테고리 Label</strong>
+                <input
+                  placeholder={item.directoryName}
+                  type="text"
+                  className="tf_blog"
+                  maxLength={40}
+                  onChange={inputHandler}
+                />
+              </label>
+              <div className="order_btn">
+                <button
+                  type="button"
+                  className={ChangedirectoryInput ? "btn_cancel" : "btn_ok"}
+                  onClick={() => ModifyCategory(item.directoryName)}
+                >
+                  {Loading ? <Loader type="Oval" color="#3d66ba" height={30} width={30} timeout={3000} /> : "확인"}
+                </button>
+                <button type="button" className="btn_cancel" onClick={() => modifytoggle(item.directoryName)}>
+                  취소
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </li>
     );
   });
-
-  const ModifyCategory = async (category) => {
-    await axios
-      .put(
-        `/api/directory/${category}`,
-        { name: ChangedirectoryInput },
-        {
-          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
-        },
-      )
-      .then((res) => {
-        if (res.data.result) {
-          dispatch(OpenModalHandler(res.data.description));
-        } else {
-          dispatch(OpenModalHandler(res.data.description));
-        }
-      });
-  };
 
   return (
     <div className="change_category">
