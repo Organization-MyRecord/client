@@ -1,16 +1,22 @@
+import axios from "axios";
 import "../styles/category.scss";
 
 interface IProps {
   directoryList: any;
+  email: string;
 }
 
 function Category(props: IProps) {
-  const { directoryList } = props;
+  const { directoryList, email } = props;
+
+  const onclickHandler = async (name) => {
+    await axios.get(`/api/directory?directoryName=${name}&userEmail=${email}`).then((res) => console.log(res));
+  };
 
   const category = directoryList?.value.directoryList.map((item) => {
     return (
       <li key={item.directoryName} className="category_item">
-        {item.directoryName}
+        <div onClick={() => onclickHandler(item.directoryName)}>{item.directoryName}</div>
         {` `}
         <span>({item.count})</span>
       </li>

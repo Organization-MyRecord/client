@@ -15,7 +15,6 @@ interface ICategory {
 function ChangeCategory() {
   const userEmail = useSelector((state: RootState) => state.User.userEmail);
   const dispatch = useDispatch();
-  const [changeToggle, setchangeToggle] = useState(true);
   const [inputToggle, setinputToggle] = useState(true);
   const [Loading, setLoading] = useState(false);
   const [categoryList, setcategoryList] = useState<ICategory>();
@@ -99,7 +98,7 @@ function ChangeCategory() {
         console.log(res);
         setLoading(false);
         if (res.data.result) {
-          dispatch(OpenModalHandler(res.data.description));
+          dispatch(OpenModalHandler("삭제가 정상적으로 완료되었습니다!"));
         } else {
           dispatch(OpenModalHandler(res.data.description));
         }

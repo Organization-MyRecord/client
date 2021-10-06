@@ -178,7 +178,7 @@ function Mypage() {
               />
             </div>
           </div>
-          <div className="category">{<Category directoryList={directoties} />}</div>
+          <div className="category">{<Category directoryList={directoties} email={email} />}</div>
         </div>
       )}
     </React.Fragment>
