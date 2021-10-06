@@ -151,6 +151,34 @@ export const GetSearchHandler = (keyword: string, page: number, dispa: any, setl
   };
 };
 
+//디렉토리 데이터 가져오기
+export const GetDirectoryData = (
+  directoryName: string,
+  email: string,
+  setloading: (bool: boolean) => void,
+  dispa: any,
+) => {
+  console.log(directoryName, email);
+
+  return async (dispatch: Dispatch<PostAction>) => {
+    await axios
+      .get(`/api/directory?directoryName=${directoryName}&userEmail=${email}`)
+      .then((res) => {
+        console.log(res);
+
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.GET_DIRECTORY_DATA,
+            payload: res.data.value,
+          });
+        } else {
+          dispa(OpenModalHandler(res.data.description));
+        }
+      })
+      .then(() => setloading(false));
+  };
+};
+
 //게시글 수정
 export const PostUpdateHandelr = (content: string, newPostName: string, postId: number, history: any, dispa) => {
   return async (dispatch: Dispatch<PostAction>) => {

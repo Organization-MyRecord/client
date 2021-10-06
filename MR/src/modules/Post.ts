@@ -54,6 +54,11 @@ const Post = (state: PostState = initialState, action: PostAction) => {
         ...state,
         FieldData: action.payload,
       };
+    case ActionType.GET_DIRECTORY_DATA:
+      return {
+        ...state,
+        FieldData: action.payload,
+      };
     default:
       return state;
   }

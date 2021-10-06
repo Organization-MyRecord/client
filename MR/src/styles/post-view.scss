@@ -33,6 +33,17 @@
     .view {
       font-size: 16px;
       line-height: 28px;
+
+      pre {
+        padding: 1rem;
+        background: rgb(251, 252, 253);
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+          sans-serif;
+        border-radius: 4px;
+        line-height: 1.5;
+        letter-spacing: 0px;
+        font-size: 0.875rem;
+      }
     }
   }
   .another_post_area {

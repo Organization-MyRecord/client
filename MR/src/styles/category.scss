@@ -22,6 +22,11 @@
       color: rgb(52, 58, 64);
       font-size: 0.875rem;
       line-height: 1.5;
+
+      .items {
+        text-decoration: none;
+        cursor: pointer;
+      }
     }
   }
 }

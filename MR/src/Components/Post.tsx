@@ -5,21 +5,35 @@ import { formats } from "../options/options";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios, { AxiosError } from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PostRegistHandler, PostUpdateHandelr } from "../modules/action-creator/PostIndex";
 import { RouteComponentProps, useHistory } from "react-router";
 import Loader from "react-loader-spinner";
+import { RootState } from "../modules/Store";
 
 interface Iparam {
   update: string;
+}
+
+interface ICategory {
+  result: boolean;
+  discription: string;
+  value: any;
+}
+
+export async function GetDirectoryList(userEmail: string, setdirectoties: any) {
+  await axios.get(`/api/directory/${userEmail}`).then((res) => setdirectoties(res.data));
 }
 
 function Post({ match }: RouteComponentProps<Iparam>) {
   const dispatch = useDispatch();
   const { update } = match.params;
   const history = useHistory();
+  const [directory, setdirectory] = useState<ICategory>();
+  const email = useSelector((state: RootState) => state.User.userEmail);
 
   useEffect(() => {
+    GetDirectoryList(email, setdirectory);
     if (update != undefined) {
       CallPostData(update).then(() => setLoading(false));
     } else {
@@ -33,7 +47,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   const QuillRef = useRef<ReactQuill>();
   const [Title, setTitle] = useState(""); // 제목을 저장할 state
   const [contents, setcontents] = useState(""); //내용을 저장할 state
-  const [directoryName, setdirectoryName] = useState("IT/웹통신");
+  const [directoryName, setdirectoryName] = useState("");
   const [Loading, setLoading] = useState(true); //로딩창 구현을 위한 state
   const [state, setstate] = useState(false); //수정인지 새글 작성인지 확인을 위한 state
 
@@ -44,6 +58,14 @@ function Post({ match }: RouteComponentProps<Iparam>) {
       setstate(true);
     });
   }
+
+  const list = directory?.value.directoryList.map((item) => {
+    return (
+      <option key={item.directoryName} value={item.directoryName}>
+        {item.directoryName}
+      </option>
+    );
+  });
 
   let url: string;
   // 이미지를 업로드 하기 위한 함수
@@ -160,6 +182,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
                 <option value={directoryName} disabled selected hidden>
                   카테고리
                 </option>
+                {list}
               </select>
               <div className="button_container">
                 <button className={state ? "modify_none" : "modify"} onClick={PostHandler}>

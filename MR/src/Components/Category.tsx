@@ -1,4 +1,4 @@
-import axios from "axios";
+import { Link } from "react-router-dom";
 import "../styles/category.scss";
 
 interface IProps {
@@ -9,14 +9,12 @@ interface IProps {
 function Category(props: IProps) {
   const { directoryList, email } = props;
 
-  const onclickHandler = async (name) => {
-    await axios.get(`/api/directory?directoryName=${name}&userEmail=${email}`).then((res) => console.log(res));
-  };
-
   const category = directoryList?.value.directoryList.map((item) => {
     return (
       <li key={item.directoryName} className="category_item">
-        <div onClick={() => onclickHandler(item.directoryName)}>{item.directoryName}</div>
+        <Link className="items" to={`/postList/direcory/${item.directoryName}/${email}`}>
+          {item.directoryName}
+        </Link>
         {` `}
         <span>({item.count})</span>
       </li>

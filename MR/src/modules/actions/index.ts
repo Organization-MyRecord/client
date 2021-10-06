@@ -77,6 +77,11 @@ interface PostSearchAction {
   type: ActionType.POST_SEARCH;
   payload: string;
 }
+
+interface GetDirectoryDataAction {
+  type: ActionType.GET_DIRECTORY_DATA;
+  payload: string;
+}
 export type Action =
   | LoginAction
   | RegisterAction
@@ -94,6 +99,7 @@ export type PostAction =
   | GetPostingAction
   | GetFieldAction
   | UpdatePostAction
-  | PostSearchAction;
+  | PostSearchAction
+  | GetDirectoryDataAction;
 
 export type ModalAction = OpenModalAction | CloseModalAction;
