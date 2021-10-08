@@ -13,9 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./modules/Store";
 import PostView from "./Components/PostView";
 import PostList from "./Components/PostList";
-import ChangeInfo from "./Components/ChangeInfo";
-import ChangeCategory from "./Components/ChangeCategory";
 import PostListTwo from "./Components/PostListTwo";
+import ChangeInfoContainer from "./Components/ChangeInfoContainer";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,12 +39,11 @@ function App() {
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
-            <Route path="/changeInfo" component={ChangeInfo} />
             <Route exact={true} path="/post/:update?" component={Post} />
-            <Route exact={true} path="/changeinfo-category" component={ChangeCategory} />
             <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />
             <Route exact={true} path="/postList/:Field?/:KeyWord?" component={PostList} />
             <Route exact={true} path="/postList/direcory/:directoryName/:email" component={PostListTwo} />
+            <Route path="/changeinfo" component={ChangeInfoContainer} />
             {/* Not Found */}
             <Route component={() => <Redirect to="/" />} />
           </Switch>

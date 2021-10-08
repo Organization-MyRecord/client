@@ -127,8 +127,8 @@ function Post({ match }: RouteComponentProps<Iparam>) {
 
   //게시글 등록
   const PostHandler = () => {
-    const url = sessionStorage.getItem("url");
-    console.log(url);
+    //사진 등록 안하면 null 값 보내고 있으면 있는 url 보내기
+    const url = sessionStorage.getItem("url") ?? null;
 
     dispatch(PostRegistHandler(Title, contents, directoryName, url, history, dispatch));
     localStorage.removeItem("url");
@@ -146,6 +146,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   const DirectoryNameHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setdirectoryName(e.currentTarget.value);
   };
+  console.log(directoryName);
 
   const modules = useMemo(
     () => ({
