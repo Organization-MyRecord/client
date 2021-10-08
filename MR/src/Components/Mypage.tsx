@@ -104,7 +104,7 @@ function Mypage() {
               <p>{userData?.email}</p>
               <br />
               {sessionStorage.getItem("token") ? (
-                <button id="user_edit" onClick={() => history.push("/changeinfo-category")}>
+                <button id="user_edit" onClick={() => history.push("/changeinfo")}>
                   기본정보 수정
                 </button>
               ) : (
