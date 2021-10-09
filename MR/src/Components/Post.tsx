@@ -10,6 +10,7 @@ import { PostRegistHandler, PostUpdateHandelr } from "../modules/action-creator/
 import { RouteComponentProps, useHistory } from "react-router";
 import Loader from "react-loader-spinner";
 import { RootState } from "../modules/Store";
+import { ConfirmModalHandler } from "../modules/action-creator/ModalIndex";
 
 interface Iparam {
   update: string;
@@ -125,6 +126,10 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     setTitle(e.currentTarget.value);
   };
 
+  const post = () => {
+    dispatch(ConfirmModalHandler("게시글을 등록하시겠습니까?", PostHandler));
+  };
+
   //게시글 등록
   const PostHandler = () => {
     //사진 등록 안하면 null 값 보내고 있으면 있는 url 보내기
@@ -146,7 +151,6 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   const DirectoryNameHander = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setdirectoryName(e.currentTarget.value);
   };
-  console.log(directoryName);
 
   const modules = useMemo(
     () => ({
@@ -186,7 +190,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
                 {list}
               </select>
               <div className="button_container">
-                <button className={state ? "modify_none" : "modify"} onClick={PostHandler}>
+                <button className={state ? "modify_none" : "modify"} onClick={post}>
                   등록
                 </button>
                 <button className={state ? "modify" : "modify_none"} onClick={updateHander}>

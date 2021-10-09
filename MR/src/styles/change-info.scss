@@ -1,14 +1,14 @@
 @import "./app.scss";
 
 .mypage {
+  margin-left: 150px;
   width: 100%;
   height: 100%;
   position: inherit;
   display: flex;
   white-space: nowrap;
   font-family: "IBMPlexSansKR-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff")
-    format("woff");
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   .profile_cotainer {

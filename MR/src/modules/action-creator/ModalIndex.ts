@@ -18,3 +18,13 @@ export const CloseModalHandler = () => {
     });
   };
 };
+
+export const ConfirmModalHandler = (modalText: string, func: any) => {
+  return (dispatch: Dispatch<ModalAction>) => {
+    dispatch({
+      type: ActionType.OPEN_CONFIRM_MODAL,
+      payload: modalText,
+      func: func,
+    });
+  };
+};

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
+import { ConfirmModalHandler, OpenModalHandler } from "../modules/action-creator/ModalIndex";
 import "../styles/change-password.scss";
 
 function PasswordConfirm() {
@@ -45,6 +45,9 @@ function PasswordConfirm() {
       });
   };
 
+  const aaa = () => {
+    dispatch(ConfirmModalHandler("비밀번호를 변경하시겠습니까?", CheckPassword));
+  };
   //변경하기 버튼
   const change = async () => {
     if (ChangePWD === ChangePWD_Cofirm) {
@@ -80,7 +83,7 @@ function PasswordConfirm() {
       <div className="password_confirm">
         <div className="confirm_container">
           <input type="password" placeholder="현재 비밀번호를 입력해주세요." onChange={CurrentPWDChangeHandler} />
-          <button onClick={CheckPassword}>확인</button>
+          <button onClick={aaa}>확인</button>
         </div>
         <span style={state ? { display: "" } : { display: "none" }}>확인 되었습니다!!</span>
         <div className="change_passowrd" style={state ? { display: "" } : { display: "none" }}>

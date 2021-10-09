@@ -59,7 +59,7 @@ export const PostRegistHandler = (
         {
           postName: postName,
           content: content,
-          diretoryName: diretoryName,
+          directoryName: diretoryName,
           postImage: postImage,
         },
         {
@@ -73,8 +73,8 @@ export const PostRegistHandler = (
             payload: res.data.value,
           });
 
-          dispa(OpenModalHandler(res.data.description));
-          history.push(`/post/${res.data.postUserEmail}/${res.data.id}`);
+          dispa(OpenModalHandler("게시글이 정상적으로 등록되었습니다."));
+          history.push(`/post/${res.data.value.postUserEmail}/${res.data.value.id}`);
         }
       });
   };

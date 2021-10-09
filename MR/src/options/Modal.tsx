@@ -1,4 +1,5 @@
-import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../modules/Store";
 import "../styles/Modal.scss";
 
 interface IProps {
@@ -9,6 +10,8 @@ interface IProps {
 }
 
 function Modal(props: IProps) {
+  const state = useSelector((state: RootState) => state.Modal.ConfirmState);
+  const reduxFunction = useSelector((state: RootState) => state.Modal.func);
   const { open, close, header } = props;
 
   return (
@@ -24,6 +27,13 @@ function Modal(props: IProps) {
           </header>
           <main>{header}</main>
           <footer>
+            <button
+              className="close"
+              style={state ? { marginRight: "10px" } : { display: "none" }}
+              onClick={reduxFunction}
+            >
+              확인
+            </button>
             <button className="close" onClick={() => close()}>
               close
             </button>

@@ -4,8 +4,20 @@ import ChangeInfo from "./ChangeInfo";
 import ChangeCategory from "./ChangeCategory";
 import "../styles/small-navbar.scss";
 import PasswordConfirm from "./PasswordConfirm";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { SideBarNoneHandler, SideBarOpenHandler } from "../modules/action-creator";
 
 function ChangeInfoContainer() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(SideBarNoneHandler());
+
+    return () => {
+      dispatch(SideBarOpenHandler());
+    };
+  }, []);
+
   return (
     <div className="changeInfo_container">
       <BrowserRouter>

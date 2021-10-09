@@ -6,7 +6,7 @@ import TextLogo from "./text_logo2.png";
 import Login from "../Components/Login";
 import "../styles/topbar.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { LogoutHandler } from "../modules/action-creator";
+import { LogoutHandler, SideBarNoneHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
 
@@ -76,6 +76,7 @@ function Topbar() {
             className="logo"
             onClick={() => {
               if (sessionStorage.getItem("token")) {
+                dispatch(SideBarNoneHandler());
                 history.push("/mypage");
               } else {
                 dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));

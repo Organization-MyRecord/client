@@ -11,6 +11,12 @@ interface CloseModalAction {
   type: ActionType.CLOSE_MODAL;
 }
 
+interface OpenConFirmModalAction {
+  type: ActionType.OPEN_CONFIRM_MODAL;
+  payload: string;
+  func: any;
+}
+
 //User 관련
 interface LoginAction {
   type: ActionType.LOGIN_USER;
@@ -102,4 +108,4 @@ export type PostAction =
   | PostSearchAction
   | GetDirectoryDataAction;
 
-export type ModalAction = OpenModalAction | CloseModalAction;
+export type ModalAction = OpenModalAction | CloseModalAction | OpenConFirmModalAction;

@@ -93,9 +93,6 @@ export const GetUserInfo = (email) => {
         type: ActionType.USER_INFO,
         payload: res.data,
       });
-      dispatch({
-        type: ActionType.SIDEBAR_NONE,
-      });
     });
   };
 };
