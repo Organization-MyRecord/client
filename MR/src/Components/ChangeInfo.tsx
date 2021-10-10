@@ -13,7 +13,7 @@ function ChangeInfo() {
   const email = useSelector((state: RootState) => state.User.myData.email);
   useEffect(() => {
     dispatch(GetUserInfo(email));
-  }, [email]);
+  }, [email, dispatch]);
   const [Name, setName] = useState(""); //이름
   const [major, setmajor] = useState(""); //전공계열
   const [Description, setDescription] = useState(""); //전공세부

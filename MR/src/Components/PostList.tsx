@@ -25,17 +25,24 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
     } else {
       dispatch(GetFieldPostHandler(field, dispatch, setloading));
     }
-  }, [Field, KeyWord, field]);
+  }, [Field, KeyWord, field, dispatch]);
 
   const data = useSelector((state: RootState) => state.Post.FieldData);
-  const date = data?.myPostList?.postDate;
 
-  const fieldPost = data.myPostList.map((item: any) => {
+  const fieldPost = data?.myPostList?.map((item: any) => {
     return (
       <li className="list_item" key={item.id}>
         <div className="content">
           <Link to={`/post/${item.postUserEmail}/${item.id}`}>
-            <div className="post_image" style={{ backgroundImage: `url(${item.postImage})` }}></div>
+            <div
+              className="post_image"
+              style={{
+                backgroundImage:
+                  item.postImage === null || item.postImage == "string"
+                    ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
+                    : `url(${item.postImage})`,
+              }}
+            ></div>
           </Link>
           <div className="box_content">
             <Link to={`/post/${item.postUserEmail}/${item.id}`}>
@@ -45,7 +52,7 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
               <Link to="/mypage" className="userName">
                 <span className="nametag">{item.postUserEmail}</span>
               </Link>
-              <span className="date">{date}</span>
+              <span className="date">{data.postDate}</span>
             </div>
             <p
               className="post_text"

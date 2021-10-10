@@ -34,7 +34,7 @@ function App() {
         <aside className="side-bar" style={{ display: toggleSideBar ? "" : "none" }}>
           <Sidebar />
         </aside>
-        <section className="Global_section">
+        <section className={toggleSideBar ? "Global_section" : "toggle_section"}>
           <Switch>
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage" component={Mypage} />

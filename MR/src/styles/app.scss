@@ -72,12 +72,18 @@ body {
       margin-top: 15px;
 
       .comment_btn {
-        background-color: #5c8fc2;
+        border: 1px solid #5c8fc2;
+        color: #5c8fc2;
         float: right;
         width: 105px;
         height: 36px;
         cursor: pointer;
         outline: none;
+
+        &:hover {
+          background-color: 5c8fc2;
+          color: white;
+        }
       }
 
       .comment_btn_not_login {
@@ -101,6 +107,12 @@ body {
   .Global_section {
     padding-top: 100px;
     padding-left: 280px;
+    max-width: 85%;
+  }
+
+  .toggle_section {
+    padding-top: 100px;
+    padding-left: 100px;
     max-width: 85%;
   }
 

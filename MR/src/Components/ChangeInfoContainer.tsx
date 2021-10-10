@@ -16,7 +16,7 @@ function ChangeInfoContainer() {
     return () => {
       dispatch(SideBarOpenHandler());
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="changeInfo_container">

@@ -82,7 +82,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
       setloading(false);
       setbtnLoading(false);
     };
-  }, [postId, userEmail, comment, recomment]);
+  }, [postId, userEmail, comment, recomment, dispatch]);
 
   const myEmail = useSelector((state: RootState) => state.User.userEmail); //이메일 정보 확인
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //유저의 로그인 정보 확인

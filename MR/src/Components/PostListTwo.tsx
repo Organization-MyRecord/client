@@ -19,7 +19,7 @@ function PostListTwo({ match }: RouteComponentProps<Iprams>) {
 
   useEffect(() => {
     dispatch(GetDirectoryData(directoryName, email, setloading, dispatch));
-  }, [directoryName, email]);
+  }, [directoryName, email, dispatch]);
 
   const data = useSelector((state: RootState) => state.Post.FieldData);
   const date = data?.myPostList?.postDate;
