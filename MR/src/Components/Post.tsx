@@ -11,6 +11,7 @@ import { RouteComponentProps, useHistory } from "react-router";
 import Loader from "react-loader-spinner";
 import { RootState } from "../modules/Store";
 import { ConfirmModalHandler } from "../modules/action-creator/ModalIndex";
+import { SideBarNoneHandler } from "../modules/action-creator";
 
 interface Iparam {
   update: string;
@@ -34,6 +35,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   const email = useSelector((state: RootState) => state.User.userEmail);
 
   useEffect(() => {
+    dispatch(SideBarNoneHandler());
     GetDirectoryList(email, setdirectory);
     if (update != undefined) {
       CallPostData(update).then(() => setLoading(false));
@@ -41,7 +43,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
       setLoading(false);
       return;
     }
-  }, []);
+  }, [email, update, dispatch]);
 
   //Content 내부에서 사진 이미지 리사이징을 위한 모듈
   Quill.register("modules/ImageResize", ImageResize);

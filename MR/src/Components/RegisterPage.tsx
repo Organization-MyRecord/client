@@ -36,7 +36,7 @@ export default function RegisterPage() {
     return () => {
       dispatch(SideBarOpenHandler());
     };
-  }, []);
+  }, [dispatch]);
 
   const BirthHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     //생년월일 input onchange 함수

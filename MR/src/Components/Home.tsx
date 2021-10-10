@@ -35,7 +35,7 @@ function Home() {
       dispatch(IsLoginHandler());
     }
     dispatch(GetPostHandler(setLoading, dispatch));
-  }, [isLogin]);
+  }, [isLogin, dispatch]);
 
   const MainData = useSelector((state: RootState) => state.Post.TotalData);
 

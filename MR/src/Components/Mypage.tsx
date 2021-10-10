@@ -38,7 +38,7 @@ function Mypage() {
     return () => {
       dispatch(SideBarOpenHandler());
     };
-  }, [email]);
+  }, [email, dispatch]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
 
