@@ -1,6 +1,13 @@
 .big_container {
   margin-top: 50px;
   font-size: 30px;
+  .logo_area {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 40px;
+  }
   input {
     font-size: 25px;
   }
@@ -34,9 +41,24 @@ select {
   input {
     margin: 0 27px;
   }
-  h6 {
+  .warning {
     font-size: 13px;
     color: red;
+  }
+  .checked {
+    font-size: 13px;
+    color: blue;
+    font-weight: bolder;
+  }
+}
+.auth_num {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+
+  input {
+    margin: 0 27px;
   }
 }
 .register_container {
@@ -50,6 +72,21 @@ select {
   }
   button {
     align-items: center;
+  }
+
+  .woman {
+    margin-left: 40px;
+  }
+
+  input {
+    width: 280px;
+  }
+  select {
+    width: 280px;
+    text-align-last: center;
+    text-align: center;
+    -ms-text-align-last: center;
+    -moz-text-align-last: center;
   }
 }
 

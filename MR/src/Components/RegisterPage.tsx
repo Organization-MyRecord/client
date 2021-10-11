@@ -6,6 +6,7 @@ import { RegisterHandler, SideBarNoneHandler, SideBarOpenHandler } from "../modu
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
+import TextLogo from "../options/text_logo.png";
 type ops = { view: string; value: string };
 
 function Getage(day: string): number {
@@ -23,7 +24,8 @@ export default function RegisterPage() {
   const [PasswordCheck, setPasswordCheck] = useState(""); //패스워드 확인
   const [Name, setName] = useState(""); //닉네임
   const [Email, setEmail] = useState(""); //이메일
-  const [toggle, settoggle] = useState<boolean>(false); //인증번호 시에 나올 입력창 토글
+  const [toggle, settoggle] = useState(false); //인증번호 시에 나올 입력창 토글
+  const [textToggle, settextToggle] = useState(false); //이메일인증 경고글 토글
   const [Anum, setAnum] = useState(""); //인증번호
   const [radioState, setradioState] = useState(""); //성별
   const [field, setfield] = useState(""); //분야
@@ -96,8 +98,8 @@ export default function RegisterPage() {
   };
 
   const genderOps: ops[] = [
-    { view: "남", value: "남" },
-    { view: "여", value: "여" },
+    { view: "남", value: "man" },
+    { view: "여", value: "woman" },
   ];
 
   //분야를 select option
@@ -125,29 +127,55 @@ export default function RegisterPage() {
     });
   };
 
-  const aaa = () => {
+  const checkAuth = () => {
     axios.get(`api/verify?email=${Email}&randomCode=${Anum}`).then((res) => {
-      res.data
-        ? dispatch(OpenModalHandler("인증이 성공적으로 완료 되었습니다!"))
-        : dispatch(OpenModalHandler("인증번호가 틀렸습니다."));
+      if (res.data) {
+        settoggle(false);
+        settextToggle(true);
+        dispatch(OpenModalHandler("인증이 성공적으로 완료 되었습니다!"));
+      } else {
+        settoggle(true);
+        dispatch(OpenModalHandler("인증번호가 틀렸습니다."));
+      }
     });
   };
   return (
     <div className="big_container">
+      <div className="logo_area">
+        <img src={TextLogo} alt="text_logo" width="200px" height="60px" />
+      </div>
       <div className="email_auth_container">
         <div className="Email_auth">
           <table>
             <tbody>
-              <label>이메일 (필수)</label>
-              <input type="text" value={Email} onChange={EmailHandler} />
-              <button onClick={emailAuth}>메일 인증</button>
-              <h6>*본인 인증시 이메일이 반드시 필요합니다.</h6>
+              <tr>
+                <td>
+                  <label>이메일 (필수)</label>
+
+                  <input type="text" value={Email} onChange={EmailHandler} disabled={textToggle} />
+                  <button onClick={emailAuth} style={textToggle ? { display: "none" } : {}}>
+                    메일 인증
+                  </button>
+                  <h6 className={textToggle ? "checked" : "warning"}>
+                    {textToggle ? "본인 인증이 완료되었습니다!" : "*본인 인증시 이메일이 반드시 필요합니다."}
+                  </h6>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div style={toggle ? { opacity: "1" } : { opacity: "0" }}>
-          <input type="text" value={Anum} onChange={AnumHandler} />
-          <button onClick={aaa}>인증하기</button>
+        <div style={toggle ? { marginLeft: "50px" } : { display: "none" }} className="auth_num">
+          <table>
+            <tbody>
+              <tr>
+                <td>인증번호</td>
+                <td>
+                  <input type="text" value={Anum} onChange={AnumHandler} />
+                  <button onClick={checkAuth}>인증하기</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <form onSubmit={register} className="register_container">
@@ -181,15 +209,17 @@ export default function RegisterPage() {
             <tr>
               <td>성별</td>
               <td>
-                {genderOps.map(({ view: title, view: gender }: any) => {
+                {genderOps.map(({ view: title, value: gender }: any) => {
                   return (
                     <React.Fragment key={title}>
                       <input
+                        className={gender}
                         type="radio"
                         value={gender}
                         name={gender}
                         checked={gender === radioState}
                         onChange={(e) => onRadioChange(e)}
+                        style={{ width: "20px", height: "20px" }}
                       />
                       {title}
                     </React.Fragment>
