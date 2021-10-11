@@ -27,14 +27,14 @@ function ChangeInfo() {
   //분야를 select option
   const fieldList = options.map((item) => {
     return (
-      <option key={item.label} value={item.value}>
+      <option key={item.label} value={item.value} selected={item.value === userData.field}>
         {item.value}
       </option>
     );
   });
   const majorList = Major.map((item) => {
     return (
-      <option key={item.label} value={item.value}>
+      <option key={item.label} value={item.value} selected={item.value === userData.major}>
         {item.label}
       </option>
     );
@@ -52,7 +52,7 @@ function ChangeInfo() {
   };
 
   return (
-    <div className="mypage">
+    <div className="change_info">
       <div className="profile_cotainer">
         <div className="profile">
           {userData?.image === "string" ? (
@@ -106,76 +106,53 @@ function ChangeInfo() {
           무엇 전직업 대학교
         </div>
       </div>
-      <div className="mypost_container">
-        <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
-        <div className="mypost">
-          <div className="interests">
-            <span>회원정보 관리</span>
-            <table>
-              <tbody>
-                <tr>
-                  <td>현재 닉네임</td>
-                  <td>{userData?.name}</td>
-                </tr>
-                <tr>
-                  <td>새로운 닉네임</td>
-                  <td>
-                    {" "}
-                    <input type="text" placeholder="변경 닉네임" value={Name} onChange={NameHandler} />
-                  </td>
-                </tr>
+      <div className="mypost_change_container">
+        <h3 className="tit_cont">개인정보수정</h3>
+        <form className="form_set">
+          <fieldset className="profile_img">
+            <legend className="screen_out">이미지 설정</legend>
+            <div className="img_wrapper">
+              <img src="" alt="profile" className="thumb" />
+              <label className="lab_photo">
+                <span className="plus_btn">이미지 찾아보기</span>
+                <input type="file" className="btn_g" accept="image/*" />
+              </label>
+              <button type="button" className="delete_btn">
+                이미지 삭제
+              </button>
+            </div>
+          </fieldset>
 
-                <tr>
-                  <td>현재 관심분야</td>
-                  <td>{userData?.field}</td>
-                </tr>
-                <tr>
-                  <td>새로운 관심분야</td>
-                  <td>
-                    <select className="inputSelect" onChange={FieldHandler} placeholder={field}>
-                      {fieldList}
-                    </select>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>전공 계열</td>
-                  <td>{userData?.major}</td>
-                </tr>
-                <tr>
-                  <td>새로운 전공계열</td>
-                  <td>
-                    <select className="MajorSelect" onChange={majorHandler} placeholder={major}>
-                      {majorList}
-                    </select>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Description :</td>
-                  <td>
-                    <input
-                      type="text"
-                      placeholder="내용을 입력하세요
-                      ex) 전직업, 대학교, 세부관심사항"
-                      value={Description}
-                      onChange={DescriptionHandler}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button
-            type="submit"
-            onClick={() => {
-              history.push("/Mypage");
-            }}
-          >
-            개인정보수정 확인
-          </button>
-        </div>
-        <ul className="list"></ul>
+          <fieldset className="fld_info">
+            <legend className="screen_out">개인정보 설정</legend>
+            <label className="lab_info">
+              <strong className="tit_set">닉네임</strong>
+              <input type="text" className="tf_blog" maxLength={40} placeholder={userData.name} />
+            </label>
+            <label className="lab_info">
+              <strong className="tit_set">관심분야</strong>
+              <select className="tf_blog" onChange={FieldHandler}>
+                {fieldList}
+              </select>
+            </label>
+            <label className="lab_info">
+              <strong className="tit_set">전공계열</strong>
+              <select className="tf_blog" onChange={majorHandler}>
+                {majorList}
+              </select>
+            </label>
+            <div className="lab_tf">
+              <strong className="title_set">블로그 설명</strong>
+              <textarea className="tf_blog" placeholder="나를 잘 나타낼 수 있는 설명을 적어보세요!"></textarea>
+            </div>
+          </fieldset>
+          <fieldset className="save">
+            <legend className="screen_out">저장버튼</legend>
+            <button type="submit" className="btn_save">
+              변경사항 저장
+            </button>
+          </fieldset>
+        </form>
       </div>
     </div>
   );

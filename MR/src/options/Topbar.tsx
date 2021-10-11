@@ -14,6 +14,7 @@ function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
+  const userImage = useSelector((state: RootState) => state.User.myData.image); //사용자 이미지
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -71,9 +72,23 @@ function Topbar() {
         >
           Logout
         </button>
-        <button className="account_logo">
-          <FaUserCircle
-            className="logo"
+        {userImage === "string" || userImage === null ? (
+          <button className="account_logo">
+            <FaUserCircle
+              className="logo"
+              onClick={() => {
+                if (sessionStorage.getItem("token")) {
+                  dispatch(SideBarNoneHandler());
+                  history.push("/mypage");
+                } else {
+                  dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));
+                }
+              }}
+            />
+          </button>
+        ) : (
+          <div
+            className="thumb"
             onClick={() => {
               if (sessionStorage.getItem("token")) {
                 dispatch(SideBarNoneHandler());
@@ -82,8 +97,10 @@ function Topbar() {
                 dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));
               }
             }}
-          />
-        </button>
+          >
+            <img alt="user_profile" src={userImage} />
+          </div>
+        )}
       </div>
 
       <Modal className="Modal" isOpen={OpenModal} ariaHideApp={false} onRequestClose={handleCloseModal}>
