@@ -157,7 +157,7 @@ function Mypage() {
             </div>
           </div>
           <div className="mypost_container">
-            <div className="motto">태초에 하나님이 천지를 창조하시느니라.</div>
+            <div className="motto">{userData.Description}</div>
             <div className="mypost">
               <div className="post_info">
                 전체글 {userData?.postPagination.totalElements}개
