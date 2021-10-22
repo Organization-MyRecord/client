@@ -3,9 +3,11 @@ import { options, Major } from "../options/options";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { GetUserInfo } from "../modules/action-creator";
+import { CloseModalHandler, GetUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import "../styles/change-info.scss";
+import axios, { AxiosError } from "axios";
+import { ConfirmModalHandler, OpenModalHandler } from "../modules/action-creator/ModalIndex";
 
 function ChangeInfo() {
   const dispatch = useDispatch();
@@ -18,23 +20,25 @@ function ChangeInfo() {
   const [major, setmajor] = useState(""); //전공계열
   const [Description, setDescription] = useState(""); //전공세부
   const [field, setfield] = useState(""); //분야
+  const [imageState, setimageState] = useState<File>();
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
   const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
   };
+  console.log(major, field);
 
   //분야를 select option
   const fieldList = options.map((item) => {
     return (
-      <option key={item.label} value={item.value} selected={item.value === userData.field}>
+      <option key={item.label} value={item.value === userData.field ? "default" : item.value}>
         {item.value}
       </option>
     );
   });
   const majorList = Major.map((item) => {
     return (
-      <option key={item.label} value={item.value} selected={item.value === userData.major}>
+      <option key={item.label} value={item.value === userData.field ? "default" : item.value}>
         {item.label}
       </option>
     );
@@ -47,8 +51,72 @@ function ChangeInfo() {
     setmajor(e.currentTarget.value);
   };
 
-  const DescriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const DescriptionHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.currentTarget.value);
+  };
+
+  const fileUpload = async () => {
+    const formData = new FormData();
+    formData.append("file", imageState);
+    let url = "";
+    try {
+      axios
+        .post("/api/upload", formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          url = res.data;
+          sessionStorage.setItem("url", url);
+        })
+        .then(() => {
+          dispatch(CloseModalHandler());
+        });
+    } catch (error) {
+      const err = error as AxiosError;
+      return { ...err.response };
+    }
+  };
+  const remove = () => {
+    sessionStorage.removeItem("url");
+    dispatch(OpenModalHandler("삭제되었습니다."));
+  };
+
+  const imageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+
+    if (!fileList) return;
+
+    setimageState(fileList[0]);
+    console.log(imageState);
+
+    dispatch(ConfirmModalHandler(`${imageState.name}을 추가 하시겠습니까?`, fileUpload));
+  };
+
+  const changeHandler = () => {
+    dispatch(ConfirmModalHandler("변경사항을 저장하시겠습니까?", ChaneInfo));
+  };
+
+  const ChaneInfo = async () => {
+    await axios
+      .put(
+        `/api/mypage?description=${Description}&userImage=${sessionStorage.getItem("url")}&userName=${Name}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        if (res.data.result) {
+          dispatch(OpenModalHandler("변경사항이 저장되었습니다!"));
+          history.push("/mypage");
+          sessionStorage.removeItem("url");
+        } else {
+          dispatch(OpenModalHandler("개인정보 수정에 실패하였습니다."));
+        }
+      });
   };
 
   return (
@@ -112,14 +180,34 @@ function ChangeInfo() {
           <fieldset className="profile_img">
             <legend className="screen_out">이미지 설정</legend>
             <div className="img_wrapper">
-              <img src="" alt="profile" className="thumb" />
+              {!sessionStorage.getItem("url") ? (
+                ""
+              ) : (
+                <img
+                  src={`${sessionStorage.getItem("url")}`}
+                  alt="profile"
+                  className="thumb"
+                  width="100%"
+                  height="100%"
+                />
+              )}
               <label className="lab_photo">
                 <span className="plus_btn">이미지 찾아보기</span>
-                <input type="file" className="btn_g" accept="image/*" />
+                <input type="file" className="btn_g" accept="image/*" onChange={imageHandler} />
               </label>
-              <button type="button" className="delete_btn">
-                이미지 삭제
-              </button>
+              {!sessionStorage.getItem("url") ? (
+                ""
+              ) : (
+                <button
+                  type="button"
+                  className="delete_btn"
+                  onClick={() => {
+                    dispatch(ConfirmModalHandler("이미지를 삭제하시겠습니까?", remove));
+                  }}
+                >
+                  이미지 삭제
+                </button>
+              )}
             </div>
           </fieldset>
 
@@ -127,7 +215,13 @@ function ChangeInfo() {
             <legend className="screen_out">개인정보 설정</legend>
             <label className="lab_info">
               <strong className="tit_set">닉네임</strong>
-              <input type="text" className="tf_blog" maxLength={40} placeholder={userData.name} />
+              <input
+                type="text"
+                className="tf_blog"
+                maxLength={40}
+                placeholder={userData.name}
+                onChange={NameHandler}
+              />
             </label>
             <label className="lab_info">
               <strong className="tit_set">관심분야</strong>
@@ -143,12 +237,16 @@ function ChangeInfo() {
             </label>
             <div className="lab_tf">
               <strong className="title_set">블로그 설명</strong>
-              <textarea className="tf_blog" placeholder="나를 잘 나타낼 수 있는 설명을 적어보세요!"></textarea>
+              <textarea
+                className="tf_blog"
+                placeholder="나를 잘 나타낼 수 있는 설명을 적어보세요!"
+                onChange={DescriptionHandler}
+              ></textarea>
             </div>
           </fieldset>
           <fieldset className="save">
             <legend className="screen_out">저장버튼</legend>
-            <button type="submit" className="btn_save">
+            <button type="button" className="btn_save" onClick={changeHandler}>
               변경사항 저장
             </button>
           </fieldset>
