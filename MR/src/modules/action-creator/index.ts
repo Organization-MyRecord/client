@@ -31,6 +31,7 @@ export const LoginHandler = (Email: string, Password: string, dispa: any, setope
             type: ActionType.LOGIN_USER,
             payload: response.data,
             email: response.data.email,
+            image: response.data.image,
           });
           dispa(OpenModalHandler(response.data.description));
         } else {

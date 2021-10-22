@@ -22,6 +22,7 @@ interface LoginAction {
   type: ActionType.LOGIN_USER;
   payload: string;
   email: string;
+  image: string;
 }
 
 interface LogoutAction {

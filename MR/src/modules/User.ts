@@ -9,6 +9,7 @@ type userState = {
   modalstate: boolean;
   userEmail: string;
   toggleSidebar: boolean;
+  image: string;
 };
 
 const initialState: userState = {
@@ -19,6 +20,7 @@ const initialState: userState = {
   modalstate: false,
   userEmail: "",
   toggleSidebar: true,
+  image: "string",
 };
 
 //로그인
@@ -31,6 +33,7 @@ const user = (state: userState = initialState, action: Action) => {
         isLogin: true,
         myData: action.payload,
         userEmail: action.email,
+        image: action.image,
       };
     case ActionType.LOGOUT_USER:
       return {
