@@ -23,6 +23,7 @@ function ChangeInfo() {
   const [imageState, setimageState] = useState<File>();
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
+  const image = useSelector((state: RootState) => state.User.image);
   const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
   };
@@ -90,10 +91,15 @@ function ChangeInfo() {
     if (!fileList) return;
 
     setimageState(fileList[0]);
-    console.log(imageState);
-
-    dispatch(ConfirmModalHandler(`${imageState.name}을 추가 하시겠습니까?`, fileUpload));
   };
+
+  useEffect(() => {
+    if (imageState === undefined) {
+      return;
+    } else {
+      dispatch(ConfirmModalHandler(`${imageState?.name}를 추가 하시겠습니까?`, fileUpload));
+    }
+  }, [imageState]);
 
   const changeHandler = () => {
     dispatch(ConfirmModalHandler("변경사항을 저장하시겠습니까?", ChaneInfo));
@@ -111,7 +117,7 @@ function ChangeInfo() {
       .then((res) => {
         if (res.data.result) {
           dispatch(OpenModalHandler("변경사항이 저장되었습니다!"));
-          history.push("/mypage");
+          history.push("/");
           sessionStorage.removeItem("url");
         } else {
           dispatch(OpenModalHandler("개인정보 수정에 실패하였습니다."));
@@ -123,7 +129,7 @@ function ChangeInfo() {
     <div className="change_info">
       <div className="profile_cotainer">
         <div className="profile">
-          {userData?.image === "string" ? (
+          {image === "string" || image === null ? (
             <FaUserCircle id="user_icon" />
           ) : (
             <div className="box">

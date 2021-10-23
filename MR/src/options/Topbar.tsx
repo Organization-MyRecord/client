@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import { FaUserCircle } from "react-icons/fa";
@@ -15,6 +15,10 @@ function Topbar() {
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
   const userImage = useSelector((state: RootState) => state.User.image); //사용자 이미지
+
+  useEffect(() => {
+    console.log(userImage);
+  }, [userImage]);
 
   const history = useHistory();
   const dispatch = useDispatch();

@@ -93,6 +93,7 @@ export const GetUserInfo = (email) => {
       dispatch({
         type: ActionType.USER_INFO,
         payload: res.data,
+        image: res.data.image,
       });
     });
   };

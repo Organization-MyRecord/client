@@ -36,6 +36,7 @@ interface RegisterAction {
 interface GetUserInfo {
   type: ActionType.USER_INFO;
   payload: string;
+  image: string;
 }
 
 interface ToggleHanlder {

@@ -49,6 +49,7 @@ const user = (state: userState = initialState, action: Action) => {
       return {
         ...state,
         userData: action.payload,
+        image: action.image,
       };
     case ActionType.OPEN_MODAL:
       return {

@@ -41,6 +41,7 @@ function Mypage() {
   }, [email, dispatch]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
+  const image = useSelector((state: RootState) => state.User.image);
 
   const changePage = (page) => {
     setcurrentPage(page);
@@ -93,7 +94,7 @@ function Mypage() {
         <div className="mypage">
           <div className="profile_cotainer">
             <div className="profile">
-              {userData?.image === "string" ? (
+              {image === "string" || image === null ? (
                 <FaUserCircle id="user_icon" />
               ) : (
                 <div className="box">
