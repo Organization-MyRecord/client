@@ -75,6 +75,7 @@ export default function RegisterPage() {
 
   const onRadioChange = (e: any) => {
     setradioState(e.target.value);
+    console.log(radioState);
   };
 
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -215,9 +216,9 @@ export default function RegisterPage() {
                       <input
                         className={gender}
                         type="radio"
-                        value={gender}
+                        value={title}
                         name={gender}
-                        checked={gender === radioState}
+                        checked={title === radioState}
                         onChange={(e) => onRadioChange(e)}
                         style={{ width: "20px", height: "20px" }}
                       />
