@@ -40,7 +40,7 @@ function Home() {
   const MainData = useSelector((state: RootState) => state.Post.TotalData);
 
   const pop = MainData?.popularPostResponseList?.slice(0, 4);
-  const pop2 = MainData?.popularPostResponseList?.slice(3, 6);
+  const pop2 = MainData?.popularPostResponseList?.slice(4, 8);
 
   //인기 글 가져오기
   const popular: IPost = pop?.map((item: any) => {
