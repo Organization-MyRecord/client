@@ -59,7 +59,7 @@ function ChangeInfo() {
   const fileUpload = async () => {
     const formData = new FormData();
     formData.append("file", imageState);
-    let url = "";
+    let imageURL = "";
     try {
       axios
         .post("/api/upload", formData, {
@@ -69,8 +69,8 @@ function ChangeInfo() {
           },
         })
         .then((res) => {
-          url = res.data;
-          sessionStorage.setItem("url", url);
+          imageURL = res.data;
+          sessionStorage.setItem("imageURL", imageURL);
         })
         .then(() => {
           dispatch(CloseModalHandler());
@@ -81,7 +81,7 @@ function ChangeInfo() {
     }
   };
   const remove = () => {
-    sessionStorage.removeItem("url");
+    sessionStorage.removeItem("imageURL");
     dispatch(OpenModalHandler("삭제되었습니다."));
   };
 
@@ -108,7 +108,7 @@ function ChangeInfo() {
   const ChaneInfo = async () => {
     await axios
       .put(
-        `/api/mypage?description=${Description}&userImage=${sessionStorage.getItem("url")}&userName=${Name}`,
+        `/api/mypage?description=${Description}&userImage=${sessionStorage.getItem("imageURL")}&userName=${Name}`,
         {},
         {
           headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
@@ -118,7 +118,7 @@ function ChangeInfo() {
         if (res.data.result) {
           dispatch(OpenModalHandler("변경사항이 저장되었습니다!"));
           history.push("/");
-          sessionStorage.removeItem("url");
+          sessionStorage.removeItem("imageURL");
         } else {
           dispatch(OpenModalHandler("개인정보 수정에 실패하였습니다."));
         }
@@ -186,11 +186,11 @@ function ChangeInfo() {
           <fieldset className="profile_img">
             <legend className="screen_out">이미지 설정</legend>
             <div className="img_wrapper">
-              {!sessionStorage.getItem("url") ? (
+              {!sessionStorage.getItem("imageURL") ? (
                 ""
               ) : (
                 <img
-                  src={`${sessionStorage.getItem("url")}`}
+                  src={`${sessionStorage.getItem("imageURL")}`}
                   alt="profile"
                   className="thumb"
                   width="100%"
@@ -201,7 +201,7 @@ function ChangeInfo() {
                 <span className="plus_btn">이미지 찾아보기</span>
                 <input type="file" className="btn_g" accept="image/*" onChange={imageHandler} />
               </label>
-              {!sessionStorage.getItem("url") ? (
+              {!sessionStorage.getItem("imageURL") ? (
                 ""
               ) : (
                 <button
