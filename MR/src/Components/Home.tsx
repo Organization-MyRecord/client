@@ -16,7 +16,7 @@ interface IPost {
 }
 
 //텍스트에서 이미지 및 줄바꿈 삭제
-function DeleteTag(content: string) {
+export function DeleteTag(content: string) {
   const brTag = /<BR(.*?)>/gi;
   const imageTag = /<IMG(.*?)>/gi;
   const text = content.replace(brTag, "");
@@ -53,6 +53,9 @@ function Home() {
               item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
           }}
         />
         <article>
@@ -79,6 +82,9 @@ function Home() {
               item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
           }}
         />
         <article>
@@ -106,6 +112,9 @@ function Home() {
               item.postImage === null || item.postImage == "string"
                 ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                 : `url(${item.postImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
           }}
         />
         <article>
@@ -134,6 +143,9 @@ function Home() {
                   item.postImage === null || item.postImage == "string"
                     ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                     : `url(${item.postImage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                backgroundPosition: "center",
               }}
             ></div>
           </Link>

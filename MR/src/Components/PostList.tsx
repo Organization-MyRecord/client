@@ -6,6 +6,7 @@ import Loader from "react-loader-spinner";
 import DOMPurify from "dompurify";
 import { RootState } from "../modules/Store";
 import "../styles/post-list.scss";
+import { DeleteTag } from "./Home";
 
 interface Iprams {
   Field: string;
@@ -41,6 +42,9 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
                   item.postImage === null || item.postImage == "string"
                     ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                     : `url(${item.postImage})`,
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "contain",
+                backgroundPosition: "center",
               }}
             ></div>
           </Link>
@@ -57,7 +61,7 @@ function PostList({ match }: RouteComponentProps<Iprams>) {
             <p
               className="post_text"
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(item.content),
+                __html: DOMPurify.sanitize(DeleteTag(item.content)),
               }}
             ></p>
             <button className="readMore">더보기..</button>

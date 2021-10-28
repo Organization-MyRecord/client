@@ -58,6 +58,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
     await axios.get(`/api/post/${id}`).then((res) => {
       setTitle(res.data.postName);
       setcontents(res.data.content);
+      setdirectoryName(res.data.directoryName);
       setstate(true);
     });
   }

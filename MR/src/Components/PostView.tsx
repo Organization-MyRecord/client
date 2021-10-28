@@ -9,6 +9,7 @@ import "../styles/post-view.scss";
 import { DeletePostHandler } from "../modules/action-creator/PostIndex";
 import Reply from "./Reply";
 import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
+import "react-quill/dist/quill.snow.css";
 
 interface MatchParams {
   postId: string;
@@ -29,6 +30,7 @@ type IData = {
 
 type IAnother = {
   postUnderResponseList: IAnotherArray[];
+  postUpperResponseList: IAnotherArray[];
 };
 
 type IAnotherArray = {
@@ -142,7 +144,20 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
     dispatch(DeletePostHandler(id, history, dispatch));
   };
 
-  const anotherList = anotherPostList?.postUnderResponseList.map((item) => {
+  //아래 두개
+  const anotherUnderList = anotherPostList?.postUnderResponseList.map((item) => {
+    return (
+      <tr key={item.postId} className="another_tr">
+        <td>
+          <Link to={`/post/${userEmail}/${item.postId}`}>{item.postName}</Link>
+        </td>
+        <td>{item.postDate}</td>
+      </tr>
+    );
+  });
+
+  //위에 두개
+  const anotherUppererList = anotherPostList?.postUpperResponseList.map((item) => {
     return (
       <tr key={item.postId} className="another_tr">
         <td>
@@ -189,7 +204,10 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
                   <th>{data?.postUserEmail}의 다른 글</th>
                 </tr>
               </thead>
-              <tbody>{anotherList}</tbody>
+              <tbody>
+                {anotherUnderList}
+                {anotherUppererList}
+              </tbody>
             </table>
           </div>
           <div className="reply_area">
