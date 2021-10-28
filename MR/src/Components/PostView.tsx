@@ -9,7 +9,7 @@ import "../styles/post-view.scss";
 import { DeletePostHandler } from "../modules/action-creator/PostIndex";
 import Reply from "./Reply";
 import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
-import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.core.css";
 
 interface MatchParams {
   postId: string;
@@ -195,7 +195,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
                 <span className="post_date">{data?.date}</span>
               </div>
             </div>
-            <div className="view" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
+            <div className="view ql-editor" dangerouslySetInnerHTML={{ __html: data?.content }}></div>
           </div>
           <div className="another_post_area">
             <table className="another_post">
