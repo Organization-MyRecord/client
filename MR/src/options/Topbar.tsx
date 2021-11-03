@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import TextLogo from "./text_logo2.png";
 import Login from "../Components/Login";
 import "../styles/topbar.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { LogoutHandler, SideBarNoneHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import { OpenModalHandler } from "../modules/action-creator/ModalIndex";
@@ -14,7 +14,7 @@ function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
-  const userImage = useSelector((state: RootState) => state.User.image); //사용자 이미지
+  const userImage = useSelector((state: RootState) => state.User.image, shallowEqual); //사용자 이미지
 
   useEffect(() => {
     console.log(userImage);

@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import SmallNavBar from "../options/SmallNavBar";
 import ChangeInfo from "./ChangeInfo";
 import ChangeCategory from "./ChangeCategory";
@@ -20,7 +20,7 @@ function ChangeInfoContainer() {
 
   return (
     <div className="changeInfo_container">
-      <BrowserRouter>
+      <>
         <nav className="container_nav">
           <SmallNavBar />
         </nav>
@@ -31,7 +31,7 @@ function ChangeInfoContainer() {
             <Route exact={true} path="/changeinfo-checkPassword" component={PasswordConfirm} />
           </Switch>
         </section>
-      </BrowserRouter>
+      </>
     </div>
   );
 }

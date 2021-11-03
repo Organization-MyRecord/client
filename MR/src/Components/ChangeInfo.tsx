@@ -117,7 +117,7 @@ function ChangeInfo() {
       .then((res) => {
         if (res.data.result) {
           dispatch(OpenModalHandler("변경사항이 저장되었습니다!"));
-          history.push("/");
+          history.push("/mypage");
           sessionStorage.removeItem("imageURL");
         } else {
           dispatch(OpenModalHandler("개인정보 수정에 실패하였습니다."));
@@ -245,7 +245,11 @@ function ChangeInfo() {
               <strong className="title_set">블로그 설명</strong>
               <textarea
                 className="tf_blog"
-                placeholder="나를 잘 나타낼 수 있는 설명을 적어보세요!"
+                placeholder={
+                  userData.description === null || userData.description === ""
+                    ? "나를 잘 나타낼 수 있는 설명을 적어보세요!"
+                    : userData.description
+                }
                 onChange={DescriptionHandler}
               ></textarea>
             </div>
