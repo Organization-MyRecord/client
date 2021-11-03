@@ -180,7 +180,14 @@ export const GetDirectoryData = (
 };
 
 //게시글 수정
-export const PostUpdateHandelr = (content: string, newPostName: string, postId: number, history: any, dispa) => {
+export const PostUpdateHandelr = (
+  content: string,
+  newPostName: string,
+  postId: number,
+  history: any,
+  dispa,
+  directoryName,
+) => {
   return async (dispatch: Dispatch<PostAction>) => {
     await axios
       .put(
@@ -189,6 +196,7 @@ export const PostUpdateHandelr = (content: string, newPostName: string, postId: 
           content: content,
           newPostName: newPostName,
           postId: postId,
+          directoryName: directoryName,
         },
         {
           headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
@@ -200,7 +208,7 @@ export const PostUpdateHandelr = (content: string, newPostName: string, postId: 
             type: ActionType.POST_UPDATE,
             payload: res.data.value,
           });
-          dispa(OpenModalHandler(res.data.description));
+          dispa(OpenModalHandler("게시글이 정상적으로 수정되었습니다!"));
 
           history.push("/mypage");
         } else {

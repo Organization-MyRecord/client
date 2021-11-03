@@ -146,7 +146,9 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   //게시글 수정
   const updateHander = () => {
     const id = update as unknown as number;
-    dispatch(PostUpdateHandelr(contents, Title, id, history, dispatch));
+    console.log(contents, Title, id);
+
+    dispatch(PostUpdateHandelr(contents, Title, id, history, dispatch, directoryName));
 
     console.log("수정");
   };
