@@ -103,6 +103,8 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
         commentList={item.commentList}
         MainPostId={postId}
         recomment={recomment}
+        email={data?.postUserEmail}
+        myEmail={myEmail}
         setrecomment={setrecomment}
         active={active}
         setactive={setactive}
@@ -189,7 +191,7 @@ function PostView({ match }: RouteComponentProps<MatchParams>) {
             <div className="content_info">
               <h2>{data?.postName}</h2>
               <div className="post_info">
-                <Link className="nametag" to="">
+                <Link className="nametag" to={`/mypage/${data?.postUserEmail}`}>
                   {data?.postUserEmail}
                 </Link>
                 <span className="post_date">{data?.date}</span>

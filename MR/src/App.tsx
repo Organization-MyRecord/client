@@ -37,7 +37,7 @@ function App() {
         <section className={toggleSideBar ? "Global_section" : "toggle_section"}>
           <Switch>
             <Route exact={true} path="/" component={Home} />
-            <Route path="/mypage" component={Mypage} />
+            <Route path="/mypage/:userEmail" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
             <Route exact={true} path="/post/:update?" component={Post} />
             <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />

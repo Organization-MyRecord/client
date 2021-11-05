@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, RouteComponentProps } from "react-router";
 import { GetUserInfo, SideBarOpenHandler } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import ReactPaginate from "react-paginate";
@@ -11,7 +11,6 @@ import "../styles/mypage.scss";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Category from "./Category";
-
 //디렉토리 state 인터페이스 정의
 interface ICategory {
   result: boolean;
@@ -19,11 +18,15 @@ interface ICategory {
   value: any;
 }
 
+interface Iparam {
+  userEmail: string;
+}
+
 export async function GetDirectoryList(userEmail: string, setdirectoties: any) {
   await axios.get(`/api/directory/${userEmail}`).then((res) => setdirectoties(res.data));
 }
 
-function Mypage() {
+function Mypage({ match }: RouteComponentProps<Iparam>) {
   const [currentPage, setcurrentPage] = useState(1);
   const [directoties, setdirectoties] = useState<ICategory>();
   const [loading, setloading] = useState(true);
@@ -32,8 +35,8 @@ function Mypage() {
   const email = useSelector((state: RootState) => state.User.myData.email);
 
   useEffect(() => {
-    dispatch(GetUserInfo(email));
-    GetDirectoryList(email, setdirectoties).then(() => setloading(false));
+    dispatch(GetUserInfo(match.params.userEmail));
+    GetDirectoryList(match.params.userEmail, setdirectoties).then(() => setloading(false));
 
     return () => {
       dispatch(SideBarOpenHandler());
@@ -113,6 +116,7 @@ function Mypage() {
                   onClick={() => {
                     history.push("/changeinfo");
                   }}
+                  style={email === match.params.userEmail ? { display: "" } : { display: "none" }}
                 >
                   기본정보 수정
                 </button>
@@ -165,7 +169,11 @@ function Mypage() {
             <div className="mypost">
               <div className="post_info">
                 전체글 {userData?.postPagination.totalElements}개
-                <button className="post_btn" onClick={onClickHandler}>
+                <button
+                  className="post_btn"
+                  onClick={onClickHandler}
+                  style={email === match.params.userEmail ? { display: "" } : { display: "none" }}
+                >
                   글쓰기
                 </button>
               </div>

@@ -23,6 +23,8 @@ export interface IReply {
   MainPostId: string;
   commentList: IArray[];
   recomment: string;
+  email: string;
+  myEmail: string;
   setrecomment: (text: string) => void;
   active: number;
   setactive: (num: number) => void;
@@ -129,10 +131,15 @@ function Reply(props: IReply) {
             <FaPlusSquare className="plus" size="19" />
             <p>{props.commentList.length}개의 답글</p>
           </div>
+
           <h5 className="recomment_btn" onClick={toggleHandler}>
             답글달기
           </h5>
-          <h5 className="recomment_btn" onClick={DeleteCommentHandler}>
+          <h5
+            className="recomment_btn"
+            onClick={DeleteCommentHandler}
+            style={props.email === props.myEmail ? { display: "" } : { display: "none" }}
+          >
             삭제
           </h5>
         </div>

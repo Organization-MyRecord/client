@@ -15,6 +15,7 @@ function Topbar() {
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
   const userImage = useSelector((state: RootState) => state.User.image, shallowEqual); //사용자 이미지
+  const email = useSelector((state: RootState) => state.User.userEmail);
 
   useEffect(() => {
     console.log(userImage);
@@ -83,7 +84,7 @@ function Topbar() {
               onClick={() => {
                 if (sessionStorage.getItem("token")) {
                   dispatch(SideBarNoneHandler());
-                  history.push("/mypage");
+                  history.push(`/mypage/${email}`);
                 } else {
                   dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));
                 }
@@ -96,7 +97,7 @@ function Topbar() {
             onClick={() => {
               if (sessionStorage.getItem("token")) {
                 dispatch(SideBarNoneHandler());
-                history.push("/mypage");
+                history.push(`/mypage/${email}`);
               } else {
                 dispatch(OpenModalHandler("로그인을 먼저 해 주시기 바랍니다!"));
               }
