@@ -23,7 +23,7 @@ const initialState: userState = {
   image: "string",
 };
 
-//로그인
+//리듀서
 
 const user = (state: userState = initialState, action: Action) => {
   switch (action.type) {
@@ -40,6 +40,7 @@ const user = (state: userState = initialState, action: Action) => {
         ...state,
         isLogin: false,
         userEmail: "",
+        image: "string",
       };
     case ActionType.REGISTER_USER:
       return {
