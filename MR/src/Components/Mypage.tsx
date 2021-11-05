@@ -41,10 +41,10 @@ function Mypage({ match }: RouteComponentProps<Iparam>) {
     return () => {
       dispatch(SideBarOpenHandler());
     };
-  }, [email, dispatch]);
+  }, [email, dispatch, match.params.userEmail]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
-  const image = useSelector((state: RootState) => state.User.image);
+  const image = useSelector((state: RootState) => state.User.userData.image);
 
   const changePage = (page) => {
     setcurrentPage(page);
@@ -67,7 +67,7 @@ function Mypage({ match }: RouteComponentProps<Iparam>) {
               className="post_image"
               style={{
                 backgroundImage:
-                  item.postImage === null || item.postImage == "string"
+                  item.postImage === null || item.postImage === "string"
                     ? "url(https://myrecord.s3.ap-northeast-2.amazonaws.com/7e1436db-68ea-45c5-b997-6de46f17280b.png)"
                     : `url(${item.postImage})`,
                 backgroundRepeat: "no-repeat",

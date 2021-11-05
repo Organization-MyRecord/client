@@ -37,7 +37,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   useEffect(() => {
     dispatch(SideBarNoneHandler());
     GetDirectoryList(email, setdirectory);
-    if (update != undefined) {
+    if (update !== undefined) {
       CallPostData(update).then(() => setLoading(false));
     } else {
       setLoading(false);
@@ -177,6 +177,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
         },
       },
     }),
+    // eslint-disable-next-line
     [],
   );
 

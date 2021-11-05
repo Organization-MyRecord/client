@@ -14,7 +14,7 @@ function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
-  const userImage = useSelector((state: RootState) => state.User.image, shallowEqual); //사용자 이미지
+  const userImage = useSelector((state: RootState) => state.User.myData.image, shallowEqual); //사용자 이미지
   const email = useSelector((state: RootState) => state.User.userEmail);
 
   useEffect(() => {

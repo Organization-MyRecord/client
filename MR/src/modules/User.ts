@@ -33,7 +33,6 @@ const user = (state: userState = initialState, action: Action) => {
         isLogin: true,
         myData: action.payload,
         userEmail: action.email,
-        image: action.image,
       };
     case ActionType.LOGOUT_USER:
       return {
