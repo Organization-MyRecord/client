@@ -31,6 +31,7 @@ export const LoginHandler = (Email: string, Password: string, dispa: any, setope
             type: ActionType.LOGIN_USER,
             payload: response.data,
             email: response.data.email,
+            image: response.data.image,
           });
           dispa(OpenModalHandler(response.data.description));
         } else {
@@ -81,6 +82,33 @@ export const RegisterHandler = (
       })
       .then(() => {
         hisory.push("/");
+      });
+  };
+};
+
+//개인정부 수정
+export const UpdateUserInfo = (Description, Name, dispa, history) => {
+  return async (dispatch: Dispatch<Action>) => {
+    await axios
+      .put(
+        `/api/mypage?description=${Description}&userImage=${sessionStorage.getItem("imageURL")}&userName=${Name}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+        },
+      )
+      .then((res) => {
+        if (res.data.result) {
+          dispatch({
+            type: ActionType.USER_UPDATE,
+            payload: res.data.value.userImage,
+          });
+          dispa(OpenModalHandler("변경사항이 저장되었습니다!"));
+          history.push("/mypage");
+          sessionStorage.removeItem("imageURL");
+        } else {
+          dispa(OpenModalHandler("개인정보 수정에 실패하였습니다."));
+        }
       });
   };
 };

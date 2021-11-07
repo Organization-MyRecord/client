@@ -14,12 +14,12 @@ function Topbar() {
   const [Keyword, setKeyword] = useState("");
   const [OpenModal, setOpenModal] = useState(false);
   const isLogin = useSelector((state: RootState) => state.User.isLogin); //사용자가 로그인 되어 있는지 확인
-  const userImage = useSelector((state: RootState) => state.User.myData, shallowEqual); //사용자 이미지
+  const userImage = useSelector((state: RootState) => state.User.image, shallowEqual); //사용자 이미지
   const email = useSelector((state: RootState) => state.User.userEmail);
 
   useEffect(() => {
-    console.log(userImage?.image);
-  }, [userImage?.image]);
+    console.log(userImage);
+  }, [userImage]);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ function Topbar() {
         >
           Logout
         </button>
-        {userImage?.image === "string" || userImage?.image === null ? (
+        {userImage === "string" || userImage === null ? (
           <button className="account_logo">
             <FaUserCircle
               className="logo"
@@ -103,7 +103,7 @@ function Topbar() {
               }
             }}
           >
-            <img alt="user_profile" src={userImage?.image} />
+            <img alt="user_profile" src={userImage} />
           </div>
         )}
       </div>

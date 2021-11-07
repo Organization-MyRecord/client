@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { options, Major } from "../options/options";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { CloseModalHandler, GetUserInfo } from "../modules/action-creator";
+import { CloseModalHandler, GetUserInfo, UpdateUserInfo } from "../modules/action-creator";
 import { RootState } from "../modules/Store";
 import "../styles/change-info.scss";
 import axios, { AxiosError } from "axios";
@@ -56,7 +56,7 @@ function ChangeInfo() {
     setDescription(e.currentTarget.value);
   };
 
-  const fileUpload = async () => {
+  const fileUpload = useCallback(async () => {
     const formData = new FormData();
     formData.append("file", imageState);
     let imageURL = "";
@@ -79,7 +79,7 @@ function ChangeInfo() {
       const err = error as AxiosError;
       return { ...err.response };
     }
-  };
+  }, [imageState]);
   const remove = () => {
     sessionStorage.removeItem("imageURL");
     dispatch(OpenModalHandler("삭제되었습니다."));
@@ -99,30 +99,14 @@ function ChangeInfo() {
     } else {
       dispatch(ConfirmModalHandler(`${imageState?.name}를 추가 하시겠습니까?`, fileUpload));
     }
-  }, [imageState]);
+  }, [imageState, fileUpload]);
 
   const changeHandler = () => {
     dispatch(ConfirmModalHandler("변경사항을 저장하시겠습니까?", ChaneInfo));
   };
 
-  const ChaneInfo = async () => {
-    await axios
-      .put(
-        `/api/mypage?description=${Description}&userImage=${sessionStorage.getItem("imageURL")}&userName=${Name}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
-        },
-      )
-      .then((res) => {
-        if (res.data.result) {
-          dispatch(OpenModalHandler("변경사항이 저장되었습니다!"));
-          history.push("/mypage");
-          sessionStorage.removeItem("imageURL");
-        } else {
-          dispatch(OpenModalHandler("개인정보 수정에 실패하였습니다."));
-        }
-      });
+  const ChaneInfo = () => {
+    dispatch(UpdateUserInfo(Description, Name, dispatch, history));
   };
 
   return (

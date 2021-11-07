@@ -33,6 +33,7 @@ const user = (state: userState = initialState, action: Action) => {
         isLogin: true,
         myData: action.payload,
         userEmail: action.email,
+        image: action.image,
       };
     case ActionType.LOGOUT_USER:
       return {
@@ -75,6 +76,11 @@ const user = (state: userState = initialState, action: Action) => {
       return {
         ...state,
         toggleSidebar: false,
+      };
+    case ActionType.USER_UPDATE:
+      return {
+        ...state,
+        image: action.payload,
       };
     default:
       return state;

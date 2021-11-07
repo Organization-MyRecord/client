@@ -22,6 +22,7 @@ interface LoginAction {
   type: ActionType.LOGIN_USER;
   payload: string;
   email: string;
+  image: string;
 }
 
 interface LogoutAction {
@@ -36,6 +37,11 @@ interface GetUserInfo {
   type: ActionType.USER_INFO;
   payload: string;
   image: string;
+}
+
+interface ChangeUserInfo {
+  type: ActionType.USER_UPDATE;
+  payload: string;
 }
 
 interface ToggleHanlder {
@@ -98,7 +104,8 @@ export type Action =
   | CloseModalAction
   | ToggleHanlder
   | ToggleOpenSideBar
-  | ToggleNoneSideBar;
+  | ToggleNoneSideBar
+  | ChangeUserInfo;
 export type PostAction =
   | GetPostAction
   | RegisterPostAction

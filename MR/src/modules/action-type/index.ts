@@ -6,6 +6,7 @@ export enum ActionType {
   REGISTER_USER = "REGISTER_USER",
   USER_INFO = "USER_INFO",
   USER_ISLOGIN = "USER_ISLOGIN",
+  USER_UPDATE = "USER_UPDATE",
 
   //게시글 관련 Action 타입
   POST_INFO = "POST_INFO",

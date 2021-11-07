@@ -44,7 +44,6 @@ function Mypage({ match }: RouteComponentProps<Iparam>) {
   }, [email, dispatch, match.params.userEmail]);
 
   const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
-  const image = useSelector((state: RootState) => state.User.userData.image);
 
   const changePage = (page) => {
     setcurrentPage(page);
@@ -100,7 +99,7 @@ function Mypage({ match }: RouteComponentProps<Iparam>) {
         <div className="mypage">
           <div className="profile_cotainer">
             <div className="profile">
-              {image === "string" || image === null ? (
+              {userData?.image === "string" || userData?.image === null || userData === null ? (
                 <FaUserCircle id="user_icon" />
               ) : (
                 <div className="box">
