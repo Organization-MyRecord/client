@@ -8,7 +8,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SideBarNoneHandler, SideBarOpenHandler } from "../modules/action-creator";
 
-function ChangeInfoContainer() {
+function ChangeInfoContainer({ match }) {
+  console.log(match);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(SideBarNoneHandler());
@@ -22,13 +24,13 @@ function ChangeInfoContainer() {
     <div className="changeInfo_container">
       <>
         <nav className="container_nav">
-          <SmallNavBar />
+          <SmallNavBar path={match.path} />
         </nav>
         <section>
           <Switch>
-            <Route exact={true} path="/changeinfo" component={ChangeInfo}></Route>
-            <Route exact={true} path="/changeinfo-category" component={ChangeCategory} />
-            <Route exact={true} path="/changeinfo-checkPassword" component={PasswordConfirm} />
+            <Route exact={true} path={`${match.path}`} component={ChangeInfo}></Route>
+            <Route path={`${match.path}/category`} component={ChangeCategory} />
+            <Route path={`${match.path}/checkPassword`} component={PasswordConfirm} />
           </Switch>
         </section>
       </>
