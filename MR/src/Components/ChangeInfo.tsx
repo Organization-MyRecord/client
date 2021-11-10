@@ -79,7 +79,7 @@ function ChangeInfo() {
       const err = error as AxiosError;
       return { ...err.response };
     }
-  }, [imageState]);
+  }, [imageState, dispatch]);
   const remove = () => {
     sessionStorage.removeItem("imageURL");
     dispatch(OpenModalHandler("삭제되었습니다."));
@@ -99,7 +99,7 @@ function ChangeInfo() {
     } else {
       dispatch(ConfirmModalHandler(`${imageState?.name}를 추가 하시겠습니까?`, fileUpload));
     }
-  }, [imageState, fileUpload]);
+  }, [imageState, fileUpload, dispatch]);
 
   const changeHandler = () => {
     dispatch(ConfirmModalHandler("변경사항을 저장하시겠습니까?", ChaneInfo));
