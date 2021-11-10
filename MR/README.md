@@ -6,6 +6,12 @@
 
 ![logo](https://user-images.githubusercontent.com/68778883/139292377-573b3eb4-b7d7-409a-bff1-06187adc5789.png)
 
+[&#128515; 사이트 링크](http://3.137.122.135:3000/)
+
+[&#127909; 유튜브 링크](https://bit.ly/3D7JOnC)
+
+[&#128523; 백엔드 Repository](https://github.com/Organization-MyRecord/server)
+
 <br/>
 
 # 목차
