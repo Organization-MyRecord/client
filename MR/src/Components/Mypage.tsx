@@ -194,7 +194,7 @@ function Mypage({ match }: RouteComponentProps<Iparam>) {
               />
             </div>
           </div>
-          <div className="category">{<Category directoryList={directoties} email={email} />}</div>
+          <div className="category">{<Category directoryList={directoties} email={match.params.userEmail} />}</div>
         </div>
       )}
     </React.Fragment>

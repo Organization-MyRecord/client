@@ -163,3 +163,5 @@
 <br/>
 
 # 후기
+
+## [마이레코드 회고록](https://sunpl13.tistory.com/22)
