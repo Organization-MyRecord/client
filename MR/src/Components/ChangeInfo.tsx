@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { options, Major } from "../options/options";
 import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -16,40 +15,14 @@ function ChangeInfo() {
   useEffect(() => {
     dispatch(GetUserInfo(email));
   }, [email, dispatch]);
+  const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
   const [Name, setName] = useState(""); //이름
-  const [major, setmajor] = useState(""); //전공계열
   const [Description, setDescription] = useState(""); //전공세부
-  const [field, setfield] = useState(""); //분야
   const [imageState, setimageState] = useState<File>();
 
-  const userData = useSelector((state: RootState) => state.User.userData); //유저정보 가져오기
   const image = useSelector((state: RootState) => state.User.image);
   const NameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value);
-  };
-  console.log(major, field);
-
-  //분야를 select option
-  const fieldList = options.map((item) => {
-    return (
-      <option key={item.label} value={item.value === userData.field ? "default" : item.value}>
-        {item.value}
-      </option>
-    );
-  });
-  const majorList = Major.map((item) => {
-    return (
-      <option key={item.label} value={item.value === userData.field ? "default" : item.value}>
-        {item.label}
-      </option>
-    );
-  });
-
-  const FieldHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setfield(e.currentTarget.value);
-  };
-  const majorHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setmajor(e.currentTarget.value);
   };
 
   const DescriptionHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -210,21 +183,11 @@ function ChangeInfo() {
                 className="tf_blog"
                 maxLength={40}
                 placeholder={userData.name}
+                defaultValue={userData.name}
                 onChange={NameHandler}
               />
             </label>
-            <label className="lab_info">
-              <strong className="tit_set">관심분야</strong>
-              <select className="tf_blog" onChange={FieldHandler}>
-                {fieldList}
-              </select>
-            </label>
-            <label className="lab_info">
-              <strong className="tit_set">전공계열</strong>
-              <select className="tf_blog" onChange={majorHandler}>
-                {majorList}
-              </select>
-            </label>
+
             <div className="lab_tf">
               <strong className="title_set">블로그 설명</strong>
               <textarea
@@ -232,8 +195,9 @@ function ChangeInfo() {
                 placeholder={
                   userData.description === null || userData.description === ""
                     ? "나를 잘 나타낼 수 있는 설명을 적어보세요!"
-                    : userData.description
+                    : ""
                 }
+                defaultValue={userData?.description}
                 onChange={DescriptionHandler}
               ></textarea>
             </div>
