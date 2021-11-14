@@ -14,7 +14,7 @@ import { ConfirmModalHandler } from "../modules/action-creator/ModalIndex";
 import { SideBarNoneHandler } from "../modules/action-creator";
 
 interface Iparam {
-  update: string;
+  postId: string;
 }
 
 interface ICategory {
@@ -29,7 +29,8 @@ export async function GetDirectoryList(userEmail: string, setdirectoties: any) {
 
 function Post({ match }: RouteComponentProps<Iparam>) {
   const dispatch = useDispatch();
-  const { update } = match.params;
+  const { postId } = match.params;
+
   const history = useHistory();
   const [directory, setdirectory] = useState<ICategory>();
   const email = useSelector((state: RootState) => state.User.userEmail);
@@ -37,13 +38,13 @@ function Post({ match }: RouteComponentProps<Iparam>) {
   useEffect(() => {
     dispatch(SideBarNoneHandler());
     GetDirectoryList(email, setdirectory);
-    if (update !== undefined) {
-      CallPostData(update).then(() => setLoading(false));
+    if (postId !== undefined) {
+      CallPostData(postId).then(() => setLoading(false));
     } else {
       setLoading(false);
       return;
     }
-  }, [email, update, dispatch]);
+  }, [email, postId, dispatch]);
 
   //Content 내부에서 사진 이미지 리사이징을 위한 모듈
   Quill.register("modules/ImageResize", ImageResize);
@@ -145,7 +146,7 @@ function Post({ match }: RouteComponentProps<Iparam>) {
 
   //게시글 수정
   const updateHander = () => {
-    const id = update as unknown as number;
+    const id = postId as unknown as number;
     console.log(contents, Title, id);
 
     dispatch(PostUpdateHandelr(contents, Title, id, history, dispatch, directoryName));
@@ -189,10 +190,17 @@ function Post({ match }: RouteComponentProps<Iparam>) {
         <div className="post">
           <div className="post_header">
             <div className="division">
-              <select onChange={DirectoryNameHander}>
-                <option value={directoryName} disabled selected hidden>
-                  카테고리
-                </option>
+              <select onChange={DirectoryNameHander} defaultValue={directoryName}>
+                {postId !== undefined ? (
+                  <option value={directoryName} disabled selected hidden>
+                    카테고리
+                  </option>
+                ) : (
+                  <option value={directoryName} disabled>
+                    카테고리
+                  </option>
+                )}
+
                 {list}
               </select>
               <div className="button_container">

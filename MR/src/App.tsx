@@ -39,7 +39,7 @@ function App() {
             <Route exact={true} path="/" component={Home} />
             <Route path="/mypage/:userEmail" component={Mypage} />
             <Route path="/registerpage" component={RegisterPage} />
-            <Route exact={true} path="/post/:update?" component={Post} />
+            <Route exact={true} path="/post/:postId?" component={Post} />
             <Route exact={true} path="/post/:userEmail/:postId" component={PostView} />
             <Route exact={true} path="/postList/:Field?/:KeyWord?" component={PostList} />
             <Route exact={true} path="/postList/direcory/:directoryName/:email" component={PostListTwo} />
